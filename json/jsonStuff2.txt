@@ -1,0 +1,34 @@
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+)
+
+type A struct {
+	Name string `json:"name"`
+}
+
+func main() {
+	var a A
+
+	// Example from the question. No error. The "status" field is not in target.
+	data := []byte(`{"status":false}`)
+	err := json.Unmarshal(data, &a)
+	fmt.Println(err)
+
+	// Error: cannot unmarshal bool into Go value of type string
+	data = []byte(`{"name":false}`)
+	err = json.Unmarshal(data, &a)
+	fmt.Println(err)
+
+	// Error: character 'w' looking for beginning of value
+	data = []byte(`{"name":what?}`)
+	err = json.Unmarshal(data, &a)
+	fmt.Println(err)
+
+	// Error: nil
+	data = []byte(`{"name":"what?"}`)
+	err = json.Unmarshal(data, &a)
+	fmt.Println(err)
+}

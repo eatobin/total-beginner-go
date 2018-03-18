@@ -1,0 +1,28 @@
+// https://play.golang.org/p/NjxEBAl7_-z
+
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+)
+
+type A struct {
+	Name     string `json:"name"`
+	MaxBooks int    `json:"maxBooks`
+}
+
+func main() {
+	var jsonString string = "{\"name\":\"Borrower1\",\"maxBooks\":1}"
+	var a A
+	err := json.Unmarshal([]byte(jsonString), &a)
+	fmt.Println(err)
+	fmt.Printf("%+v\n", a)
+	fmt.Println(jsonString)
+	fmt.Println(IsJSON(jsonString))
+}
+
+func IsJSON(str string) bool {
+	var js json.RawMessage
+	return json.Unmarshal([]byte(str), &js) == nil
+}
