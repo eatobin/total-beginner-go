@@ -1,10 +1,12 @@
-package totalbeginnergo
+package book
 
 import (
 	"testing"
+
+	"github.com/eatobin/totalbeginnergo/borrower"
 )
 
-var br2 = MakeBorrower("Borrower2", 2)
+var br2 = borrower.MakeBorrower("Borrower2", 2)
 var bk1 = MakeBook("Title1", "Author1")
 
 func TestMakeBook(t *testing.T) {
@@ -19,7 +21,7 @@ func TestMakeBook(t *testing.T) {
 		t.Fatalf("bk1lib.Author == %q, want %q", gotA, wantA)
 	}
 	gotBrIsNot := bk1.Borrower
-	wantBrIsNot := Borrower{Name: "NoName", MaxBooks: -1}
+	wantBrIsNot := borrower.Borrower{Name: "NoName", MaxBooks: -1}
 	if gotBrIsNot != wantBrIsNot {
 		t.Fatalf("bk1lib.Borrower == %v, want %v", gotBrIsNot, wantBrIsNot)
 	}
@@ -32,7 +34,7 @@ func TestMakeBook(t *testing.T) {
 }
 
 func TestBookToString(t *testing.T) {
-	bk1.SetBorrower(Borrower{Name: "NoName", MaxBooks: -1})
+	bk1.SetBorrower(borrower.Borrower{Name: "NoName", MaxBooks: -1})
 	gotAvail := bk1.BookToString()
 	wantAvail := "Title1 by Author1; Available"
 	if gotAvail != wantAvail {

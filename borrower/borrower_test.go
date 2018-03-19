@@ -1,4 +1,4 @@
-package totalbeginnergo
+package borrower
 
 import "testing"
 
