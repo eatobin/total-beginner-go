@@ -6,6 +6,8 @@ import (
 	"strconv"
 	"strings"
 
+	"fmt"
+
 	"github.com/eatobin/totalbeginnergo/book"
 	"github.com/eatobin/totalbeginnergo/borrower"
 )
@@ -89,18 +91,20 @@ func CheckIn(t string, bks []book.Book) []book.Book {
 	return bks
 }
 
-func JSONStringToBorrowers(js string) ([]borrower.Borrower, string) {
+func JSONStringToBorrowers(js string) []borrower.Borrower {
 	var res []borrower.Borrower
 	err := json.Unmarshal([]byte(js), &res)
 	if err != nil {
-		return []borrower.Borrower{}, "JSON parse error."
+		fmt.Println("JSON parse error. Borrowers list is empty.")
+		return []borrower.Borrower{}
 	}
 	for _, br := range res {
 		if br.Name == "" || br.MaxBooks == 0 {
-			return []borrower.Borrower{}, "Missing Borrower field value."
+			fmt.Println("Missing Borrower field value. Borrowers list is empty.")
+			return []borrower.Borrower{}
 		}
 	}
-	return res, ""
+	return res
 }
 
 func JSONStringToBooks(js string) ([]book.Book, string) {
