@@ -107,18 +107,20 @@ func JSONStringToBorrowers(js string) []borrower.Borrower {
 	return res
 }
 
-func JSONStringToBooks(js string) ([]book.Book, string) {
+func JSONStringToBooks(js string) []book.Book {
 	var res []book.Book
 	err := json.Unmarshal([]byte(js), &res)
 	if err != nil {
-		return []book.Book{}, "JSON parse error."
+		fmt.Println("JSON parse error. Book list is empty.")
+		return []book.Book{}
 	}
 	for _, bk := range res {
 		if bk.Title == "" || bk.Author == "" || bk.Borrower.Name == "" || bk.Borrower.MaxBooks == 0 {
-			return []book.Book{}, "Missing Book field value."
+			fmt.Println("Missing Book field value. Book list is empty.")
+			return []book.Book{}
 		}
 	}
-	return res, ""
+	return res
 }
 
 func BorrowersToJSONSting(brs []borrower.Borrower) string {

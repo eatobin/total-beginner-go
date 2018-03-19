@@ -163,7 +163,7 @@ func TestJSONStringToBorrowers(t *testing.T) {
 	for _, c := range cases {
 		got := JSONStringToBorrowers(c.js)
 		if !reflect.DeepEqual(got, c.wantBrs) {
-			t.Errorf("JSONStringToBorrowers(%s) ==\n(%v) want \n(%v)",
+			t.Errorf("JSONStringToBorrowers(%s) ==\n%v want \n%v",
 				c.js, got, c.wantBrs)
 		}
 	}
@@ -173,19 +173,18 @@ func TestJSONStringToBooks(t *testing.T) {
 	cases := []struct {
 		js      string
 		wantBks []book.Book
-		wantErr string
 	}{
 		{jsonStringBooks,
-			[]book.Book{{Title: "Title2", Author: "Author22", Borrower: borrower.Borrower{Name: "NoName", MaxBooks: -1}}}, ""},
-		{jsonStringBooksBadParse, []book.Book{}, "JSON parse error."},
-		{jsonStringBooksBadTitleField, []book.Book{}, "Missing Book field value."},
-		{jsonStringBooksBadBorrowerField, []book.Book{}, "Missing Book field value."},
+			[]book.Book{{Title: "Title2", Author: "Author22", Borrower: borrower.Borrower{Name: "NoName", MaxBooks: -1}}}},
+		{jsonStringBooksBadParse, []book.Book{}},
+		{jsonStringBooksBadTitleField, []book.Book{}},
+		{jsonStringBooksBadBorrowerField, []book.Book{}},
 	}
 	for _, c := range cases {
-		got, err := JSONStringToBooks(c.js)
-		if !reflect.DeepEqual(got, c.wantBks) || err != c.wantErr {
-			t.Errorf("JSONStringToBooks(%s) ==\n(%v, %v) want \n(%v, %v)",
-				c.js, got, err, c.wantBks, c.wantErr)
+		got := JSONStringToBooks(c.js)
+		if !reflect.DeepEqual(got, c.wantBks) {
+			t.Errorf("JSONStringToBooks(%s) ==\n%v want \n%v",
+				c.js, got, c.wantBks)
 		}
 	}
 }

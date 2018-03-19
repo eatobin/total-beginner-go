@@ -3,8 +3,8 @@ package book
 import "github.com/eatobin/totalbeginnergo/borrower"
 
 type Book struct {
-	Title    string   `json:"title"`
-	Author   string   `json:"author"`
+	Title    string            `json:"title"`
+	Author   string            `json:"author"`
 	Borrower borrower.Borrower `json:"borrower"`
 }
 
