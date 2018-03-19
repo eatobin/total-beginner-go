@@ -124,12 +124,12 @@ func JSONStringToBooks(js string) []book.Book {
 }
 
 func BorrowersToJSONSting(brs []borrower.Borrower) string {
-	bytes, _ := json.Marshal(brs)
+	bytes, _ := json.MarshalIndent(brs, "", "  ")
 	return string(bytes)
 }
 
 func BooksToJSONSting(bks []book.Book) string {
-	bytes, _ := json.Marshal(bks)
+	bytes, _ := json.MarshalIndent(bks, "", "  ")
 	return string(bytes)
 }
 

@@ -1,47 +1,39 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
+
+	"github.com/eatobin/totalbeginnergo/library"
 )
-
-// Tentacle a character from Day of Tentacles
-type Tentacle struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
-}
-
-func (t Tentacle) toString() string {
-	bytes, err := json.Marshal(t)
-	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(1)
-	}
-	return string(bytes)
-}
-
-func toTentacles(ts string) []Tentacle {
-	var tentacles []Tentacle
-	json.Unmarshal([]byte(ts), &tentacles)
-	return tentacles
-}
 
 func readFileIntoJsonString(f string) string {
 	raw, err := ioutil.ReadFile(f)
 	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(1)
+		fmt.Println("File read error. Library is empty.")
+		return ""
 	}
 	return string(raw)
 }
 
+func writeJSONStringToFile(js string, fp string) {
+	f, err := os.Create(fp)
+	if err != nil {
+		fmt.Println("File write error. Library was not saved.")
+	}
+	f.WriteString(js)
+	defer f.Close()
+}
+
 func main() {
-	tentaclesString := readFileIntoJsonString("books-before.json")
-	fmt.Printf("%q\n", tentaclesString)
-	//tentacles := toTentacles(tentaclesString)
-	//for _, te := range tentacles {
-	//	fmt.Println(te.toString())
-	//}
+	brsJ := readFileIntoJsonString("borrowers-before.json")
+	fmt.Printf("%q\n", brsJ)
+	bksJ := readFileIntoJsonString("books-before.json")
+	fmt.Printf("%q\n", bksJ)
+	brs := library.JSONStringToBorrowers(brsJ)
+	bks := library.JSONStringToBooks(bksJ)
+	nBks := library.CheckOut("Borrower200", "Book200", brs, bks)
+	nBksJ := library.BooksToJSONSting(nBks)
+	writeJSONStringToFile(nBksJ, "books-after.json")
 }
