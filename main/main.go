@@ -8,7 +8,7 @@ import (
 	"github.com/eatobin/totalbeginnergo/library"
 )
 
-func readFileIntoJsonString(f string) string {
+func ReadFileIntoJsonString(f string) string {
 	raw, err := ioutil.ReadFile(f)
 	if err != nil {
 		fmt.Println("File read error. Library is empty.")
@@ -17,7 +17,7 @@ func readFileIntoJsonString(f string) string {
 	return string(raw)
 }
 
-func writeJSONStringToFile(js string, fp string) {
+func WriteJSONStringToFile(js string, fp string) {
 	f, err := os.Create(fp)
 	if err != nil {
 		fmt.Println("File write error. Library was not saved.")
@@ -27,13 +27,13 @@ func writeJSONStringToFile(js string, fp string) {
 }
 
 func main() {
-	brsJ := readFileIntoJsonString("borrowers-before.json")
+	brsJ := ReadFileIntoJsonString("borrowers-before.json")
 	fmt.Printf("%q\n", brsJ)
-	bksJ := readFileIntoJsonString("books-before.json")
+	bksJ := ReadFileIntoJsonString("books-before.json")
 	fmt.Printf("%q\n", bksJ)
 	brs := library.JSONStringToBorrowers(brsJ)
 	bks := library.JSONStringToBooks(bksJ)
 	nBks := library.CheckOut("Borrower200", "Book200", brs, bks)
 	nBksJ := library.BooksToJSONSting(nBks)
-	writeJSONStringToFile(nBksJ, "books-after.json")
+	WriteJSONStringToFile(nBksJ, "books-after.json")
 }
