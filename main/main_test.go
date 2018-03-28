@@ -1,6 +1,8 @@
 package main
 
 import (
+	"bytes"
+	"io/ioutil"
 	"testing"
 )
 
@@ -21,6 +23,32 @@ func TestReadFileIntoJSONString(t *testing.T) {
 		if got != c.want {
 			t.Errorf("ReadFileIntoJsonString(%s) ==\n%s want\n%s",
 				c.f, got, c.want)
+		}
+	}
+}
+
+func TestWriteJSONStringToFile(t *testing.T) {
+	cases := []struct {
+		js string
+		f1 string
+		f2 string
+	}{
+		{brsJ, "../borrowers-before2.json", "../borrowers-before.json"},
+		{bksJ, "../books-before2.json", "../books-before.json"},
+	}
+	for _, c := range cases {
+		WriteJSONStringToFile(c.js, c.f1)
+		f1, err1 := ioutil.ReadFile(c.f1)
+		if err1 != nil {
+			t.Error(err1)
+		}
+		f2, err2 := ioutil.ReadFile(c.f2)
+		if err2 != nil {
+			t.Error(err2)
+		}
+		if !bytes.Equal(f1, f2) {
+			t.Errorf("WriteJSONStringToFile(\n%s, %s)\n\n!=\n\n%s",
+				c.js, c.f1, f2)
 		}
 	}
 }
