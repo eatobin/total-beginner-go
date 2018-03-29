@@ -32,8 +32,8 @@ func WriteJSONStringToFile(js string, fp string) {
 }
 
 func main() {
-	tvBorrowers = append(tvBorrowers, borrower.MakeBorrower("Jim", 3))
-	tvBorrowers = append(tvBorrowers, borrower.MakeBorrower("Sue", 3))
+	tvBorrowers = library.AddBorrower(tvBorrowers, borrower.MakeBorrower("Jim", 3))
+	tvBorrowers = library.AddBorrower(tvBorrowers, borrower.MakeBorrower("Sue", 3))
 	tvBooks = append(tvBooks, book.MakeBook("War And Peace", "Tolstoy"))
 	tvBooks = append(tvBooks, book.MakeBook("Great Expectations", "Dickens"))
 	println("\nJust created new library")

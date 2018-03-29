@@ -51,6 +51,24 @@ func TestAddBorrower(t *testing.T) {
 	}
 }
 
+func TestAddBook(t *testing.T) {
+	cases := []struct {
+		bks     []book.Book
+		bk      book.Book
+		wantBks []book.Book
+	}{
+		{bks1, bk3, bks2},
+		{bks1, bk2, bks1},
+	}
+	for _, c := range cases {
+		gotBks := AddBook(c.bks, c.bk)
+		if !reflect.DeepEqual(gotBks, c.wantBks) {
+			t.Errorf("AddBook(%v, %v) ==\n%v want\n%v",
+				c.bks, c.bk, gotBks, c.wantBks)
+		}
+	}
+}
+
 func TestFindBorrower(t *testing.T) {
 	cases := []struct {
 		n    string

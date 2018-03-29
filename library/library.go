@@ -21,11 +21,27 @@ func containsBorrower(brs []borrower.Borrower, br borrower.Borrower) bool {
 	return false
 }
 
+func containsBook(bks []book.Book, bk book.Book) bool {
+	for _, b := range bks {
+		if b == bk {
+			return true
+		}
+	}
+	return false
+}
+
 func AddBorrower(brs []borrower.Borrower, br borrower.Borrower) []borrower.Borrower {
 	if !containsBorrower(brs, br) {
 		return append(brs, br)
 	}
 	return brs
+}
+
+func AddBook(bks []book.Book, bk book.Book) []book.Book {
+	if !containsBook(bks, bk) {
+		return append(bks, bk)
+	}
+	return bks
 }
 
 func FindBorrower(n string, brs []borrower.Borrower) borrower.Borrower {
