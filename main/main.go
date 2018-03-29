@@ -63,7 +63,20 @@ func main() {
 	println("No change to Test Library:")
 	println(library.StatusToString(tvBooks, tvBorrowers))
 
+	println("Add a book that already exists (book.Book{\"War And Peace\", \"Tolstoy\"})")
+	tvBooks = library.AddBook(tvBooks, book.MakeBook("War And Peace", "Tolstoy"))
+	println("No change to Test Library:")
+	println(library.StatusToString(tvBooks, tvBorrowers))
 
+	println("Check out a valid book to an invalid person (checkOut('JoJo', 'War And Peace', borrowers, books))")
+	tvBooks = library.CheckOut("JoJo", "War And Peace", tvBorrowers, tvBooks)
+	println("No change to Test Library:")
+	println(library.StatusToString(tvBooks, tvBorrowers))
+
+	println("Check out an invalid book to an valid person (checkOut(\"Sue\", \"Not A Book\", borrowers, books))")
+	tvBooks = library.CheckOut("Sue", "Not A Book", tvBorrowers, tvBooks)
+	println("No change to Test Library:")
+	println(library.StatusToString(tvBooks, tvBorrowers))
 }
 
 //func main() {
