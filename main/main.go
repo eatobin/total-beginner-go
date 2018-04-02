@@ -68,13 +68,18 @@ func main() {
 	println("No change to Test Library:")
 	println(library.StatusToString(tvBooks, tvBorrowers))
 
-	println("Check out a valid book to an invalid person (checkOut('JoJo', 'War And Peace', borrowers, books))")
+	println("Check out a valid book to an invalid person (CheckOut('JoJo', 'War And Peace', borrowers, books))")
 	tvBooks = library.CheckOut("JoJo", "War And Peace", tvBorrowers, tvBooks)
 	println("No change to Test Library:")
 	println(library.StatusToString(tvBooks, tvBorrowers))
 
-	println("Check out an invalid book to an valid person (checkOut(\"Sue\", \"Not A Book\", borrowers, books))")
+	println("Check out an invalid book to an valid person (CheckOut(\"Sue\", \"Not A Book\", borrowers, books))")
 	tvBooks = library.CheckOut("Sue", "Not A Book", tvBorrowers, tvBooks)
+	println("No change to Test Library:")
+	println(library.StatusToString(tvBooks, tvBorrowers))
+
+	println("Last - check in a book not checked out (CheckIn(\"War And Peace\", books))")
+	tvBooks = library.CheckIn("War And Peace", tvBooks)
 	println("No change to Test Library:")
 	println(library.StatusToString(tvBooks, tvBorrowers))
 }
