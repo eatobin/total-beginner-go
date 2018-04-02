@@ -31,6 +31,12 @@ func WriteJSONStringToFile(js string, fp string) {
 	defer f.Close()
 }
 
+func newEmpty() {
+	tvBooks = []book.Book{}
+	tvBorrowers = []borrower.Borrower{}
+	println(library.StatusToString(tvBooks, tvBorrowers))
+}
+
 func main() {
 	tvBorrowers = library.AddBorrower(tvBorrowers, borrower.MakeBorrower("Jim", 3))
 	tvBorrowers = library.AddBorrower(tvBorrowers, borrower.MakeBorrower("Sue", 3))
@@ -82,6 +88,9 @@ func main() {
 	tvBooks = library.CheckIn("War And Peace", tvBooks)
 	println("No change to Test Library:")
 	println(library.StatusToString(tvBooks, tvBorrowers))
+
+	println("Okay... let's finish with some persistence. First clear the whole library:")
+	newEmpty()
 }
 
 //func main() {
