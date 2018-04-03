@@ -79,6 +79,16 @@ func main() {
 	println("Add... a new borrower:")
 	tvBorrowers = library.AddBorrower(tvBorrowers, borrower.MakeBorrower("BorrowerNew", 300))
 	println(library.StatusToString(tvBooks, tvBorrowers))
+
+	println("Save the revised borrowers to \"borrowers-after.json\"")
+	nBrsJ := library.BorrowersToJSONSting(tvBorrowers)
+	WriteJSONStringToFile(nBrsJ, jsonBorrowersFileAfter)
+
+	println("Clear the whole library again:")
+	newEmpty()
+
+	println("Then read in the revised library from \"borrowers-after.json\" and \"books-before.json\":")
+	newV(jsonBorrowersFileAfter, jsonBooksFile)
 }
 
 func ReadFileIntoJsonString(f string) string {

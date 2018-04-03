@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Borrower100",
+    "max-books": 100
+  },
+  {
+    "name": "Borrower200",
+    "max-books": 200
+  },
+  {
+    "name": "BorrowerNew",
+    "max-books": 300
+  }
+]
