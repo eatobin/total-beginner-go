@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"errors"
 	"io/ioutil"
 	"testing"
 )
@@ -11,18 +12,19 @@ var bksJ = "[\n  {\n    \"title\": \"Book100\",\n    \"author\": \"Author100\",\
 
 func TestReadFileIntoJSONString(t *testing.T) {
 	cases := []struct {
-		f    string
-		want string
+		f     string
+		wantS string
+		wantE error
 	}{
-		{"../borrowers-before.json", brsJ},
-		{"../books-before.json", bksJ},
-		{"../NoSuch.json", ""},
+		{"../borrowers-before.json", brsJ, errors.New("")},
+		{"../books-before.json", bksJ, errors.New("")},
+		{"../NoSuch.json", "", errors.New("file read error - library is empty")},
 	}
 	for _, c := range cases {
-		got := ReadFileIntoJsonString(c.f)
-		if got != c.want {
-			t.Errorf("ReadFileIntoJsonString(%s) ==\n%s want\n%s",
-				c.f, got, c.want)
+		got, err := ReadFileIntoJsonString(c.f)
+		if got != c.wantS || err.Error() != c.wantE.Error() {
+			t.Errorf("ReadFileIntoJsonString(%s) ==\n%s and %v\nwant\n%s and %v",
+				c.f, got, err, c.wantS, c.wantE)
 		}
 	}
 }

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -102,13 +103,12 @@ func main() {
 	newV(jsonBorrowersFileAfter, jsonBorrowersFileAfter)
 }
 
-func ReadFileIntoJsonString(f string) string {
+func ReadFileIntoJsonString(f string) (string, error) {
 	raw, err := ioutil.ReadFile(f)
 	if err != nil {
-		fmt.Println("File read error. Library is empty.")
-		return ""
+		return "", errors.New("file read error - library is empty")
 	}
-	return string(raw)
+	return string(raw), errors.New("")
 }
 
 func WriteJSONStringToFile(js string, fp string) {
@@ -127,8 +127,8 @@ func newEmpty() {
 }
 
 func newV(brsFile string, bksFile string) {
-	brsJ := ReadFileIntoJsonString(brsFile)
-	bksJ := ReadFileIntoJsonString(bksFile)
+	brsJ, _ := ReadFileIntoJsonString(brsFile)
+	bksJ, _ := ReadFileIntoJsonString(bksFile)
 	tvBorrowers = library.JSONStringToBorrowers(brsJ)
 	tvBooks = library.JSONStringToBooks(bksJ)
 	println(library.StatusToString(tvBooks, tvBorrowers))
