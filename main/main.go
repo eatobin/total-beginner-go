@@ -97,6 +97,9 @@ func main() {
 		return
 	}
 	newEmpty()
+
+	println("Then try to make a library using the deleted \"borrowers-after.json\" and \"borrowers-after.json\":")
+	newV(jsonBorrowersFileAfter, jsonBorrowersFileAfter)
 }
 
 func ReadFileIntoJsonString(f string) string {
