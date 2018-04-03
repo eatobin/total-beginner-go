@@ -13,29 +13,11 @@ import (
 var tvBorrowers []borrower.Borrower
 var tvBooks []book.Book
 
-func ReadFileIntoJsonString(f string) string {
-	raw, err := ioutil.ReadFile(f)
-	if err != nil {
-		fmt.Println("File read error. Library is empty.")
-		return ""
-	}
-	return string(raw)
-}
-
-func WriteJSONStringToFile(js string, fp string) {
-	f, err := os.Create(fp)
-	if err != nil {
-		fmt.Println("File write error. Library was not saved.")
-	}
-	f.WriteString(js)
-	defer f.Close()
-}
-
-func newEmpty() {
-	tvBooks = []book.Book{}
-	tvBorrowers = []borrower.Borrower{}
-	println(library.StatusToString(tvBooks, tvBorrowers))
-}
+var jsonBorrowersFileBefore = "borrowers-before.json"
+var jsonBooksFile = "books-before.json"
+var jsonBorrowersFileAfter = "borrowers-after.json"
+var jsonBorrowersFileBad = "bad-borrowers.json"
+var emptyFile = "empty.json"
 
 func main() {
 	tvBorrowers = library.AddBorrower(tvBorrowers, borrower.MakeBorrower("Jim", 3))
@@ -91,6 +73,44 @@ func main() {
 
 	println("Okay... let's finish with some persistence. First clear the whole library:")
 	newEmpty()
+
+	println("Lets read in a new library from \"borrowers-before.json\" and \"books-before.json\":")
+	newV(jsonBorrowersFileBefore, jsonBooksFile)
+	println("Add... a new borrower:")
+	tvBorrowers = library.AddBorrower(tvBorrowers, borrower.MakeBorrower("BorrowerNew", 300))
+	println(library.StatusToString(tvBooks, tvBorrowers))
+}
+
+func ReadFileIntoJsonString(f string) string {
+	raw, err := ioutil.ReadFile(f)
+	if err != nil {
+		fmt.Println("File read error. Library is empty.")
+		return ""
+	}
+	return string(raw)
+}
+
+func WriteJSONStringToFile(js string, fp string) {
+	f, err := os.Create(fp)
+	if err != nil {
+		fmt.Println("File write error. Library was not saved.")
+	}
+	f.WriteString(js)
+	defer f.Close()
+}
+
+func newEmpty() {
+	tvBooks = []book.Book{}
+	tvBorrowers = []borrower.Borrower{}
+	println(library.StatusToString(tvBooks, tvBorrowers))
+}
+
+func newV(brsFile string, bksFile string) {
+	brsJ := ReadFileIntoJsonString(brsFile)
+	bksJ := ReadFileIntoJsonString("books-before.json")
+	tvBorrowers = library.JSONStringToBorrowers(brsJ)
+	tvBooks = library.JSONStringToBooks(bksJ)
+	println(library.StatusToString(tvBooks, tvBorrowers))
 }
 
 //func main() {
