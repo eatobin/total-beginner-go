@@ -107,7 +107,7 @@ func newEmpty() {
 
 func newV(brsFile string, bksFile string) {
 	brsJ := ReadFileIntoJsonString(brsFile)
-	bksJ := ReadFileIntoJsonString("books-before.json")
+	bksJ := ReadFileIntoJsonString(bksFile)
 	tvBorrowers = library.JSONStringToBorrowers(brsJ)
 	tvBooks = library.JSONStringToBooks(bksJ)
 	println(library.StatusToString(tvBooks, tvBorrowers))
