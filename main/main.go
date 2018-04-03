@@ -89,6 +89,14 @@ func main() {
 
 	println("Then read in the revised library from \"borrowers-after.json\" and \"books-before.json\":")
 	newV(jsonBorrowersFileAfter, jsonBooksFile)
+
+	println("Last... delete the file \"borrowers-after.json\"")
+	err := os.Remove(jsonBorrowersFileAfter)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	newEmpty()
 }
 
 func ReadFileIntoJsonString(f string) string {
