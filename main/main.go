@@ -16,6 +16,7 @@ var tvBooks []book.Book
 var jsonBorrowersFileBefore = "borrowers-before.json"
 var jsonBooksFile = "books-before.json"
 var jsonBorrowersFileAfter = "borrowers-after.json"
+
 //var jsonBorrowersFileBad = "bad-borrowers.json"
 //var emptyFile = "empty.json"
 
