@@ -7,8 +7,6 @@ import (
 	"strconv"
 	"strings"
 
-	"fmt"
-
 	"github.com/eatobin/totalbeginnergo/book"
 	"github.com/eatobin/totalbeginnergo/borrower"
 )
@@ -123,20 +121,19 @@ func JSONStringToBorrowers(js string) ([]borrower.Borrower, error) {
 	return res, nil
 }
 
-func JSONStringToBooks(js string) []book.Book {
+func JSONStringToBooks(js string) ([]book.Book, error) {
 	var res []book.Book
 	err := json.Unmarshal([]byte(js), &res)
 	if err != nil {
-		fmt.Println("JSON parse error. Book list is empty.")
-		return []book.Book{}
+		return []book.Book{}, err
 	}
 	for _, bk := range res {
 		if bk.Title == "" || bk.Author == "" || bk.Borrower.Name == "" || bk.Borrower.MaxBooks == 0 {
-			fmt.Println("Missing Book field value. Book list is empty.")
-			return []book.Book{}
+			err = errors.New("missing Book field value - book list is empty")
+			return []book.Book{}, err
 		}
 	}
-	return res
+	return res, nil
 }
 
 func BorrowersToJSONSting(brs []borrower.Borrower) string {
