@@ -220,7 +220,7 @@ func TestJSONStringToBooksFail(t *testing.T) {
 		wantE   error
 	}{
 		{jsonStringBooksBadParse, []book.Book{}, errors.New("invalid character '\"' after object key")},
-		//{jsonStringBooksBadTitleField, []book.Book{}},
+		{jsonStringBooksBadTitleField, []book.Book{}, errors.New("missing Book field value - book list is empty")},
 		//{jsonStringBooksBadBorrowerField, []book.Book{}},
 	}
 	for _, c := range cases {
