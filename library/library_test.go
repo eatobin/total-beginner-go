@@ -170,7 +170,7 @@ func TestCheckIn(t *testing.T) {
 	}
 }
 
-func TestJSONStringToBorrowers(t *testing.T) {
+func TestJSONStringToBorrowersPass(t *testing.T) {
 	js := jsonStringBorrowers
 	wantBrs := brs1
 	wantE := error(nil)
@@ -182,7 +182,7 @@ func TestJSONStringToBorrowers(t *testing.T) {
 	}
 }
 
-func TestJSONStringToBorrowers2(t *testing.T) {
+func TestJSONStringToBorrowersFail(t *testing.T) {
 	cases := []struct {
 		js      string
 		wantBrs []borrower.Borrower
