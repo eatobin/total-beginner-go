@@ -49,7 +49,7 @@ func TestWriteJSONStringToFile(t *testing.T) {
 		wantE error
 	}{
 		{brsJ, "../borrowers-before2.json", "../borrowers-before.json", nil},
-		//{bksJ, "../books-before2.json", "../books-before.json"},
+		{bksJ, "../books-before2.json", "../books-before.json", nil},
 	}
 	for _, c := range cases {
 		err := WriteJSONStringToFile(c.js, c.f1)
