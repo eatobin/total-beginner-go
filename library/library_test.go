@@ -213,25 +213,24 @@ func TestJSONStringToBooksPass(t *testing.T) {
 	}
 }
 
-//func TestJSONStringToBooksPass(t *testing.T) {
-//	cases := []struct {
-//		js      string
-//		wantBks []book.Book
-//	}{
-//		{jsonStringBooks,
-//			[]book.Book{{Title: "Title2", Author: "Author22", Borrower: borrower.Borrower{Name: "NoName", MaxBooks: -1}}}},
-//		{jsonStringBooksBadParse, []book.Book{}},
-//		{jsonStringBooksBadTitleField, []book.Book{}},
-//		{jsonStringBooksBadBorrowerField, []book.Book{}},
-//	}
-//	for _, c := range cases {
-//		got := JSONStringToBooks(c.js)
-//		if !reflect.DeepEqual(got, c.wantBks) {
-//			t.Errorf("JSONStringToBooks(%s) ==\n%v want \n%v",
-//				c.js, got, c.wantBks)
-//		}
-//	}
-//}
+func TestJSONStringToBooksFail(t *testing.T) {
+	cases := []struct {
+		js      string
+		wantBks []book.Book
+		wantE   error
+	}{
+		{jsonStringBooksBadParse, []book.Book{}, errors.New("invalid character '\"' after object key")},
+		//{jsonStringBooksBadTitleField, []book.Book{}},
+		//{jsonStringBooksBadBorrowerField, []book.Book{}},
+	}
+	for _, c := range cases {
+		got, err := JSONStringToBooks(c.js)
+		if err.Error() != c.wantE.Error() {
+			t.Errorf("JSONStringToBooks\n(%s)\n==\n%v and %v\nwant\n%v and %v",
+				c.js, got, err, c.wantBks, c.wantE)
+		}
+	}
+}
 
 func TestBorrowersToJSONString(t *testing.T) {
 	brs := brs1
