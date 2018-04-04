@@ -18,8 +18,8 @@ var jsonBorrowersFileBefore = "borrowers-before.json"
 var jsonBooksFile = "books-before.json"
 var jsonBorrowersFileAfter = "borrowers-after.json"
 
-//var jsonBorrowersFileBad = "bad-borrowers.json"
-//var emptyFile = "empty.json"
+var jsonBorrowersFileBad = "bad-borrowers.json"
+var emptyFile = "empty.json"
 
 func main() {
 	tvBorrowers = library.AddBorrower(tvBorrowers, borrower.MakeBorrower("Jim", 3))
@@ -111,6 +111,21 @@ func main() {
 	if err != nil {
 		println(err.Error())
 	}
+
+	println("And if we read in a file with mal-formed json content... like \"bad-borrowers.json\" and \"books-before.json\":")
+	err = newV(jsonBorrowersFileBad, jsonBooksFile)
+	if err != nil {
+		println(err.Error())
+	}
+
+	println("Or how about reading in an empty file... \"empty.json\" (for books):")
+	err = newV(jsonBorrowersFileBefore, emptyFile)
+	if err != nil {
+		println(err.Error())
+	}
+
+	println("And... that's all...")
+	println("Thanks - bye!\n")
 }
 
 func ReadFileIntoJsonString(f string) (string, error) {
