@@ -1,9 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"io/ioutil"
 	"os"
+
+	"errors"
 
 	"github.com/eatobin/totalbeginnergo/book"
 	"github.com/eatobin/totalbeginnergo/borrower"
@@ -25,23 +26,23 @@ func main() {
 	tvBorrowers = library.AddBorrower(tvBorrowers, borrower.MakeBorrower("Sue", 3))
 	tvBooks = library.AddBook(tvBooks, book.MakeBook("War And Peace", "Tolstoy"))
 	tvBooks = library.AddBook(tvBooks, book.MakeBook("Great Expectations", "Dickens"))
-	println("\nJust created new library")
+	println("\nJust created new library:")
 	println(library.StatusToString(tvBooks, tvBorrowers))
 
-	println("Check out War And Peace to Sue")
+	println("Check out War And Peace to Sue:")
 	tvBooks = library.CheckOut("Sue", "War And Peace", tvBorrowers, tvBooks)
 	println(library.StatusToString(tvBooks, tvBorrowers))
 
 	println("Now check in War And Peace from Sue...")
 	tvBooks = library.CheckIn("War And Peace", tvBooks)
-	println("...and check out Great Expectations to Jim")
+	println("...and check out Great Expectations to Jim:")
 	tvBooks = library.CheckOut("Jim", "Great Expectations", tvBorrowers, tvBooks)
 	println(library.StatusToString(tvBooks, tvBorrowers))
 
-	println("Add Eric and The Cat In The Hat")
+	println("Add Eric and The Cat In The Hat\nand")
 	tvBorrowers = library.AddBorrower(tvBorrowers, borrower.MakeBorrower("Eric", 1))
 	tvBooks = library.AddBook(tvBooks, book.MakeBook("The Cat In The Hat", "Dr. Seuss"))
-	println("Check Out Dr. Seuss to Eric")
+	println("Check Out Dr. Seuss to Eric:")
 	tvBooks = library.CheckOut("Eric", "The Cat In The Hat", tvBorrowers, tvBooks)
 	println(library.StatusToString(tvBooks, tvBorrowers))
 
@@ -76,12 +77,15 @@ func main() {
 	newEmpty()
 
 	println("Lets read in a new library from \"borrowers-before.json\" and \"books-before.json\":")
-	newV(jsonBorrowersFileBefore, jsonBooksFile)
+	err := newV(jsonBorrowersFileBefore, jsonBooksFile)
+	if err != nil {
+		println(err.Error())
+	}
 	println("Add... a new borrower:")
 	tvBorrowers = library.AddBorrower(tvBorrowers, borrower.MakeBorrower("BorrowerNew", 300))
 	println(library.StatusToString(tvBooks, tvBorrowers))
 
-	println("Save the revised borrowers to \"borrowers-after.json\"")
+	println("Save the revised borrowers to \"borrowers-after.json\":")
 	nBrsJ := library.BorrowersToJSONSting(tvBorrowers)
 	WriteJSONStringToFile(nBrsJ, jsonBorrowersFileAfter)
 
@@ -89,18 +93,24 @@ func main() {
 	newEmpty()
 
 	println("Then read in the revised library from \"borrowers-after.json\" and \"books-before.json\":")
-	newV(jsonBorrowersFileAfter, jsonBooksFile)
-
-	println("Last... delete the file \"borrowers-after.json\"")
-	err := os.Remove(jsonBorrowersFileAfter)
+	err = newV(jsonBorrowersFileAfter, jsonBooksFile)
 	if err != nil {
-		fmt.Println(err)
+		println(err.Error())
+	}
+
+	println("Last... delete the file \"borrowers-after.json\":")
+	err = os.Remove(jsonBorrowersFileAfter)
+	if err != nil {
+		println(err.Error())
 		return
 	}
 	newEmpty()
 
-	println("Then try to make a library using the deleted \"borrowers-after.json\" and \"borrowers-after.json\":")
-	newV(jsonBorrowersFileAfter, jsonBorrowersFileAfter)
+	println("Then try to make a library using the deleted \"borrowers-after.json\":")
+	err = newV(jsonBorrowersFileAfter, jsonBorrowersFileAfter)
+	if err != nil {
+		println(err.Error())
+	}
 }
 
 func ReadFileIntoJsonString(f string) (string, error) {
@@ -127,12 +137,26 @@ func newEmpty() {
 	println(library.StatusToString(tvBooks, tvBorrowers))
 }
 
-func newV(brsFile string, bksFile string) {
-	brsJ, _ := ReadFileIntoJsonString(brsFile)
-	bksJ, _ := ReadFileIntoJsonString(bksFile)
-	tvBorrowers, _ = library.JSONStringToBorrowers(brsJ)
-	tvBooks, _ = library.JSONStringToBooks(bksJ)
-	println(library.StatusToString(tvBooks, tvBorrowers))
+func newV(brsFile string, bksFile string) error {
+	brsPError := error(nil)
+	bksPError := error(nil)
+	brsJ, brsRError := ReadFileIntoJsonString(brsFile)
+	bksJ, bksRError := ReadFileIntoJsonString(bksFile)
+	tvBorrowers, brsPError = library.JSONStringToBorrowers(brsJ)
+	tvBooks, bksPError = library.JSONStringToBooks(bksJ)
+	switch {
+	case brsRError != nil:
+		return errors.New("\n**Borrowers file read error**\n")
+	case bksRError != nil:
+		return errors.New("\n**Books file read error**\n")
+	case brsPError != nil:
+		return errors.New("\n**Borrowers file parse error**\n")
+	case bksPError != nil:
+		return errors.New("\n**Books file parse error**\n")
+	default:
+		println(library.StatusToString(tvBooks, tvBorrowers))
+		return nil
+	}
 }
 
 //func main() {

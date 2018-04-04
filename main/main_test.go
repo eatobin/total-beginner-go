@@ -43,9 +43,9 @@ func TestReadFileIntoJSONStringFail(t *testing.T) {
 
 func TestWriteJSONStringToFile(t *testing.T) {
 	cases := []struct {
-		js string
-		f1 string
-		f2 string
+		js    string
+		f1    string
+		f2    string
 		wantE error
 	}{
 		{brsJ, "../borrowers-before2.json", "../borrowers-before.json", nil},
