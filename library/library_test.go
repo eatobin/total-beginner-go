@@ -242,15 +242,15 @@ func TestBorrowersToJSONString(t *testing.T) {
 	}
 }
 
-//func TestBooksToJSONString(t *testing.T) {
-//	bks := []book.Book{{Title: "Title2", Author: "Author22", Borrower: borrower.Borrower{Name: "NoName", MaxBooks: -1}}}
-//	got := BooksToJSONSting(bks)
-//	want := jsonStringBooks
-//	if got != want {
-//		t.Errorf("BooksToJSONSting(%v) ==\n(%q) want \n(%q)",
-//			bks, got, want)
-//	}
-//}
+func TestBooksToJSONString(t *testing.T) {
+	bks := []book.Book{{Title: "Title2", Author: "Author22", Borrower: borrower.Borrower{Name: "NoName", MaxBooks: -1}}}
+	got := BooksToJSONSting(bks)
+	want := jsonStringBooks
+	if got != want {
+		t.Errorf("BooksToJSONSting(%v) ==\n(%q) want \n(%q)",
+			bks, got, want)
+	}
+}
 
 func TestStatusToString(t *testing.T) {
 	bks := bks2
