@@ -221,7 +221,7 @@ func TestJSONStringToBooksFail(t *testing.T) {
 	}{
 		{jsonStringBooksBadParse, []book.Book{}, errors.New("invalid character '\"' after object key")},
 		{jsonStringBooksBadTitleField, []book.Book{}, errors.New("missing Book field value - book list is empty")},
-		//{jsonStringBooksBadBorrowerField, []book.Book{}},
+		{jsonStringBooksBadBorrowerField, []book.Book{}, errors.New("missing Book field value - book list is empty")},
 	}
 	for _, c := range cases {
 		got, err := JSONStringToBooks(c.js)
