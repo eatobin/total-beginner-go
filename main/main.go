@@ -111,13 +111,14 @@ func ReadFileIntoJsonString(f string) (string, error) {
 	return string(raw), err
 }
 
-func WriteJSONStringToFile(js string, fp string) {
+func WriteJSONStringToFile(js string, fp string) error {
 	f, err := os.Create(fp)
 	if err != nil {
-		fmt.Println("File write error. Library was not saved.")
+		return err
 	}
 	f.WriteString(js)
 	defer f.Close()
+	return nil
 }
 
 func newEmpty() {
@@ -129,8 +130,8 @@ func newEmpty() {
 func newV(brsFile string, bksFile string) {
 	brsJ, _ := ReadFileIntoJsonString(brsFile)
 	bksJ, _ := ReadFileIntoJsonString(bksFile)
-	tvBorrowers = library.JSONStringToBorrowers(brsJ)
-	tvBooks = library.JSONStringToBooks(bksJ)
+	tvBorrowers, _ = library.JSONStringToBorrowers(brsJ)
+	tvBooks, _ = library.JSONStringToBooks(bksJ)
 	println(library.StatusToString(tvBooks, tvBorrowers))
 }
 
