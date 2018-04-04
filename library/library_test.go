@@ -173,16 +173,17 @@ func TestJSONStringToBorrowers(t *testing.T) {
 	cases := []struct {
 		js      string
 		wantBrs []borrower.Borrower
+		wantE error
 	}{
-		{jsonStringBorrowers, brs1},
-		{jsonStringBorrowersBadParse, []borrower.Borrower{}},
-		{jsonStringBorrowersBadNameField, []borrower.Borrower{}},
+		{jsonStringBorrowers, brs1, nil},
+		//{jsonStringBorrowersBadParse, []borrower.Borrower{}},
+		//{jsonStringBorrowersBadNameField, []borrower.Borrower{}},
 	}
 	for _, c := range cases {
-		got := JSONStringToBorrowers(c.js)
-		if !reflect.DeepEqual(got, c.wantBrs) {
-			t.Errorf("JSONStringToBorrowers(%s) ==\n%v want \n%v",
-				c.js, got, c.wantBrs)
+		got, err := JSONStringToBorrowers(c.js)
+		if !reflect.DeepEqual(got, c.wantBrs) || err != c.wantE {
+			t.Errorf("JSONStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
+				c.js, got, err, c.wantBrs, c.wantE)
 		}
 	}
 }

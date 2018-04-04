@@ -2,6 +2,7 @@ package library
 
 import (
 	"encoding/json"
+	"errors"
 
 	"strconv"
 	"strings"
@@ -107,20 +108,19 @@ func CheckIn(t string, bks []book.Book) []book.Book {
 	return bks
 }
 
-func JSONStringToBorrowers(js string) []borrower.Borrower {
+func JSONStringToBorrowers(js string) ([]borrower.Borrower, error) {
 	var res []borrower.Borrower
 	err := json.Unmarshal([]byte(js), &res)
 	if err != nil {
-		fmt.Println("JSON parse error. Borrowers list is empty.")
-		return []borrower.Borrower{}
+		return []borrower.Borrower{}, err
 	}
 	for _, br := range res {
 		if br.Name == "" || br.MaxBooks == 0 {
-			fmt.Println("Missing Borrower field value. Borrowers list is empty.")
-			return []borrower.Borrower{}
+			err = errors.New("missing Borrower field value - borrowers list is empty")
+			return []borrower.Borrower{}, err
 		}
 	}
-	return res
+	return res, nil
 }
 
 func JSONStringToBooks(js string) []book.Book {
