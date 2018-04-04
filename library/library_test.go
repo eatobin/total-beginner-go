@@ -171,21 +171,14 @@ func TestCheckIn(t *testing.T) {
 }
 
 func TestJSONStringToBorrowers(t *testing.T) {
-	cases := []struct {
-		js      string
-		wantBrs []borrower.Borrower
-		wantE error
-	}{
-		{jsonStringBorrowers, brs1, nil},
-		{jsonStringBorrowersBadParse, []borrower.Borrower{}, errors.New("invalid character '\"' after object key")},
-		//{jsonStringBorrowersBadNameField, []borrower.Borrower{}},
-	}
-	for _, c := range cases {
-		got, err := JSONStringToBorrowers(c.js)
-		if !reflect.DeepEqual(got, c.wantBrs) || err != c.wantE {
-			t.Errorf("JSONStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
-				c.js, got, err, c.wantBrs, c.wantE)
-		}
+	js := jsonStringBorrowers
+	wantBrs := brs1
+	wantE := error(nil)
+
+	got, err := JSONStringToBorrowers(js)
+	if !reflect.DeepEqual(got, wantBrs) || err != wantE {
+		t.Errorf("JSONStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
+			js, got, err, wantBrs, wantE)
 	}
 }
 
@@ -193,7 +186,7 @@ func TestJSONStringToBorrowers2(t *testing.T) {
 	cases := []struct {
 		js      string
 		wantBrs []borrower.Borrower
-		wantE error
+		wantE   error
 	}{
 		{jsonStringBorrowersBadParse, []borrower.Borrower{}, errors.New("invalid character '\"' after object key")},
 		{jsonStringBorrowersBadNameField, []borrower.Borrower{}, errors.New("missing Borrower field value - borrowers list is empty")},
