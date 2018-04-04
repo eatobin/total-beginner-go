@@ -102,14 +102,6 @@ func main() {
 	newV(jsonBorrowersFileAfter, jsonBorrowersFileAfter)
 }
 
-//func ReadFileIntoJsonString(f string) (string, error) {
-//	raw, err := ioutil.ReadFile(f)
-//	if err != nil {
-//		return "", errors.New("file read error - library is empty")
-//	}
-//	return string(raw), errors.New("")
-//}
-
 func ReadFileIntoJsonString(f string) (string, error) {
 	raw, err := ioutil.ReadFile(f)
 	if err != nil {
