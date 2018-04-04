@@ -173,15 +173,3 @@ func newV(brsFile string, bksFile string) error {
 		return nil
 	}
 }
-
-//func main() {
-//	brsJ := ReadFileIntoJsonString("borrowers-before.json")
-//	fmt.Printf("%q\n", brsJ)
-//	bksJ := ReadFileIntoJsonString("books-before.json")
-//	fmt.Printf("%q\n", bksJ)
-//	brs := library.JSONStringToBorrowers(brsJ)
-//	bks := library.JSONStringToBooks(bksJ)
-//	nBks := library.CheckOut("Borrower200", "Book200", brs, bks)
-//	nBksJ := library.BooksToJSONSting(nBks)
-//	WriteJSONStringToFile(nBksJ, "books-after.json")
-//}
