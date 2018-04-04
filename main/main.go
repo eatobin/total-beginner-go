@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -17,8 +16,8 @@ var tvBooks []book.Book
 var jsonBorrowersFileBefore = "borrowers-before.json"
 var jsonBooksFile = "books-before.json"
 var jsonBorrowersFileAfter = "borrowers-after.json"
-var jsonBorrowersFileBad = "bad-borrowers.json"
-var emptyFile = "empty.json"
+//var jsonBorrowersFileBad = "bad-borrowers.json"
+//var emptyFile = "empty.json"
 
 func main() {
 	tvBorrowers = library.AddBorrower(tvBorrowers, borrower.MakeBorrower("Jim", 3))
@@ -103,12 +102,20 @@ func main() {
 	newV(jsonBorrowersFileAfter, jsonBorrowersFileAfter)
 }
 
+//func ReadFileIntoJsonString(f string) (string, error) {
+//	raw, err := ioutil.ReadFile(f)
+//	if err != nil {
+//		return "", errors.New("file read error - library is empty")
+//	}
+//	return string(raw), errors.New("")
+//}
+
 func ReadFileIntoJsonString(f string) (string, error) {
 	raw, err := ioutil.ReadFile(f)
 	if err != nil {
-		return "", errors.New("file read error - library is empty")
+		return "", err
 	}
-	return string(raw), errors.New("")
+	return string(raw), err
 }
 
 func WriteJSONStringToFile(js string, fp string) {

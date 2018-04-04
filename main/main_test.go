@@ -16,17 +16,29 @@ func TestReadFileIntoJSONString(t *testing.T) {
 		wantS string
 		wantE error
 	}{
-		{"../borrowers-before.json", brsJ, errors.New("")},
-		{"../books-before.json", bksJ, errors.New("")},
-		{"../NoSuch.json", "", errors.New("file read error - library is empty")},
+		{"../borrowers-before.json", brsJ, nil},
+		{"../books-before.json", bksJ, nil},
 	}
 	for _, c := range cases {
 		got, err := ReadFileIntoJsonString(c.f)
-		if got != c.wantS || err.Error() != c.wantE.Error() {
+		if got != c.wantS || err != c.wantE {
 			t.Errorf("ReadFileIntoJsonString(%s) ==\n%s and %v\nwant\n%s and %v",
 				c.f, got, err, c.wantS, c.wantE)
 		}
 	}
+}
+
+func TestReadFileIntoJSONString2(t *testing.T) {
+	f := "../NoSuch.json"
+	wantE := errors.New("open ../NoSuch.json: no such file or directory")
+
+	_, err := ReadFileIntoJsonString(f)
+
+	if err.Error() != wantE.Error() {
+		t.Errorf("ReadFileIntoJsonString(%s) ==\n%v\nwant\n%v",
+			f, err, wantE)
+	}
+
 }
 
 func TestWriteJSONStringToFile(t *testing.T) {
