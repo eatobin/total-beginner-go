@@ -98,7 +98,7 @@ func main() {
 		println(err.Error())
 	}
 
-	println("Last... delete the file \"borrowers-after.json\":")
+	println("Last... delete the file \"borrowers-after.json\" and clear the library:")
 	err = os.Remove(jsonBorrowersFileAfter)
 	if err != nil {
 		println(err.Error())
@@ -106,8 +106,8 @@ func main() {
 	}
 	newEmpty()
 
-	println("Then try to make a library using the deleted \"borrowers-after.json\":")
-	err = newV(jsonBorrowersFileAfter, jsonBorrowersFileAfter)
+	println("Then try to make a library using the deleted \"borrowers-after.json\" and \"books-before.json\":")
+	err = newV(jsonBorrowersFileAfter, jsonBooksFile)
 	if err != nil {
 		println(err.Error())
 	}
