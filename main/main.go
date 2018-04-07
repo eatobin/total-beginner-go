@@ -161,13 +161,13 @@ func newV(brsFile string, bksFile string) error {
 	tvBooks, bksPError = library.JSONStringToBooks(bksJ)
 	switch {
 	case brsRError != nil:
-		return errors.New("\n**Borrowers file read error**\n")
+		return errors.New("\n**borrowers file read error**\n")
 	case bksRError != nil:
-		return errors.New("\n**Books file read error**\n")
+		return errors.New("\n**books file read error**\n")
 	case brsPError != nil:
-		return errors.New("\n**Borrowers file parse error**\n")
+		return errors.New("\n**borrowers file parse error**\n")
 	case bksPError != nil:
-		return errors.New("\n**Books file parse error**\n")
+		return errors.New("\n**books file parse error**\n")
 	default:
 		println(library.StatusToString(tvBooks, tvBorrowers))
 		return nil
