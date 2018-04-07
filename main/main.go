@@ -128,7 +128,7 @@ func main() {
 	println("Thanks - bye!\n")
 }
 
-func ReadFileIntoJsonString(f string) (string, error) {
+func ReadFileIntoJSONString(f string) (string, error) {
 	raw, err := ioutil.ReadFile(f)
 	if err != nil {
 		return "", err
@@ -155,19 +155,19 @@ func newEmpty() {
 func newV(brsFile string, bksFile string) error {
 	brsPError := error(nil)
 	bksPError := error(nil)
-	brsJ, brsRError := ReadFileIntoJsonString(brsFile)
-	bksJ, bksRError := ReadFileIntoJsonString(bksFile)
+	brsJ, brsRError := ReadFileIntoJSONString(brsFile)
+	bksJ, bksRError := ReadFileIntoJSONString(bksFile)
 	tvBorrowers, brsPError = library.JSONStringToBorrowers(brsJ)
 	tvBooks, bksPError = library.JSONStringToBooks(bksJ)
 	switch {
 	case brsRError != nil:
-		return errors.New("\n**borrowers file read error**\n")
+		return errors.New("borrowers file read error")
 	case bksRError != nil:
-		return errors.New("\n**books file read error**\n")
+		return errors.New("books file read error")
 	case brsPError != nil:
-		return errors.New("\n**borrowers file parse error**\n")
+		return errors.New("borrowers file parse error")
 	case bksPError != nil:
-		return errors.New("\n**books file parse error**\n")
+		return errors.New("books file parse error")
 	default:
 		println(library.StatusToString(tvBooks, tvBorrowers))
 		return nil

@@ -20,7 +20,7 @@ func TestReadFileIntoJSONStringPass(t *testing.T) {
 		{"../books-before.json", bksJ, nil},
 	}
 	for _, c := range cases {
-		got, err := ReadFileIntoJsonString(c.f)
+		got, err := ReadFileIntoJSONString(c.f)
 		if got != c.wantS || err != c.wantE {
 			t.Errorf("ReadFileIntoJsonString(%s) ==\n%s and %v\nwant\n%s and %v",
 				c.f, got, err, c.wantS, c.wantE)
@@ -32,7 +32,7 @@ func TestReadFileIntoJSONStringFail(t *testing.T) {
 	f := "../NoSuch.json"
 	wantE := errors.New("open ../NoSuch.json: no such file or directory")
 
-	_, err := ReadFileIntoJsonString(f)
+	_, err := ReadFileIntoJSONString(f)
 
 	if err.Error() != wantE.Error() {
 		t.Errorf("ReadFileIntoJsonString(%s) ==\n%v\nwant\n%v",
