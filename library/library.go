@@ -65,6 +65,7 @@ func FindBook(t string, bks []book.Book) (int, book.Book) {
 	return -1, book.Book{}
 }
 
+// GetBooksForBorrower will find books given a Borrower and a slice of Books
 func GetBooksForBorrower(br borrower.Borrower, bks []book.Book) []book.Book {
 	nBks := make([]book.Book, 0)
 	for _, bk := range bks {
