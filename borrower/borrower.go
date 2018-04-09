@@ -2,7 +2,7 @@ package borrower
 
 import "strconv"
 
-// A Borrower has a Name and a max books
+// A Borrower has a Name and a max booksX
 type Borrower struct {
 	Name     string `json:"name"`
 	MaxBooks int    `json:"max-books"`
