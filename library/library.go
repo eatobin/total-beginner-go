@@ -55,6 +55,7 @@ func FindBorrower(n string, brs []borrower.Borrower) borrower.Borrower {
 	return borrower.Borrower{}
 }
 
+// FindBook finds a Book given a Title
 func FindBook(t string, bks []book.Book) (int, book.Book) {
 	for i, bk := range bks {
 		if bk.Title == t {
