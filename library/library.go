@@ -81,6 +81,7 @@ func NumberBooksOut(br borrower.Borrower, bks []book.Book) int {
 	return len(GetBooksForBorrower(br, bks))
 }
 
+// NotMaxedOut returns True if books out < max books
 func NotMaxedOut(br borrower.Borrower, bks []book.Book) bool {
 	return NumberBooksOut(br, bks) < br.MaxBooks
 }
