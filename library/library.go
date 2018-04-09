@@ -37,6 +37,7 @@ func AddBorrower(brs []borrower.Borrower, br borrower.Borrower) []borrower.Borro
 	return brs
 }
 
+// AddBook adds a book to a slice of Books
 func AddBook(bks []book.Book, bk book.Book) []book.Book {
 	if !containsBook(bks, bk) {
 		return append(bks, bk)
