@@ -76,6 +76,7 @@ func GetBooksForBorrower(br borrower.Borrower, bks []book.Book) []book.Book {
 	return nBks
 }
 
+// NumberBooksOut returns the # Books checked out to a Borrower
 func NumberBooksOut(br borrower.Borrower, bks []book.Book) int {
 	return len(GetBooksForBorrower(br, bks))
 }
