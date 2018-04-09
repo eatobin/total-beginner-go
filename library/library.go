@@ -45,6 +45,7 @@ func AddBook(bks []book.Book, bk book.Book) []book.Book {
 	return bks
 }
 
+// FindBorrower finds a Borrower given a Name
 func FindBorrower(n string, brs []borrower.Borrower) borrower.Borrower {
 	for _, br := range brs {
 		if br.Name == n {
