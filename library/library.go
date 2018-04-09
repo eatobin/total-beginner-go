@@ -29,6 +29,7 @@ func containsBook(bks []book.Book, bk book.Book) bool {
 	return false
 }
 
+// AddBorrower adds a Borrower to a slice of Borrowers
 func AddBorrower(brs []borrower.Borrower, br borrower.Borrower) []borrower.Borrower {
 	if !containsBorrower(brs, br) {
 		return append(brs, br)
