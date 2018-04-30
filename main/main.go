@@ -1,10 +1,9 @@
 package main
 
 import (
+	"errors"
 	"io/ioutil"
 	"os"
-
-	"errors"
 
 	"github.com/eatobin/totalbeginnergo/book"
 	"github.com/eatobin/totalbeginnergo/borrower"
