@@ -2,18 +2,18 @@ package borrower
 
 import "testing"
 
-var br1 = MakeBorrower("Borrower1", 1)
+var br1 = NewBorrower("Borrower1", 1)
 
-func TestMakeBorrower(t *testing.T) {
+func TestNewBorrower(t *testing.T) {
 	gotN := br1.Name
 	wantN := "Borrower1"
 	if gotN != wantN {
-		t.Fatalf("br1lib.Name == %q, want %q", gotN, wantN)
+		t.Fatalf("br1.Name == %q, want %q", gotN, wantN)
 	}
 	gotMB := br1.MaxBooks
 	wantMB := 1
 	if gotMB != wantMB {
-		t.Fatalf("br1lib.MaxBooks == %v, want %v", gotMB, wantMB)
+		t.Fatalf("br1.MaxBooks == %v, want %v", gotMB, wantMB)
 	}
 }
 

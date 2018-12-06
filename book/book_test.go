@@ -6,7 +6,7 @@ import (
 	"github.com/eatobin/totalbeginnergo/borrower"
 )
 
-var br2 = borrower.MakeBorrower("Borrower2", 2)
+var br2 = borrower.NewBorrower("Borrower2", 2)
 var bk1 = MakeBook("Title1", "Author1")
 
 func TestMakeBook(t *testing.T) {
