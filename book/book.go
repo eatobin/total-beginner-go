@@ -10,16 +10,16 @@ type Book struct {
 }
 
 // NewBook needs a Title and an Author to make a Book
-func NewBook(t string, a string) Book {
+func NewBook(t string, a string) *Book {
 	bk := Book{}
 	bk.Title = t
 	bk.Author = a
-	return bk
+	return &bk
 }
 
 // SetBorrower takes a Borrower and sets it for a Book
-func (bk *Book) SetBorrower(br borrower.Borrower) {
-	bk.Borrower = br
+func (bk *Book) SetBorrower(br *borrower.Borrower) {
+	bk.Borrower = *br
 }
 
 func (bk *Book) availableString() string {
