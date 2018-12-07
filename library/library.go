@@ -87,11 +87,11 @@ func NotMaxedOut(br borrower.Borrower, bks []book.Book) bool {
 }
 
 func BookNotOut(bk book.Book) bool {
-	return bk.Borrower == borrower.Borrower{Name: "NoName", MaxBooks: -1}
+	return bk.Borrower == borrower.Borrower{}
 }
 
 func BookOut(bk book.Book) bool {
-	return bk.Borrower != borrower.Borrower{Name: "NoName", MaxBooks: -1}
+	return bk.Borrower != borrower.Borrower{}
 }
 
 func CheckOut(n string, t string, brs []borrower.Borrower, bks []book.Book) []book.Book {
@@ -107,7 +107,7 @@ func CheckOut(n string, t string, brs []borrower.Borrower, bks []book.Book) []bo
 func CheckIn(t string, bks []book.Book) []book.Book {
 	i, mbk := FindBook(t, bks)
 	if mbk != (book.Book{}) && BookOut(mbk) {
-		bks[i].SetBorrower(borrower.Borrower{Name: "NoName", MaxBooks: -1})
+		bks[i].SetBorrower(borrower.Borrower{})
 		return bks
 	}
 	return bks

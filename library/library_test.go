@@ -17,7 +17,7 @@ var brs1 = []borrower.Borrower{br1lib, br2lib}
 var brs2 = []borrower.Borrower{br1lib, br2lib, br3}
 
 var bk1lib = book.Book{"Title1", "Author1", br1lib}
-var bk2 = book.Book{"Title2", "Author2", borrower.Borrower{"NoName", -1}}
+var bk2 = book.Book{"Title2", "Author2", borrower.Borrower{}}
 var bk3 = book.Book{"Title3", "Author3", br3}
 var bk4 = book.Book{"Title4", "Author4", borrower.Borrower{"Borrower3", 3}}
 
