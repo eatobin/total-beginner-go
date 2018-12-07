@@ -18,11 +18,12 @@ func NewBook(t string, a string) Book {
 }
 
 // SetBorrower takes a Borrower and sets it for a Book
-func (bk *Book) SetBorrower(br borrower.Borrower) {
+func (bk Book) SetBorrower(br borrower.Borrower) Book {
 	bk.Borrower = br
+	return bk
 }
 
-func (bk *Book) availableString() string {
+func (bk Book) availableString() string {
 	if bk.Borrower == (borrower.Borrower{Name: "", MaxBooks: 0}) {
 		return "Available"
 	}
@@ -31,7 +32,7 @@ func (bk *Book) availableString() string {
 }
 
 // BookToString makes a description of a Book
-func (bk *Book) BookToString() string {
+func (bk Book) BookToString() string {
 	return bk.Title +
 		" by " + bk.Author +
 		"; " + bk.availableString()
