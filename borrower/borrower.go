@@ -9,11 +9,11 @@ type Borrower struct {
 }
 
 // NewBorrower needs a Name and a max books to create
-func NewBorrower(n string, mb int) *Borrower {
+func NewBorrower(n string, mb int) Borrower {
 	br := Borrower{}
 	br.Name = n
 	br.MaxBooks = mb
-	return &br
+	return br
 }
 
 // SetName sets a Name for a Borrower
