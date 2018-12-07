@@ -36,3 +36,5 @@ func (bk *Book) BookToString() string {
 		" by " + bk.Author +
 		"; " + bk.availableString()
 }
+
+/// Test
