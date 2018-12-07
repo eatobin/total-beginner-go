@@ -25,9 +25,13 @@ func TestNewBook(t *testing.T) {
 	if gotBr != wantBr {
 		t.Fatalf("bk1.Borrower == %v, want %v", gotBr, wantBr)
 	}
+}
+
+func TestSetBorrower(t *testing.T) {
 	bk1.SetBorrower(br2)
 	gotBk := bk1
-	wantBk := Book{"Title1", "Author1", borrower.Borrower{"Borrower2", 2}}
+	wantBk := Book{"Title1", "Author1",
+		borrower.Borrower{"Borrower2", 2}}
 	if gotBk != wantBk {
 		t.Fatalf("Book == %v, want %v", gotBk, wantBk)
 	}
