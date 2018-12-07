@@ -17,16 +17,18 @@ func NewBorrower(n string, mb int) Borrower {
 }
 
 // SetName sets a Name for a Borrower
-func (br *Borrower) SetName(n string) {
+func (br Borrower) SetName(n string) Borrower {
 	br.Name = n
+	return br
 }
 
 // SetMaxBooks sets a max books for a Borrower
-func (br *Borrower) SetMaxBooks(mb int) {
+func (br Borrower) SetMaxBooks(mb int) Borrower {
 	br.MaxBooks = mb
+	return br
 }
 
 // BorrowerToString makes a Borrower into a string
-func (br *Borrower) BorrowerToString() string {
+func (br Borrower) BorrowerToString() string {
 	return br.Name + " (" + strconv.Itoa(br.MaxBooks) + " books)"
 }

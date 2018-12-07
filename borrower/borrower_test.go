@@ -1,6 +1,9 @@
 package borrower
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 var br1 = NewBorrower("Borrower1", 1)
 
@@ -19,15 +22,17 @@ func TestNewBorrower(t *testing.T) {
 
 func TestSetValues(t *testing.T) {
 	n := "Borrower1"
-	gotBrN := Borrower{"Jack", 1}
-	gotBrN.SetName(n)
-	wantBrN := br1
-	if gotBrN != wantBrN {
-		t.Fatalf("br.SetName(%q) == %v, want %v", n, gotBrN, wantBrN)
+	badBr := Borrower{"Jack", 1}
+	gotBr := badBr.SetName(n)
+	wantBr := br1
+	if gotBr != wantBr {
+		t.Fatalf("br.SetName(%q) == %v, want %v", n, gotBr, wantBr)
 	}
+	fmt.Println("badBr: ", badBr)
+	fmt.Println("wantBr: ", wantBr)
 	mb := 1
-	gotBrMB := Borrower{"Borrower1", 11}
-	gotBrMB.SetMaxBooks(mb)
+	badBrMB := Borrower{"Borrower1", 11}
+	gotBrMB := badBrMB.SetMaxBooks(mb)
 	wantBrMB := br1
 	if gotBrMB != wantBrMB {
 		t.Fatalf("br.SetMaxBooks(%v) == %v, want %v", mb, gotBrMB, wantBrMB)
