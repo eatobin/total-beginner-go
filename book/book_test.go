@@ -33,17 +33,17 @@ func TestNewBook(t *testing.T) {
 	}
 }
 
-//func TestBookToString(t *testing.T) {
-//	bk1.SetBorrower(borrower.Borrower{Name: "NoName", MaxBooks: -1})
-//	gotAvail := bk1.BookToString()
-//	wantAvail := "Title1 by Author1; Available"
-//	if gotAvail != wantAvail {
-//		t.Fatalf("bk.BookToString() == %q, want %q", gotAvail, wantAvail)
-//	}
-//	bk1.SetBorrower(br2)
-//	gotNotAvail := bk1.BookToString()
-//	wantNotAvail := "Title1 by Author1; Checked out to Borrower2"
-//	if gotNotAvail != wantNotAvail {
-//		t.Fatalf("bk.BookToString() == %q, want %q", gotNotAvail, wantNotAvail)
-//	}
-//}
+func TestBookToString(t *testing.T) {
+	bk1.SetBorrower(borrower.Borrower{Name: "", MaxBooks: 0})
+	gotAvail := bk1.BookToString()
+	wantAvail := "Title1 by Author1; Available"
+	if gotAvail != wantAvail {
+		t.Fatalf("bk.BookToString() == %q, want %q", gotAvail, wantAvail)
+	}
+	bk1.SetBorrower(br2)
+	gotNotAvail := bk1.BookToString()
+	wantNotAvail := "Title1 by Author1; Checked out to Borrower2"
+	if gotNotAvail != wantNotAvail {
+		t.Fatalf("bk.BookToString() == %q, want %q", gotNotAvail, wantNotAvail)
+	}
+}
