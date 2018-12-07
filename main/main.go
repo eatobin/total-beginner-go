@@ -23,8 +23,8 @@ var emptyFile = "empty.json"
 func main() {
 	tvBorrowers = library.AddBorrower(tvBorrowers, borrower.NewBorrower("Jim", 3))
 	tvBorrowers = library.AddBorrower(tvBorrowers, borrower.NewBorrower("Sue", 3))
-	tvBooks = library.AddBook(tvBooks, book.MakeBook("War And Peace", "Tolstoy"))
-	tvBooks = library.AddBook(tvBooks, book.MakeBook("Great Expectations", "Dickens"))
+	tvBooks = library.AddBook(tvBooks, book.NewBook("War And Peace", "Tolstoy"))
+	tvBooks = library.AddBook(tvBooks, book.NewBook("Great Expectations", "Dickens"))
 	println("\nJust created new library:")
 	println(library.StatusToString(tvBooks, tvBorrowers))
 
@@ -40,7 +40,7 @@ func main() {
 
 	println("Add Eric and The Cat In The Hat\nand")
 	tvBorrowers = library.AddBorrower(tvBorrowers, borrower.NewBorrower("Eric", 1))
-	tvBooks = library.AddBook(tvBooks, book.MakeBook("The Cat In The Hat", "Dr. Seuss"))
+	tvBooks = library.AddBook(tvBooks, book.NewBook("The Cat In The Hat", "Dr. Seuss"))
 	println("Check Out Dr. Seuss to Eric:")
 	tvBooks = library.CheckOut("Eric", "The Cat In The Hat", tvBorrowers, tvBooks)
 	println(library.StatusToString(tvBooks, tvBorrowers))
@@ -53,7 +53,7 @@ func main() {
 	println(library.StatusToString(tvBooks, tvBorrowers))
 
 	println("Add a book that already exists (book.Book{\"War And Peace\", \"Tolstoy\"})")
-	tvBooks = library.AddBook(tvBooks, book.MakeBook("War And Peace", "Tolstoy"))
+	tvBooks = library.AddBook(tvBooks, book.NewBook("War And Peace", "Tolstoy"))
 	println("No change to Test Library:")
 	println(library.StatusToString(tvBooks, tvBorrowers))
 
