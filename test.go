@@ -25,7 +25,7 @@ func main() {
 		fmt.Printf("Error 1 occured: %v\n", err)
 		return
 	}
-	fmt.Println(r)
+	fmt.Println("Answer: ", r)
 	r1, err := foo(43, 30, 40)
 	if err != nil {
 		fmt.Printf("Error 2 occured: %v\n", err)
