@@ -71,19 +71,20 @@ func TestAddBook(t *testing.T) {
 }
 
 func TestFindBorrower(t *testing.T) {
+	var ErrNoBorrowerFound = errors.New("did not find the requested borrower")
 	cases := []struct {
-		n    string
-		brs  []borrower.Borrower
-		want borrower.Borrower
+		n       string
+		brs     []borrower.Borrower
+		wantErr error
 	}{
-		{"Borrower1", brs2, br1lib},
-		{"Borrower11", brs2, borrower.Borrower{}},
+		{"Borrower1", brs2, nil},
+		{"Borrower11", brs2, ErrNoBorrowerFound},
 	}
 	for _, c := range cases {
-		got := FindBorrower(c.n, c.brs)
-		if got != c.want {
-			t.Errorf("FindBorrower(%s, %v) ==\n%v want \n%v",
-				c.n, c.brs, got, c.want)
+		_, gotErr := FindBorrower(c.n, c.brs)
+		if !reflect.DeepEqual(gotErr, c.wantErr) {
+			t.Errorf("FindBorrower(%s, %v) ==\n%v\nwant\n%v",
+				c.n, c.brs, gotErr, c.wantErr)
 		}
 	}
 }

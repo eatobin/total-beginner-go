@@ -45,23 +45,32 @@ func AddBook(bks []book.Book, bk book.Book) []book.Book {
 	return bks
 }
 
+//func FindBorrower(n string, brs []borrower.Borrower) struct {
+//	error  bool;
+//	result borrower.Borrower
+//} {
+//	for _, br := range brs {
+//		if br.Name == n {
+//			return struct {
+//				error  bool;
+//				result borrower.Borrower
+//			}{error: false, result: br}
+//		}
+//	}
+//	return struct {
+//		error  bool;
+//		result borrower.Borrower
+//	}{error: true, result: borrower.Borrower{}}
+//}
+
 // FindBorrower finds a Borrower given a Name
-func FindBorrower(n string, brs []borrower.Borrower) struct {
-	error  bool;
-	result borrower.Borrower
-} {
+func FindBorrower(n string, brs []borrower.Borrower) (br borrower.Borrower, err error) {
 	for _, br := range brs {
 		if br.Name == n {
-			return struct {
-				error  bool;
-				result borrower.Borrower
-			}{error: false, result: br}
+			return br, nil
 		}
 	}
-	return struct {
-		error  bool;
-		result borrower.Borrower
-	}{error: true, result: borrower.Borrower{}}
+	return borrower.Borrower{}, errors.New("did not find the requested borrower")
 }
 
 // FindBook finds a Book given a Title
@@ -105,8 +114,8 @@ func BookOut(bk book.Book) bool {
 
 func CheckOut(n string, t string, brs []borrower.Borrower, bks []book.Book) []book.Book {
 	i, mbk := FindBook(t, bks)
-	mbr := FindBorrower(n, brs)
-	if mbk != (book.Book{}) && mbr != (borrower.Borrower{}) && NotMaxedOut(mbr, bks) && BookNotOut(mbk) {
+	mbr, err := FindBorrower(n, brs)
+	if mbk != (book.Book{}) && err != nil && NotMaxedOut(mbr, bks) && BookNotOut(mbk) {
 		bks[i].SetBorrower(mbr)
 		return bks
 	}
