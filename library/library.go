@@ -45,24 +45,6 @@ func AddBook(bks []book.Book, bk book.Book) []book.Book {
 	return bks
 }
 
-//func FindBorrower(n string, brs []borrower.Borrower) struct {
-//	error  bool;
-//	result borrower.Borrower
-//} {
-//	for _, br := range brs {
-//		if br.Name == n {
-//			return struct {
-//				error  bool;
-//				result borrower.Borrower
-//			}{error: false, result: br}
-//		}
-//	}
-//	return struct {
-//		error  bool;
-//		result borrower.Borrower
-//	}{error: true, result: borrower.Borrower{}}
-//}
-
 // FindBorrower finds a Borrower given a Name
 func FindBorrower(n string, brs []borrower.Borrower) (br borrower.Borrower, err error) {
 	for _, br := range brs {
