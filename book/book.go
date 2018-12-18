@@ -9,24 +9,22 @@ type Book struct {
 	Borrower borrower.Borrower `json:"borrower"`
 }
 
-// MakeBook needs a Title and an Author to make a Book
-func MakeBook(t string, a string) Book {
-	bk := Book{
-		Title:    t,
-		Author:   a,
-		Borrower: borrower.Borrower{Name: "NoName", MaxBooks: -1},
-	}
+// NewBook needs a Title and an Author to make a Book
+func NewBook(t string, a string) Book {
+	bk := Book{}
+	bk.Title = t
+	bk.Author = a
 	return bk
 }
 
 // SetBorrower takes a Borrower and sets it for a Book
-func (bk *Book) SetBorrower(br borrower.Borrower) {
+func (bk Book) SetBorrower(br borrower.Borrower) Book {
 	bk.Borrower = br
-	return
+	return bk
 }
 
-func (bk *Book) availableString() string {
-	if bk.Borrower == (borrower.Borrower{Name: "NoName", MaxBooks: -1}) {
+func (bk Book) availableString() string {
+	if bk.Borrower == (borrower.Borrower{Name: "", MaxBooks: 0}) {
 		return "Available"
 	}
 	return "Checked out to " +
@@ -34,7 +32,7 @@ func (bk *Book) availableString() string {
 }
 
 // BookToString makes a description of a Book
-func (bk *Book) BookToString() string {
+func (bk Book) BookToString() string {
 	return bk.Title +
 		" by " + bk.Author +
 		"; " + bk.availableString()

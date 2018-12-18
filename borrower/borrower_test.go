@@ -1,33 +1,38 @@
 package borrower
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
-var br1 = MakeBorrower("Borrower1", 1)
+var br1 = NewBorrower("Borrower1", 1)
 
-func TestMakeBorrower(t *testing.T) {
+func TestNewBorrower(t *testing.T) {
 	gotN := br1.Name
 	wantN := "Borrower1"
 	if gotN != wantN {
-		t.Fatalf("br1lib.Name == %q, want %q", gotN, wantN)
+		t.Fatalf("br1.Name == %q, want %q", gotN, wantN)
 	}
 	gotMB := br1.MaxBooks
 	wantMB := 1
 	if gotMB != wantMB {
-		t.Fatalf("br1lib.MaxBooks == %v, want %v", gotMB, wantMB)
+		t.Fatalf("br1.MaxBooks == %v, want %v", gotMB, wantMB)
 	}
 }
 
 func TestSetValues(t *testing.T) {
 	n := "Borrower1"
-	gotBrN := Borrower{"Jack", 1}
-	gotBrN.SetName(n)
-	wantBrN := br1
-	if gotBrN != wantBrN {
-		t.Fatalf("br.SetName(%q) == %v, want %v", n, gotBrN, wantBrN)
+	badBr := Borrower{"Jack", 1}
+	gotBr := badBr.SetName(n)
+	wantBr := br1
+	if gotBr != wantBr {
+		t.Fatalf("br.SetName(%q) == %v, want %v", n, gotBr, wantBr)
 	}
+	fmt.Println("badBr: ", badBr)
+	fmt.Println("wantBr: ", wantBr)
 	mb := 1
-	gotBrMB := Borrower{"Borrower1", 11}
-	gotBrMB.SetMaxBooks(mb)
+	badBrMB := Borrower{"Borrower1", 11}
+	gotBrMB := badBrMB.SetMaxBooks(mb)
 	wantBrMB := br1
 	if gotBrMB != wantBrMB {
 		t.Fatalf("br.SetMaxBooks(%v) == %v, want %v", mb, gotBrMB, wantBrMB)

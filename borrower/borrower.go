@@ -8,28 +8,27 @@ type Borrower struct {
 	MaxBooks int    `json:"max-books"`
 }
 
-// MakeBorrower needs a Name and a max books to create
-func MakeBorrower(n string, mb int) Borrower {
-	br := Borrower{
-		Name:     n,
-		MaxBooks: mb,
-	}
+// NewBorrower needs a Name and a max books to create
+func NewBorrower(n string, mb int) Borrower {
+	br := Borrower{}
+	br.Name = n
+	br.MaxBooks = mb
 	return br
 }
 
 // SetName sets a Name for a Borrower
-func (br *Borrower) SetName(n string) {
+func (br Borrower) SetName(n string) Borrower {
 	br.Name = n
-	return
+	return br
 }
 
 // SetMaxBooks sets a max books for a Borrower
-func (br *Borrower) SetMaxBooks(mb int) {
+func (br Borrower) SetMaxBooks(mb int) Borrower {
 	br.MaxBooks = mb
-	return
+	return br
 }
 
 // BorrowerToString makes a Borrower into a string
-func (br *Borrower) BorrowerToString() string {
+func (br Borrower) BorrowerToString() string {
 	return br.Name + " (" + strconv.Itoa(br.MaxBooks) + " books)"
 }
