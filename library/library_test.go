@@ -126,6 +126,7 @@ func TestGetBooksForBorrower(t *testing.T) {
 	}
 }
 
+// TODO Not=passing
 func TestCheckOut(t *testing.T) {
 	var bks2 = []book.Book{bk1lib, {Title: "Title2", Author: "Author2", Borrower: borrower.Borrower{Name: "Borrower2", MaxBooks: 2}}}
 	cases := []struct {
