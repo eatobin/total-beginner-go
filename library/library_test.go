@@ -151,6 +151,7 @@ func TestCheckOut(t *testing.T) {
 	}
 }
 
+//TODO Not=passing
 func TestCheckIn(t *testing.T) {
 	var bks1 = []book.Book{bk1lib, bk2}
 	var bks2 = []book.Book{{Title: "Title1", Author: "Author1", Borrower: borrower.Borrower{Name: "NoName", MaxBooks: -1}}, bk2}
