@@ -1,7 +1,6 @@
 package borrower
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -28,8 +27,6 @@ func TestSetValues(t *testing.T) {
 	if gotBr != wantBr {
 		t.Fatalf("br.SetName(%q) == %v, want %v", n, gotBr, wantBr)
 	}
-	fmt.Println("badBr: ", badBr)
-	fmt.Println("wantBr: ", wantBr)
 	mb := 1
 	badBrMB := Borrower{"Borrower1", 11}
 	gotBrMB := badBrMB.SetMaxBooks(mb)
