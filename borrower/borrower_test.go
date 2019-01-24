@@ -22,17 +22,15 @@ func TestNewBorrower(t *testing.T) {
 func TestSetValues(t *testing.T) {
 	n := "Borrower1"
 	badBr := Borrower{"Jack", 1}
-	gotBr := badBr.SetName(n)
-	wantBr := br1
-	if gotBr != wantBr {
-		t.Fatalf("br.SetName(%q) == %v, want %v", n, gotBr, wantBr)
+	badBr.SetName(n)
+	if badBr != *br1 {
+		t.Fatalf("br.SetName(%q) == %v, want %v", n, badBr, *br1)
 	}
 	mb := 1
 	badBrMB := Borrower{"Borrower1", 11}
-	gotBrMB := badBrMB.SetMaxBooks(mb)
-	wantBrMB := br1
-	if gotBrMB != wantBrMB {
-		t.Fatalf("br.SetMaxBooks(%v) == %v, want %v", mb, gotBrMB, wantBrMB)
+	badBrMB.SetMaxBooks(mb)
+	if badBrMB != *br1 {
+		t.Fatalf("br.SetMaxBooks(%v) == %v, want %v", mb, badBrMB, *br1)
 	}
 }
 
