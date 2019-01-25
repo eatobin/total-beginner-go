@@ -6,45 +6,45 @@ import (
 	"github.com/eatobin/totalbeginnergo/borrower"
 )
 
-var br2 = borrower.NewBorrower("Borrower2", 2)
-var bk1 = NewBook("Title1", "Author1")
+var br2Ptr = borrower.NewBorrower("Borrower2", 2)
+var bk1Ptr = NewBook("Title1", "Author1")
 
 func TestNewBook(t *testing.T) {
-	gotT := bk1.Title
+	gotT := bk1Ptr.Title
 	wantT := "Title1"
 	if gotT != wantT {
-		t.Fatalf("bk1.Title == %q, want %q", gotT, wantT)
+		t.Fatalf("bk1Ptr.Title == %q, want %q", gotT, wantT)
 	}
-	gotA := bk1.Author
+	gotA := bk1Ptr.Author
 	wantA := "Author1"
 	if gotA != wantA {
-		t.Fatalf("bk1.Author == %q, want %q", gotA, wantA)
+		t.Fatalf("bk1Ptr.Author == %q, want %q", gotA, wantA)
 	}
-	gotBr := bk1.Borrower
+	gotBr := bk1Ptr.Borrower
 	wantBr := borrower.Borrower{}
 	if gotBr != wantBr {
-		t.Fatalf("bk1.Borrower == %v, want %v", gotBr, wantBr)
+		t.Fatalf("bk1Ptr.Borrower == %v, want %v", gotBr, wantBr)
 	}
 }
 
 func TestSetBorrower(t *testing.T) {
-	gotBk := bk1.SetBorrower(br2)
+	bk1Ptr.SetBorrower(*br2Ptr)
 	wantBk := Book{"Title1", "Author1",
 		borrower.Borrower{Name: "Borrower2", MaxBooks: 2}}
-	if gotBk != wantBk {
-		t.Fatalf("Book == %v, want %v", gotBk, wantBk)
+	if *bk1Ptr != wantBk {
+		t.Fatalf("Book == %v, want %v", *bk1Ptr, wantBk)
 	}
 }
 
 func TestBookToString(t *testing.T) {
-	//bk1.SetBorrower(borrower.Borrower{Name: "", MaxBooks: 0})
-	gotAvail := bk1.BookToString()
+	bk1Ptr.SetBorrower(borrower.Borrower{Name: "", MaxBooks: 0})
+	gotAvail := bk1Ptr.BookToString()
 	wantAvail := "Title1 by Author1; Available"
 	if gotAvail != wantAvail {
 		t.Fatalf("bk.BookToString() == %q, want %q", gotAvail, wantAvail)
 	}
-	na := bk1.SetBorrower(br2)
-	gotNotAvail := na.BookToString()
+	bk1Ptr.SetBorrower(*br2Ptr)
+	gotNotAvail := bk1Ptr.BookToString()
 	wantNotAvail := "Title1 by Author1; Checked out to Borrower2"
 	if gotNotAvail != wantNotAvail {
 		t.Fatalf("bk.BookToString() == %q, want %q", gotNotAvail, wantNotAvail)

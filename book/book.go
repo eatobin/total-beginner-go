@@ -9,31 +9,36 @@ type Book struct {
 	Borrower borrower.Borrower `json:"borrower"`
 }
 
-// NewBook needs a Title and an Author to make a Book
-func NewBook(t string, a string) Book {
-	bk := Book{}
-	bk.Title = t
-	bk.Author = a
-	return bk
+func NewBook(title string, author string) *Book {
+	return &Book{Title: title, Author: author}
+}
+
+// SetTitle sets a Title for a Book
+func (b *Book) SetTitle(title string) {
+	b.Title = title
+}
+
+// SetAuthor sets a Author for a Book
+func (b *Book) SetAuthor(author string) {
+	b.Author = author
 }
 
 // SetBorrower takes a Borrower and sets it for a Book
-func (bk Book) SetBorrower(br borrower.Borrower) Book {
-	bk.Borrower = br
-	return bk
+func (b *Book) SetBorrower(borrower borrower.Borrower) {
+	b.Borrower = borrower
 }
 
-func (bk Book) availableString() string {
-	if bk.Borrower == (borrower.Borrower{Name: "", MaxBooks: 0}) {
+func (b *Book) availableString() string {
+	if b.Borrower == (borrower.Borrower{Name: "", MaxBooks: 0}) {
 		return "Available"
 	}
 	return "Checked out to " +
-		bk.Borrower.Name
+		b.Borrower.Name
 }
 
 // BookToString makes a description of a Book
-func (bk Book) BookToString() string {
-	return bk.Title +
-		" by " + bk.Author +
-		"; " + bk.availableString()
+func (b *Book) BookToString() string {
+	return b.Title +
+		" by " + b.Author +
+		"; " + b.availableString()
 }
