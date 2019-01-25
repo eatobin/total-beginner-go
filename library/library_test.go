@@ -76,16 +76,18 @@ func TestFindBorrower(t *testing.T) {
 	cases := []struct {
 		n       string
 		brs     []borrower.Borrower
+		wantBr  borrower.Borrower
 		wantErr error
 	}{
-		{"Borrower1", brs2, nil},
-		{"Borrower11", brs2, ErrNoBorrowerFound},
+		{"Borrower1", brs2, *br1libPtr, nil},
+		{"Borrower11", brs2, borrower.Borrower{}, ErrNoBorrowerFound},
 	}
 	for _, c := range cases {
-		_, gotErr := FindBorrower(c.n, c.brs)
-		if !reflect.DeepEqual(gotErr, c.wantErr) {
-			t.Errorf("FindBorrower(%s, %v) ==\n%v\nwant\n%v",
-				c.n, c.brs, gotErr, c.wantErr)
+		gotBr, gotErr := FindBorrower(c.n, c.brs)
+		if !reflect.DeepEqual(gotBr, c.wantBr) ||
+			!reflect.DeepEqual(gotErr, c.wantErr) {
+			t.Errorf("FindBorrower(%s, %v) ==\n%v\nwant\n%v\n%v\nwant\n%v",
+				c.n, c.brs, gotBr, c.wantBr, gotErr, c.wantErr)
 		}
 	}
 }
@@ -108,7 +110,7 @@ func TestFindBook(t *testing.T) {
 		if gotI != c.wantI ||
 			!reflect.DeepEqual(gotBk, c.wantBk) ||
 			!reflect.DeepEqual(gotErr, c.wantErr) {
-			t.Errorf("FindBook(%s, %v) ==\n%v want \n%v\n%v want \n%v\n%v want \n%v",
+			t.Errorf("FindBook(%s, %v) ==\n%v\nwant\n%v\n%v\nwant\n%v\n%v\nwant\n%v",
 				c.t, c.bks, gotI, c.wantI, gotBk, c.wantBk, gotErr, c.wantErr)
 		}
 	}
