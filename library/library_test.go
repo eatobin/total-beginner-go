@@ -9,21 +9,22 @@ import (
 	"github.com/eatobin/totalbeginnergo/borrower"
 )
 
-var br1lib = borrower.Borrower{"Borrower1", 1}
-var br2lib = borrower.Borrower{"Borrower2", 2}
-var br3 = borrower.Borrower{"Borrower3", 3}
+//var br1libPtr = borrower.Borrower{"Borrower1", 1}
+var br1libPtr = borrower.NewBorrower("Borrower1", 1)
+var br2libPtr = borrower.NewBorrower("Borrower2", 2)
+var br3Ptr = borrower.NewBorrower("Borrower3", 3)
 
-var brs1 = []borrower.Borrower{br1lib, br2lib}
-var brs2 = []borrower.Borrower{br1lib, br2lib, br3}
+var brs1 = []borrower.Borrower{*br1libPtr, *br2libPtr}
+var brs2 = []borrower.Borrower{*br1libPtr, *br2libPtr, *br3Ptr}
 
-var bk1lib = book.Book{"Title1", "Author1", br1lib}
-var bk2 = book.Book{"Title2", "Author2", borrower.Borrower{}}
-var bk3 = book.Book{"Title3", "Author3", br3}
-var bk4 = book.Book{"Title4", "Author4", borrower.Borrower{"Borrower3", 3}}
+var bk1libPtr = &book.Book{Title: "Title1", Author: "Author1", Borrower: *br1libPtr}
+var bk2Ptr = book.NewBook("Title2", "Author2")
+var bk3Ptr = &book.Book{Title: "Title3", Author: "Author3", Borrower: *br3Ptr}
+var bk4Ptr = &book.Book{Title: "Title4", Author: "Author4", Borrower: borrower.Borrower{Name: "Borrower3", MaxBooks: 3}}
 
-var bks1 = []book.Book{bk1lib, bk2}
-var bks2 = []book.Book{bk1lib, bk2, bk3}
-var bks3 = []book.Book{bk1lib, bk2, bk3, bk4}
+var bks1 = []book.Book{*bk1libPtr, *bk2Ptr}
+var bks2 = []book.Book{*bk1libPtr, *bk2Ptr, *bk3Ptr}
+var bks3 = []book.Book{*bk1libPtr, *bk2Ptr, *bk3Ptr, *bk4Ptr}
 
 var jsonStringBorrowers = "[\n  {\n    \"name\": \"Borrower1\",\n    \"max-books\": 1\n  },\n  {\n    \"name\": \"Borrower2\",\n    \"max-books\": 2\n  }\n]"
 var jsonStringBooks = "[\n  {\n    \"title\": \"Title2\",\n    \"author\": \"Author22\",\n    \"borrower\": {\n      \"name\": \"NoName\",\n      \"max-books\": -1\n    }\n  }\n]"
@@ -40,8 +41,8 @@ func TestAddBorrower(t *testing.T) {
 		br      borrower.Borrower
 		wantBrs []borrower.Borrower
 	}{
-		{brs1, br3, brs2},
-		{brs1, br2lib, brs1},
+		{brs1, *br3Ptr, brs2},
+		{brs1, *br2libPtr, brs1},
 	}
 	for _, c := range cases {
 		gotBrs := AddBorrower(c.brs, c.br)
@@ -58,8 +59,8 @@ func TestAddBook(t *testing.T) {
 		bk      book.Book
 		wantBks []book.Book
 	}{
-		{bks1, bk3, bks2},
-		{bks1, bk2, bks1},
+		{bks1, *bk3Ptr, bks2},
+		{bks1, *bk2Ptr, bks1},
 	}
 	for _, c := range cases {
 		gotBks := AddBook(c.bks, c.bk)
@@ -95,7 +96,7 @@ func TestFindBook(t *testing.T) {
 		bks  []book.Book
 		want book.Book
 	}{
-		{"Title1", bks2, bk1lib},
+		{"Title1", bks2, *bk1libPtr},
 		{"Title11", bks2, book.Book{}},
 	}
 	for _, c := range cases {
@@ -113,9 +114,9 @@ func TestGetBooksForBorrower(t *testing.T) {
 		bks  []book.Book
 		want []book.Book
 	}{
-		{br2lib, bks1, []book.Book{}},
-		{br1lib, bks1, []book.Book{bk1lib}},
-		{br3, bks3, []book.Book{bk3, bk4}},
+		{*br2libPtr, bks1, []book.Book{}},
+		{*br1libPtr, bks1, []book.Book{*bk1libPtr}},
+		{*br3Ptr, bks3, []book.Book{*bk3Ptr, *bk4Ptr}},
 	}
 	for _, c := range cases {
 		got := GetBooksForBorrower(c.br, c.bks)
@@ -128,7 +129,7 @@ func TestGetBooksForBorrower(t *testing.T) {
 
 // TODO Not=passing
 func TestCheckOut(t *testing.T) {
-	var bks2 = []book.Book{bk1lib, {Title: "Title2", Author: "Author2", Borrower: borrower.Borrower{Name: "Borrower2", MaxBooks: 2}}}
+	var bks2 = []book.Book{*bk1libPtr, {Title: "Title2", Author: "Author2", Borrower: borrower.Borrower{Name: "Borrower2", MaxBooks: 2}}}
 	cases := []struct {
 		n    string
 		t    string
@@ -153,8 +154,8 @@ func TestCheckOut(t *testing.T) {
 
 //TODO Not=passing
 func TestCheckIn(t *testing.T) {
-	var bks1 = []book.Book{bk1lib, bk2}
-	var bks2 = []book.Book{{Title: "Title1", Author: "Author1", Borrower: borrower.Borrower{Name: "NoName", MaxBooks: -1}}, bk2}
+	var bks1 = []book.Book{*bk1libPtr, *bk2Ptr}
+	var bks2 = []book.Book{{Title: "Title1", Author: "Author1", Borrower: borrower.Borrower{Name: "NoName", MaxBooks: -1}}, *bk2Ptr}
 	cases := []struct {
 		t    string
 		bks  []book.Book
