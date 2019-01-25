@@ -2,7 +2,6 @@ package library
 
 import (
 	"errors"
-	"fmt"
 	"reflect"
 	"testing"
 
@@ -106,7 +105,6 @@ func TestFindBook(t *testing.T) {
 	}
 	for _, c := range cases {
 		gotI, gotBk, gotErr := FindBook(c.t, c.bks)
-		fmt.Printf("%v %v %v\n", gotI, gotBk, gotErr)
 		if gotI != c.wantI ||
 			!reflect.DeepEqual(gotBk, c.wantBk) ||
 			!reflect.DeepEqual(gotErr, c.wantErr) {
@@ -135,7 +133,6 @@ func TestGetBooksForBorrower(t *testing.T) {
 	}
 }
 
-// TODO Not=passing
 func TestCheckOut(t *testing.T) {
 	var bks2 = []book.Book{*bk1libPtr, {Title: "Title2", Author: "Author2", Borrower: borrower.Borrower{Name: "Borrower2", MaxBooks: 2}}}
 	cases := []struct {
@@ -160,10 +157,9 @@ func TestCheckOut(t *testing.T) {
 	}
 }
 
-//TODO Not=passing
 func TestCheckIn(t *testing.T) {
 	var bks1 = []book.Book{*bk1libPtr, *bk2Ptr}
-	var bks2 = []book.Book{{Title: "Title1", Author: "Author1", Borrower: borrower.Borrower{Name: "NoName", MaxBooks: -1}}, *bk2Ptr}
+	var bks2 = []book.Book{{Title: "Title1", Author: "Author1", Borrower: borrower.Borrower{}}, *bk2Ptr}
 	cases := []struct {
 		t    string
 		bks  []book.Book
