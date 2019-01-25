@@ -2,6 +2,7 @@ package library
 
 import (
 	"errors"
+	"fmt"
 	"reflect"
 	"testing"
 
@@ -9,7 +10,6 @@ import (
 	"github.com/eatobin/totalbeginnergo/borrower"
 )
 
-//var br1libPtr = borrower.Borrower{"Borrower1", 1}
 var br1libPtr = borrower.NewBorrower("Borrower1", 1)
 var br2libPtr = borrower.NewBorrower("Borrower2", 2)
 var br3Ptr = borrower.NewBorrower("Borrower3", 3)
@@ -91,19 +91,25 @@ func TestFindBorrower(t *testing.T) {
 }
 
 func TestFindBook(t *testing.T) {
+	var ErrNoBookFound = errors.New("did not find the requested book")
 	cases := []struct {
-		t    string
-		bks  []book.Book
-		want book.Book
+		t       string
+		bks     []book.Book
+		wantI   int
+		wantBk  book.Book
+		wantErr error
 	}{
-		{"Title1", bks2, *bk1libPtr},
-		{"Title11", bks2, book.Book{}},
+		{"Title1", bks2, 0, *bk1libPtr, nil},
+		{"Title11", bks2, 0, book.Book{}, ErrNoBookFound},
 	}
 	for _, c := range cases {
-		_, got := FindBook(c.t, c.bks)
-		if got != c.want {
-			t.Errorf("FindBook(%s, %v) ==\n%v want \n%v",
-				c.t, c.bks, got, c.want)
+		gotI, gotBk, gotErr := FindBook(c.t, c.bks)
+		fmt.Printf("%v %v %v\n", gotI, gotBk, gotErr)
+		if gotI != c.wantI ||
+			!reflect.DeepEqual(gotBk, c.wantBk) ||
+			!reflect.DeepEqual(gotErr, c.wantErr) {
+			t.Errorf("FindBook(%s, %v) ==\n%v want \n%v\n%v want \n%v\n%v want \n%v",
+				c.t, c.bks, gotI, c.wantI, gotBk, c.wantBk, gotErr, c.wantErr)
 		}
 	}
 }
