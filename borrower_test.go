@@ -1,4 +1,4 @@
-package borrower
+package main
 
 import (
 	"testing"
@@ -14,7 +14,7 @@ func TestBorrowerToString(t *testing.T) {
 	}
 }
 
-func TestSetValues(t *testing.T) {
+func TestSetBorrowerValues(t *testing.T) {
 	n := "Borrower1"
 	badBr := Borrower{"Jack", 1}
 	badBr.SetName(n)
