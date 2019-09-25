@@ -4,27 +4,6 @@ import (
 	"eatobin.com/totalbeginnergo/borrower"
 )
 
-//type Point struct {
-//	X, Y int
-//}
-//type Circle struct {
-//	Point
-//	Radius int
-//}
-//
-//type Wheel struct {
-//	Circle
-//	Spokes int
-//}
-//
-//func Test() {
-//	var w Wheel
-//	w.X = 8
-//	w.Y = 8
-//	w.Radius = 5
-//	w.Spokes = 20
-//}
-
 // A Book has a Title and an Author
 type Book struct {
 	Title              string `json:"title"`
