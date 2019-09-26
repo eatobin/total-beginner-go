@@ -25,7 +25,6 @@ var bks2 = []*Book{bk1libPtr, bk2libPtr, bk3libPtr}
 
 var bks3 = []*Book{bk1libPtr, bk2libPtr, bk3libPtr, bk4libPtr}
 
-//var b = `{"firstName":"John","lastName":"Dow"}`
 var jsonStringBorrowers = "[\n  {\n    \"name\": \"Borrower1\",\n    \"max-books\": 1\n  },\n  {\n    \"name\": \"Borrower2\",\n    \"max-books\": 2\n  }\n]"
 var jsonStringBorrowersBadParse = "[{\"name\"\"Borrower1\",\"max-books\":1},{\"name\":\"Borrower2\",\"max-books\":2}]"
 var jsonStringBorrowersBadNameField = "[{\"noName\":\"Borrower1\",\"max-books\":1},{\"name\":\"Borrower2\",\"max-books\":2}]"
