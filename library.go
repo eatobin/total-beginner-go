@@ -122,21 +122,21 @@ func jsonStringToBorrowers(js string) (error, []*Borrower) {
 	return err, res
 }
 
-//func JSONStringToBooks(js string) ([]Book, error) {
-//	var res []Book
-//	err := json.Unmarshal([]byte(js), &res)
-//	if err != nil {
-//		return []Book{}, err
-//	}
-//	for _, bk := range res {
-//		if bk.Title == "" || bk.Author == "" || bk.Borrower.Name == "" || bk.Borrower.MaxBooks == 0 {
-//			err = errors.New("missing Book field value - book list is empty")
-//			return []Book{}, err
-//		}
-//	}
-//	return res, nil
-//}
-//
+func jsonStringToBooks(js string) (error, []*Book) {
+	var res []*Book
+	err := json.Unmarshal([]byte(js), &res)
+	if err != nil {
+		return err, []*Book{}
+	}
+	for _, bk := range res {
+		if bk.Title == "" || bk.Author == "" || bk.Borrower.Name == "" || bk.Borrower.MaxBooks == 0 {
+			err = errors.New("missing Book field value - book list is empty")
+			return err, []*Book{}
+		}
+	}
+	return nil, res
+}
+
 //func BorrowersToJSONSting(brs []Borrower) string {
 //	bytes, _ := json.MarshalIndent(brs, "", "  ")
 //	return string(bytes)

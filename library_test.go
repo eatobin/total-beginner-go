@@ -30,10 +30,11 @@ var jsonStringBorrowers = "[\n  {\n    \"name\": \"Borrower1\",\n    \"max-books
 var jsonStringBorrowersBadParse = "[{\"name\"\"Borrower1\",\"max-books\":1},{\"name\":\"Borrower2\",\"max-books\":2}]"
 var jsonStringBorrowersBadNameField = "[{\"noName\":\"Borrower1\",\"max-books\":1},{\"name\":\"Borrower2\",\"max-books\":2}]"
 
-//var jsonStringBooks = "[\n  {\n    \"title\": \"Title2\",\n    \"author\": \"Author22\",\n    \"borrower\": {\n      \"name\": \"NoName\",\n      \"max-books\": -1\n    }\n  }\n]"
-//var jsonStringBooksBadParse = "[{\"title\"\"Title2\",\"author\":\"Author22\",\"borrower\":{\"name\":\"NoName\",\"max-books\":-1}}, {\"title\":\"Title99\",\"author\":\"Author99\",\"borrower\":{\"name\":\"Borrower1\",\"max-books\":1}}]"
-//var jsonStringBooksBadTitleField = "[{\"noTitle\":\"Title2\",\"author\":\"Author22\",\"borrower\":{\"name\":\"NoName\",\"max-books\":-1}}, {\"title\":\"Title99\",\"author\":\"Author99\",\"borrower\":{\"name\":\"Borrower1\",\"max-books\":1}}]"
-//var jsonStringBooksBadBorrowerField = "[{\"title\":\"Title2\",\"author\":\"Author22\",\"borrower\":{\"noName\":\"NoName\",\"max-books\":-1}}, {\"title\":\"Title99\",\"author\":\"Author99\",\"borrower\":{\"name\":\"Borrower1\",\"max-books\":1}}]"
+var jsonStringBooks = "[\n  {\n    \"title\": \"Title2\",\n    \"author\": \"Author22\",\n    \"borrower\": {\n      \"name\": \"NoName\",\n      \"max-books\": -1\n    }\n  }\n]"
+var jsonStringBooksBadParse = "[{\"title\"\"Title2\",\"author\":\"Author22\",\"borrower\":{\"name\":\"NoName\",\"max-books\":-1}}, {\"title\":\"Title99\",\"author\":\"Author99\",\"borrower\":{\"name\":\"Borrower1\",\"max-books\":1}}]"
+var jsonStringBooksBadTitleField = "[{\"noTitle\":\"Title2\",\"author\":\"Author22\",\"borrower\":{\"name\":\"NoName\",\"max-books\":-1}}, {\"title\":\"Title99\",\"author\":\"Author99\",\"borrower\":{\"name\":\"Borrower1\",\"max-books\":1}}]"
+var jsonStringBooksBadBorrowerField = "[{\"title\":\"Title2\",\"author\":\"Author22\",\"borrower\":{\"noName\":\"NoName\",\"max-books\":-1}}, {\"title\":\"Title99\",\"author\":\"Author99\",\"borrower\":{\"name\":\"Borrower1\",\"max-books\":1}}]"
+
 //var ss = "\n--- Status Report of Test Library ---\n\nTest Library: 3 books; 3 borrowers.\n\nTitle1 by Author1; Checked out to Borrower1\nTitle2 by Author2; Available\nTitle3 by Author3; Checked out to Borrower3\n\nBorrower1 (1 books)\nBorrower2 (2 books)\nBorrower3 (3 books)\n\n--- End of Status Report ---\n"
 
 func TestAddBorrower(t *testing.T) {
@@ -210,38 +211,38 @@ func Test_jsonStringToBorrowersFail(t *testing.T) {
 	}
 }
 
-//func TestJSONStringToBooksPass(t *testing.T) {
-//	js := jsonStringBooks
-//	wantBks := []Book{{Title: "Title2", Author: "Author22", Borrower: &Borrower{Name: "NoName", MaxBooks: -1}}}
-//	wantE := error(nil)
-//
-//	got, err := JSONStringToBooks(js)
-//
-//	if !reflect.DeepEqual(got, wantBks) || err != wantE {
-//		t.Errorf("JSONStringToBooks\n(%s)\n==\n%v and %v\nwant\n%v and %v",
-//			js, got, err, wantBks, wantE)
-//	}
-//}
-//
-//func TestJSONStringToBooksFail(t *testing.T) {
-//	cases := []struct {
-//		js      string
-//		wantBks []Book
-//		wantE   error
-//	}{
-//		{jsonStringBooksBadParse, []Book{}, errors.New("invalid character '\"' after object key")},
-//		{jsonStringBooksBadTitleField, []Book{}, errors.New("missing Book field value - book list is empty")},
-//		{jsonStringBooksBadBorrowerField, []Book{}, errors.New("missing Book field value - book list is empty")},
-//	}
-//	for _, c := range cases {
-//		got, err := JSONStringToBooks(c.js)
-//		if err.Error() != c.wantE.Error() {
-//			t.Errorf("JSONStringToBooks\n(%s)\n==\n%v and %v\nwant\n%v and %v",
-//				c.js, got, err, c.wantBks, c.wantE)
-//		}
-//	}
-//}
-//
+func Test_jsonStringToBooksPass(t *testing.T) {
+	js := jsonStringBooks
+	wantBks := []*Book{{Title: "Title2", Author: "Author22", Borrower: &Borrower{Name: "NoName", MaxBooks: -1}}}
+	wantE := error(nil)
+
+	err, got := jsonStringToBooks(js)
+
+	if !reflect.DeepEqual(got, wantBks) || err != wantE {
+		t.Errorf("JSONStringToBooks\n(%s)\n==\n%v and %v\nwant\n%v and %v",
+			js, got, err, wantBks, wantE)
+	}
+}
+
+func Test_jsonStringToBooksFail(t *testing.T) {
+	cases := []struct {
+		js      string
+		wantBks []*Book
+		wantE   error
+	}{
+		{jsonStringBooksBadParse, []*Book{}, errors.New("invalid character '\"' after object key")},
+		{jsonStringBooksBadTitleField, []*Book{}, errors.New("missing Book field value - book list is empty")},
+		{jsonStringBooksBadBorrowerField, []*Book{}, errors.New("missing Book field value - book list is empty")},
+	}
+	for _, c := range cases {
+		err, got := jsonStringToBooks(c.js)
+		if err.Error() != c.wantE.Error() {
+			t.Errorf("JSONStringToBooks\n(%s)\n==\n%v and %v\nwant\n%v and %v",
+				c.js, got, err, c.wantBks, c.wantE)
+		}
+	}
+}
+
 //func TestBorrowersToJSONString(t *testing.T) {
 //	brs := brs1
 //	got := BorrowersToJSONSting(brs)
