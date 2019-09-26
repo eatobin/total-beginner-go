@@ -26,10 +26,11 @@ var bks2 = []*Book{bk1libPtr, bk2libPtr, bk3libPtr}
 var bks3 = []*Book{bk1libPtr, bk2libPtr, bk3libPtr, bk4libPtr}
 
 //var b = `{"firstName":"John","lastName":"Dow"}`
-//var jsonStringBorrowers = "[\n  {\n    \"name\": \"Borrower1\",\n    \"max-books\": 1\n  },\n  {\n    \"name\": \"Borrower2\",\n    \"max-books\": 2\n  }\n]"
+var jsonStringBorrowers = "[\n  {\n    \"name\": \"Borrower1\",\n    \"max-books\": 1\n  },\n  {\n    \"name\": \"Borrower2\",\n    \"max-books\": 2\n  }\n]"
+var jsonStringBorrowersBadParse = "[{\"name\"\"Borrower1\",\"max-books\":1},{\"name\":\"Borrower2\",\"max-books\":2}]"
+var jsonStringBorrowersBadNameField = "[{\"noName\":\"Borrower1\",\"max-books\":1},{\"name\":\"Borrower2\",\"max-books\":2}]"
+
 //var jsonStringBooks = "[\n  {\n    \"title\": \"Title2\",\n    \"author\": \"Author22\",\n    \"borrower\": {\n      \"name\": \"NoName\",\n      \"max-books\": -1\n    }\n  }\n]"
-//var jsonStringBorrowersBadParse = "[{\"name\"\"Borrower1\",\"max-books\":1},{\"name\":\"Borrower2\",\"max-books\":2}]"
-//var jsonStringBorrowersBadNameField = "[{\"noName\":\"Borrower1\",\"max-books\":1},{\"name\":\"Borrower2\",\"max-books\":2}]"
 //var jsonStringBooksBadParse = "[{\"title\"\"Title2\",\"author\":\"Author22\",\"borrower\":{\"name\":\"NoName\",\"max-books\":-1}}, {\"title\":\"Title99\",\"author\":\"Author99\",\"borrower\":{\"name\":\"Borrower1\",\"max-books\":1}}]"
 //var jsonStringBooksBadTitleField = "[{\"noTitle\":\"Title2\",\"author\":\"Author22\",\"borrower\":{\"name\":\"NoName\",\"max-books\":-1}}, {\"title\":\"Title99\",\"author\":\"Author99\",\"borrower\":{\"name\":\"Borrower1\",\"max-books\":1}}]"
 //var jsonStringBooksBadBorrowerField = "[{\"title\":\"Title2\",\"author\":\"Author22\",\"borrower\":{\"noName\":\"NoName\",\"max-books\":-1}}, {\"title\":\"Title99\",\"author\":\"Author99\",\"borrower\":{\"name\":\"Borrower1\",\"max-books\":1}}]"
@@ -179,36 +180,36 @@ func TestCheckIn(t *testing.T) {
 	}
 }
 
-//func TestJSONStringToBorrowersPass(t *testing.T) {
-//	js := jsonStringBorrowers
-//	wantBrs := brs1
-//	wantE := error(nil)
-//
-//	got, err := JSONStringToBorrowers(js)
-//	if !reflect.DeepEqual(got, wantBrs) || err != wantE {
-//		t.Errorf("JSONStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
-//			js, got, err, wantBrs, wantE)
-//	}
-//}
-//
-//func TestJSONStringToBorrowersFail(t *testing.T) {
-//	cases := []struct {
-//		js      string
-//		wantBrs []Borrower
-//		wantE   error
-//	}{
-//		{jsonStringBorrowersBadParse, []Borrower{}, errors.New("invalid character '\"' after object key")},
-//		{jsonStringBorrowersBadNameField, []Borrower{}, errors.New("missing Borrower field value - borrowers list is empty")},
-//	}
-//	for _, c := range cases {
-//		got, err := JSONStringToBorrowers(c.js)
-//		if err.Error() != c.wantE.Error() {
-//			t.Errorf("JSONStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
-//				c.js, got, err, c.wantBrs, c.wantE)
-//		}
-//	}
-//}
-//
+func Test_jsonStringToBorrowersPass(t *testing.T) {
+	js := jsonStringBorrowers
+	wantBrs := brs1
+	wantE := error(nil)
+
+	err, got := jsonStringToBorrowers(js)
+	if !reflect.DeepEqual(got, wantBrs) || err != wantE {
+		t.Errorf("jsonStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
+			js, got, err, wantBrs, wantE)
+	}
+}
+
+func Test_jsonStringToBorrowersFail(t *testing.T) {
+	cases := []struct {
+		js      string
+		wantBrs []*Borrower
+		wantE   error
+	}{
+		{jsonStringBorrowersBadParse, []*Borrower{}, errors.New("invalid character '\"' after object key")},
+		{jsonStringBorrowersBadNameField, []*Borrower{}, errors.New("missing Borrower field value - borrowers list is empty")},
+	}
+	for _, c := range cases {
+		err, got := jsonStringToBorrowers(c.js)
+		if err.Error() != c.wantE.Error() {
+			t.Errorf("jsonStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
+				c.js, got, err, c.wantBrs, c.wantE)
+		}
+	}
+}
+
 //func TestJSONStringToBooksPass(t *testing.T) {
 //	js := jsonStringBooks
 //	wantBks := []Book{{Title: "Title2", Author: "Author22", Borrower: &Borrower{Name: "NoName", MaxBooks: -1}}}

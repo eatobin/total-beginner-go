@@ -1,6 +1,9 @@
 package main
 
-import "errors"
+import (
+	"encoding/json"
+	"errors"
+)
 
 func containsBorrower(brs []*Borrower, br *Borrower) bool {
 	for _, b := range brs {
@@ -104,21 +107,21 @@ func CheckIn(t string, bks []*Book) []*Book {
 	return bks
 }
 
-//func JSONStringToBorrowers(js string) ([]Borrower, error) {
-//	var res []Borrower
-//	err := json.Unmarshal([]byte(js), &res)
-//	if err != nil {
-//		return []Borrower{}, err
-//	}
-//	for _, br := range res {
-//		if br.Name == "" || br.MaxBooks == 0 {
-//			err = errors.New("missing Borrower field value - borrowers list is empty")
-//			return []Borrower{}, err
-//		}
-//	}
-//	return res, nil
-//}
-//
+func jsonStringToBorrowers(js string) (error, []*Borrower) {
+	var res []*Borrower
+	err := json.Unmarshal([]byte(js), &res)
+	if err != nil {
+		return err, []*Borrower{}
+	}
+	for _, br := range res {
+		if br.Name == "" || br.MaxBooks == 0 {
+			err = errors.New("missing Borrower field value - borrowers list is empty")
+			return err, []*Borrower{}
+		}
+	}
+	return err, res
+}
+
 //func JSONStringToBooks(js string) ([]Book, error) {
 //	var res []Book
 //	err := json.Unmarshal([]byte(js), &res)
