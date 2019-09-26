@@ -56,17 +56,17 @@ func FindBook(t string, bks []*Book) (int, error, *Book) {
 	return 0, errors.New("did not find the requested book"), &Book{}
 }
 
-//// GetBooksForBorrower will find books given a Borrower and a slice of Books
-//func GetBooksForBorrower(br Borrower, bks []Book) []Book {
-//	nBks := make([]Book, 0)
-//	for _, bk := range bks {
-//		if *bk.Borrower == br {
-//			nBks = append(nBks, bk)
-//		}
-//	}
-//	return nBks
-//}
-//
+// GetBooksForBorrower will find books given a Borrower and a slice of Books
+func GetBooksForBorrower(br *Borrower, bks []*Book) []*Book {
+	nBks := make([]*Book, 0)
+	for _, bk := range bks {
+		if bk.Borrower == br {
+			nBks = append(nBks, bk)
+		}
+	}
+	return nBks
+}
+
 //// NumberBooksOut returns the # Books checked out to a Borrower
 //func NumberBooksOut(br Borrower, bks []Book) int {
 //	return len(GetBooksForBorrower(br, bks))

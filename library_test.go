@@ -18,12 +18,12 @@ var bk1libPtr = &Book{Title: "Title1", Author: "Author1", Borrower: br1libPtr}
 var bk2libPtr = NewBook("Title2", "Author2")
 var bk3libPtr = &Book{Title: "Title3", Author: "Author3", Borrower: br3libPtr}
 
-//var bk4libPtr = &Book{Title: "Title4", Author: "Author4", Borrower: &Borrower{Name: "Borrower3", MaxBooks: 3}}
+var bk4libPtr = &Book{Title: "Title4", Author: "Author4", Borrower: br3libPtr}
 
 var bks1 = []*Book{bk1libPtr, bk2libPtr}
 var bks2 = []*Book{bk1libPtr, bk2libPtr, bk3libPtr}
 
-//var bks3 = []*Book{bk1libPtr, bk2libPtr, bk3libPtr, bk4libPtr}
+var bks3 = []*Book{bk1libPtr, bk2libPtr, bk3libPtr, bk4libPtr}
 
 //var b = `{"firstName":"John","lastName":"Dow"}`
 //var jsonStringBorrowers = "[\n  {\n    \"name\": \"Borrower1\",\n    \"max-books\": 1\n  },\n  {\n    \"name\": \"Borrower2\",\n    \"max-books\": 2\n  }\n]"
@@ -115,25 +115,25 @@ func TestFindBook(t *testing.T) {
 	}
 }
 
-//func TestGetBooksForBorrower(t *testing.T) {
-//	cases := []struct {
-//		br   Borrower
-//		bks  []Book
-//		want []Book
-//	}{
-//		{*br2libPtr, bks1, []Book{}},
-//		{*br1libPtr, bks1, []Book{*bk1libPtr}},
-//		{*br3libPtr, bks3, []Book{*bk3libPtr, *bk4libPtr}},
-//	}
-//	for _, c := range cases {
-//		got := GetBooksForBorrower(c.br, c.bks)
-//		if !reflect.DeepEqual(got, c.want) {
-//			t.Errorf("GetBooksForborrower(%v, %v) ==\n%v want \n%v",
-//				c.br, c.bks, got, c.want)
-//		}
-//	}
-//}
-//
+func TestGetBooksForBorrower(t *testing.T) {
+	cases := []struct {
+		br   *Borrower
+		bks  []*Book
+		want []*Book
+	}{
+		{br2libPtr, bks1, []*Book{}},
+		{br1libPtr, bks1, []*Book{bk1libPtr}},
+		{br3libPtr, bks3, []*Book{bk3libPtr, bk4libPtr}},
+	}
+	for _, c := range cases {
+		got := GetBooksForBorrower(c.br, c.bks)
+		if !reflect.DeepEqual(got, c.want) {
+			t.Errorf("GetBooksForborrower(%v, %v) ==\n%v want \n%v",
+				c.br, c.bks, got, c.want)
+		}
+	}
+}
+
 //func TestCheckOut(t *testing.T) {
 //	var bks2 = []Book{*bk1libPtr, {Title: "Title2", Author: "Author2", Borrower: &Borrower{Name: "Borrower2", MaxBooks: 2}}}
 //	cases := []struct {
