@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	//"errors"
 	"reflect"
 	"testing"
 )
@@ -31,7 +30,7 @@ var jsonStringBorrowersBadNameField = `[{"noName":"Borrower1","max-books":1},{"n
 var jsonStringBorrowersBadMaxBooksField = `[{"name":"Borrower1","noMax-books":1},{"name":"Borrower2","max-books":2}]`
 
 var jsonStringBooks = `[{"title":"Title2","author":"Author22","borrower":{"name":"NoName","max-books":-1}}]`
-var jsonStringBooksBadParse = "[{\"title\"\"Title2\",\"author\":\"Author22\",\"borrower\":{\"name\":\"NoName\",\"max-books\":-1}}, {\"title\":\"Title99\",\"author\":\"Author99\",\"borrower\":{\"name\":\"Borrower1\",\"max-books\":1}}]"
+var jsonStringBooksBadParse = `[{"title""Title2","author":"Author22","borrower":{"name":"NoName","max-books":-1}},{"title":"Title99","author":"Author99","borrower":{"name":"Borrower1","max-books":1}}]`
 var jsonStringBooksBadTitleField = "[{\"noTitle\":\"Title2\",\"author\":\"Author22\",\"borrower\":{\"name\":\"NoName\",\"max-books\":-1}}, {\"title\":\"Title99\",\"author\":\"Author99\",\"borrower\":{\"name\":\"Borrower1\",\"max-books\":1}}]"
 var jsonStringBooksBadBorrowerField = "[{\"title\":\"Title2\",\"author\":\"Author22\",\"borrower\":{\"noName\":\"NoName\",\"max-books\":-1}}, {\"title\":\"Title99\",\"author\":\"Author99\",\"borrower\":{\"name\":\"Borrower1\",\"max-books\":1}}]"
 
