@@ -92,29 +92,29 @@ func TestFindBorrower(t *testing.T) {
 	}
 }
 
-//func TestFindBook(t *testing.T) {
-//	var ErrNoBookFound = errors.New("did not find the requested book")
-//	cases := []struct {
-//		t       string
-//		bks     []Book
-//		wantI   int
-//		wantBk  Book
-//		wantErr error
-//	}{
-//		{"Title1", bks2, 0, *bk1libPtr, nil},
-//		{"Title11", bks2, 0, Book{}, ErrNoBookFound},
-//	}
-//	for _, c := range cases {
-//		gotI, gotBk, gotErr := FindBook(c.t, c.bks)
-//		if gotI != c.wantI ||
-//			!reflect.DeepEqual(gotBk, c.wantBk) ||
-//			!reflect.DeepEqual(gotErr, c.wantErr) {
-//			t.Errorf("FindBook(%s, %v) ==\n%v\nwant\n%v\n%v\nwant\n%v\n%v\nwant\n%v",
-//				c.t, c.bks, gotI, c.wantI, gotBk, c.wantBk, gotErr, c.wantErr)
-//		}
-//	}
-//}
-//
+func TestFindBook(t *testing.T) {
+	var ErrNoBookFound = errors.New("did not find the requested book")
+	cases := []struct {
+		t       string
+		bks     []*Book
+		wantI   int
+		wantBk  *Book
+		wantErr error
+	}{
+		{"Title1", bks2, 0, bk1libPtr, nil},
+		{"Title11", bks2, 0, &Book{}, ErrNoBookFound},
+	}
+	for _, c := range cases {
+		gotI, gotErr, gotBk := FindBook(c.t, c.bks)
+		if gotI != c.wantI ||
+			!reflect.DeepEqual(gotBk, c.wantBk) ||
+			!reflect.DeepEqual(gotErr, c.wantErr) {
+			t.Errorf("FindBook(%s, %v) ==\n%v\nwant\n%v\n%v\nwant\n%v\n%v\nwant\n%v",
+				c.t, c.bks, gotI, c.wantI, gotBk, c.wantBk, gotErr, c.wantErr)
+		}
+	}
+}
+
 //func TestGetBooksForBorrower(t *testing.T) {
 //	cases := []struct {
 //		br   Borrower
