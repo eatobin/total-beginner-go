@@ -95,15 +95,15 @@ func CheckOut(n string, t string, brs []*Borrower, bks []*Book) []*Book {
 	return bks
 }
 
-//func CheckIn(t string, bks []Book) []Book {
-//	i, mbk, errBk := findBook(t, bks)
-//	if errBk == nil && BookOut(mbk) {
-//		bks[i].SetBorrower(nil)
-//		return bks
-//	}
-//	return bks
-//}
-//
+func CheckIn(t string, bks []*Book) []*Book {
+	i, errBk, mbk := findBook(t, bks)
+	if errBk == nil && bookOut(mbk) {
+		bks[i].SetBorrower(nil)
+		return bks
+	}
+	return bks
+}
+
 //func JSONStringToBorrowers(js string) ([]Borrower, error) {
 //	var res []Borrower
 //	err := json.Unmarshal([]byte(js), &res)

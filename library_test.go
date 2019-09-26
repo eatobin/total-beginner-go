@@ -158,27 +158,27 @@ func TestCheckOut(t *testing.T) {
 	}
 }
 
-//func TestCheckIn(t *testing.T) {
-//	var bks1 = []Book{*bk1libPtr, *bk2libPtr}
-//	var bks2 = []Book{{Title: "Title1", Author: "Author1", Borrower: &Borrower{}}, *bk2libPtr}
-//	cases := []struct {
-//		t    string
-//		bks  []Book
-//		want []Book
-//	}{
-//		{"Title1", bks1, bks2},
-//		{"Title2", bks1, bks1},
-//		{"NoTitle", bks1, bks1},
-//	}
-//	for _, c := range cases {
-//		got := CheckIn(c.t, c.bks)
-//		if !reflect.DeepEqual(got, c.want) {
-//			t.Errorf("CheckIn(%s, %v) ==\n%v want \n%v",
-//				c.t, c.bks, got, c.want)
-//		}
-//	}
-//}
-//
+func TestCheckIn(t *testing.T) {
+	var testbks1 = []*Book{bk1libPtr, bk2libPtr}
+	var testbks2 = []*Book{{Title: "Title1", Author: "Author1", Borrower: nil}, bk2libPtr}
+	cases := []struct {
+		t    string
+		bks  []*Book
+		want []*Book
+	}{
+		{"Title1", testbks1, testbks2},
+		{"Title2", testbks1, testbks1},
+		{"NoTitle", testbks1, testbks1},
+	}
+	for _, c := range cases {
+		got := CheckIn(c.t, c.bks)
+		if !reflect.DeepEqual(got, c.want) {
+			t.Errorf("CheckIn(%s, %v) ==\n%v want \n%v",
+				c.t, c.bks, got, c.want)
+		}
+	}
+}
+
 //func TestJSONStringToBorrowersPass(t *testing.T) {
 //	js := jsonStringBorrowers
 //	wantBrs := brs1
