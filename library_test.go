@@ -72,7 +72,7 @@ func TestAddBook(t *testing.T) {
 	}
 }
 
-func TestFindBorrower(t *testing.T) {
+func Test_findBorrower(t *testing.T) {
 	var ErrNoBorrowerFound = errors.New("did not find the requested borrower")
 	cases := []struct {
 		n       string
@@ -93,7 +93,7 @@ func TestFindBorrower(t *testing.T) {
 	}
 }
 
-func TestFindBook(t *testing.T) {
+func Test_findBook(t *testing.T) {
 	var ErrNoBookFound = errors.New("did not find the requested book")
 	cases := []struct {
 		t       string
@@ -116,7 +116,7 @@ func TestFindBook(t *testing.T) {
 	}
 }
 
-func TestGetBooksForBorrower(t *testing.T) {
+func Test_getBooksForBorrower(t *testing.T) {
 	cases := []struct {
 		br   *Borrower
 		bks  []*Book
