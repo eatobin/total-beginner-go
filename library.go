@@ -3,6 +3,8 @@ package main
 import (
 	"encoding/json"
 	"errors"
+	"strconv"
+	"strings"
 )
 
 func containsBorrower(brs []*Borrower, br *Borrower) bool {
@@ -147,23 +149,23 @@ func BooksToJSONSting(bks []*Book) string {
 	return string(bytes)
 }
 
-//func libraryToString(bks []Book, brs []Borrower) string {
-//	return "Test Library: " +
-//		strconv.Itoa(len(bks)) + " books; " +
-//		strconv.Itoa(len(brs)) + " borrowers."
-//}
-//
-//func StatusToString(bks []Book, brs []Borrower) string {
-//	var sb strings.Builder
-//	sb.WriteString("\n--- Status Report of Test Library ---\n\n")
-//	sb.WriteString(libraryToString(bks, brs) + "\n\n")
-//	for _, bk := range bks {
-//		sb.WriteString(bk.BookToString() + "\n")
-//	}
-//	sb.WriteString("\n")
-//	for _, br := range brs {
-//		sb.WriteString(br.BorrowerToString() + "\n")
-//	}
-//	sb.WriteString("\n--- End of Status Report ---\n")
-//	return sb.String()
-//}
+func libraryToString(bks []*Book, brs []*Borrower) string {
+	return "Test Library: " +
+		strconv.Itoa(len(bks)) + " books; " +
+		strconv.Itoa(len(brs)) + " borrowers."
+}
+
+func StatusToString(bks []*Book, brs []*Borrower) string {
+	var sb strings.Builder
+	sb.WriteString("\n--- Status Report of Test Library ---\n\n")
+	sb.WriteString(libraryToString(bks, brs) + "\n\n")
+	for _, bk := range bks {
+		sb.WriteString(bk.BookToString() + "\n")
+	}
+	sb.WriteString("\n")
+	for _, br := range brs {
+		sb.WriteString(br.BorrowerToString() + "\n")
+	}
+	sb.WriteString("\n--- End of Status Report ---\n")
+	return sb.String()
+}

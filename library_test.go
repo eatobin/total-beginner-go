@@ -13,13 +13,13 @@ var br3libPtr = NewBorrower("Borrower3", 3)
 var brs1 = []*Borrower{br1libPtr, br2libPtr}
 var brs2 = []*Borrower{br1libPtr, br2libPtr, br3libPtr}
 
-var bk1libPtr = &Book{Title: "Title1", Author: "Author1", Borrower: br1libPtr}
+var bk1libPtr = &Book{Title: "Title1", Author: "Author1", Borrower: br3libPtr}
 var bk2libPtr = NewBook("Title2", "Author2")
 var bk3libPtr = &Book{Title: "Title3", Author: "Author3", Borrower: br3libPtr}
 
 var bk4libPtr = &Book{Title: "Title4", Author: "Author4", Borrower: br3libPtr}
 
-var bks1 = []*Book{bk1libPtr, bk2libPtr}
+var bks1 = []*Book{bk1libPtr, bk3libPtr}
 var bks2 = []*Book{bk1libPtr, bk2libPtr, bk3libPtr}
 
 var bks3 = []*Book{bk1libPtr, bk2libPtr, bk3libPtr, bk4libPtr}
@@ -34,7 +34,7 @@ var jsonStringBooksBadParse = `[{"title""Title2","author":"Author22","borrower":
 var jsonStringBooksBadTitleField = `[{"noTitle":"Title2","author":"Author22","borrower":{"name":"NoName","max-books":-1}},{"title":"Title99","author":"Author99","borrower":{"name":"Borrower1","max-books":1}}]`
 var jsonStringBooksBadBorrowerField = `[{"title":"Title2","author":"Author22","borrower":{"noName":"NoName","max-books":-1}},{"title":"Title99","author":"Author99","borrower":{"name":"Borrower1","max-books":1}}]`
 
-//var ss = "\n--- Status Report of Test Library ---\n\nTest Library: 3 books; 3 borrowers.\n\nTitle1 by Author1; Checked out to Borrower1\nTitle2 by Author2; Available\nTitle3 by Author3; Checked out to Borrower3\n\nBorrower1 (1 books)\nBorrower2 (2 books)\nBorrower3 (3 books)\n\n--- End of Status Report ---\n"
+var ss = "\n--- Status Report of Test Library ---\n\nTest Library: 3 books; 3 borrowers.\n\nTitle1 by Author1; Checked out to Borrower1\nTitle2 by Author2; Available\nTitle3 by Author3; Checked out to Borrower3\n\nBorrower1 (1 books)\nBorrower2 (2 books)\nBorrower3 (3 books)\n\n--- End of Status Report ---\n"
 
 func TestAddBorrower(t *testing.T) {
 	cases := []struct {
@@ -263,13 +263,13 @@ func TestBooksToJSONString(t *testing.T) {
 	}
 }
 
-//func TestStatusToString(t *testing.T) {
-//	bks := bks2
-//	brs := brs2
-//	got := StatusToString(bks, brs)
-//	want := ss
-//	if got != want {
-//		t.Errorf("StatusToString(%v, %v) ==\n(%q) want \n(%q)",
-//			bks, brs, got, want)
-//	}
-//}
+func TestStatusToString(t *testing.T) {
+	bks := bks1
+	brs := brs2
+	got := StatusToString(bks, brs)
+	want := ss
+	if got != want {
+		t.Errorf("StatusToString(%v, %v) ==\n(%q) want \n(%q)",
+			bks, brs, got, want)
+	}
+}
