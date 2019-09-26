@@ -137,16 +137,16 @@ func jsonStringToBooks(js string) (error, []*Book) {
 	return nil, res
 }
 
-//func BorrowersToJSONSting(brs []Borrower) string {
-//	bytes, _ := json.MarshalIndent(brs, "", "  ")
-//	return string(bytes)
-//}
-//
-//func BooksToJSONSting(bks []Book) string {
-//	bytes, _ := json.MarshalIndent(bks, "", "  ")
-//	return string(bytes)
-//}
-//
+func BorrowersToJSONSting(brs []*Borrower) string {
+	bytes, _ := json.MarshalIndent(brs, "", "  ")
+	return string(bytes)
+}
+
+func BooksToJSONSting(bks []*Book) string {
+	bytes, _ := json.MarshalIndent(bks, "", "  ")
+	return string(bytes)
+}
+
 //func libraryToString(bks []Book, brs []Borrower) string {
 //	return "Test Library: " +
 //		strconv.Itoa(len(bks)) + " books; " +

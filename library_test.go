@@ -24,12 +24,12 @@ var bks2 = []*Book{bk1libPtr, bk2libPtr, bk3libPtr}
 
 var bks3 = []*Book{bk1libPtr, bk2libPtr, bk3libPtr, bk4libPtr}
 
-var jsonStringBorrowers = `[{"name":"Borrower1","max-books":1},{"name":"Borrower2","max-books":2}]`
+var jsonStringBorrowers = "[\n  {\n    \"name\": \"Borrower1\",\n    \"max-books\": 1\n  },\n  {\n    \"name\": \"Borrower2\",\n    \"max-books\": 2\n  }\n]"
 var jsonStringBorrowersBadParse = `[{"name""Borrower1","max-books":1},{"name":"Borrower2","max-books":2}]`
 var jsonStringBorrowersBadNameField = `[{"noName":"Borrower1","max-books":1},{"name":"Borrower2","max-books":2}]`
 var jsonStringBorrowersBadMaxBooksField = `[{"name":"Borrower1","noMax-books":1},{"name":"Borrower2","max-books":2}]`
 
-var jsonStringBooks = `[{"title":"Title2","author":"Author22","borrower":{"name":"NoName","max-books":-1}}]`
+var jsonStringBooks = "[\n  {\n    \"title\": \"Title2\",\n    \"author\": \"Author22\",\n    \"borrower\": {\n      \"name\": \"NoName\",\n      \"max-books\": -1\n    }\n  }\n]"
 var jsonStringBooksBadParse = `[{"title""Title2","author":"Author22","borrower":{"name":"NoName","max-books":-1}},{"title":"Title99","author":"Author99","borrower":{"name":"Borrower1","max-books":1}}]`
 var jsonStringBooksBadTitleField = `[{"noTitle":"Title2","author":"Author22","borrower":{"name":"NoName","max-books":-1}},{"title":"Title99","author":"Author99","borrower":{"name":"Borrower1","max-books":1}}]`
 var jsonStringBooksBadBorrowerField = `[{"title":"Title2","author":"Author22","borrower":{"noName":"NoName","max-books":-1}},{"title":"Title99","author":"Author99","borrower":{"name":"Borrower1","max-books":1}}]`
@@ -243,26 +243,26 @@ func Test_jsonStringToBooksFail(t *testing.T) {
 	}
 }
 
-//func TestBorrowersToJSONString(t *testing.T) {
-//	brs := brs1
-//	got := BorrowersToJSONSting(brs)
-//	want := jsonStringBorrowers
-//	if got != want {
-//		t.Errorf("BorrwersToJSONSting(%v) ==\n(%q) want \n(%q)",
-//			brs, got, want)
-//	}
-//}
-//
-//func TestBooksToJSONString(t *testing.T) {
-//	bks := []Book{{Title: "Title2", Author: "Author22", Borrower: &Borrower{Name: "NoName", MaxBooks: -1}}}
-//	got := BooksToJSONSting(bks)
-//	want := jsonStringBooks
-//	if got != want {
-//		t.Errorf("BooksToJSONSting(%v) ==\n(%q) want \n(%q)",
-//			bks, got, want)
-//	}
-//}
-//
+func TestBorrowersToJSONString(t *testing.T) {
+	brs := brs1
+	got := BorrowersToJSONSting(brs)
+	want := jsonStringBorrowers
+	if got != want {
+		t.Errorf("BorrwersToJSONSting(%v) ==\n(%q) want \n(%q)",
+			brs, got, want)
+	}
+}
+
+func TestBooksToJSONString(t *testing.T) {
+	bks := []*Book{{Title: "Title2", Author: "Author22", Borrower: &Borrower{Name: "NoName", MaxBooks: -1}}}
+	got := BooksToJSONSting(bks)
+	want := jsonStringBooks
+	if got != want {
+		t.Errorf("BooksToJSONSting(%v) ==\n(%q) want \n(%q)",
+			bks, got, want)
+	}
+}
+
 //func TestStatusToString(t *testing.T) {
 //	bks := bks2
 //	brs := brs2
