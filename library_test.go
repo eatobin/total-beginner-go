@@ -29,6 +29,7 @@ var bks3 = []*Book{bk1libPtr, bk2libPtr, bk3libPtr, bk4libPtr}
 var jsonStringBorrowers = "[\n  {\n    \"name\": \"Borrower1\",\n    \"max-books\": 1\n  },\n  {\n    \"name\": \"Borrower2\",\n    \"max-books\": 2\n  }\n]"
 var jsonStringBorrowersBadParse = "[{\"name\"\"Borrower1\",\"max-books\":1},{\"name\":\"Borrower2\",\"max-books\":2}]"
 var jsonStringBorrowersBadNameField = "[{\"noName\":\"Borrower1\",\"max-books\":1},{\"name\":\"Borrower2\",\"max-books\":2}]"
+var jsonStringBorrowersBadMaxBooksField = "[{\"name\":\"Borrower1\",\"noMax-books\":1},{\"name\":\"Borrower2\",\"max-books\":2}]"
 
 var jsonStringBooks = "[\n  {\n    \"title\": \"Title2\",\n    \"author\": \"Author22\",\n    \"borrower\": {\n      \"name\": \"NoName\",\n      \"max-books\": -1\n    }\n  }\n]"
 var jsonStringBooksBadParse = "[{\"title\"\"Title2\",\"author\":\"Author22\",\"borrower\":{\"name\":\"NoName\",\"max-books\":-1}}, {\"title\":\"Title99\",\"author\":\"Author99\",\"borrower\":{\"name\":\"Borrower1\",\"max-books\":1}}]"
@@ -201,6 +202,7 @@ func Test_jsonStringToBorrowersFail(t *testing.T) {
 	}{
 		{jsonStringBorrowersBadParse, []*Borrower{}, errors.New("invalid character '\"' after object key")},
 		{jsonStringBorrowersBadNameField, []*Borrower{}, errors.New("missing Borrower field value - borrowers list is empty")},
+		{jsonStringBorrowersBadMaxBooksField, []*Borrower{}, errors.New("missing Borrower field value - borrowers list is empty")},
 	}
 	for _, c := range cases {
 		err, got := jsonStringToBorrowers(c.js)
