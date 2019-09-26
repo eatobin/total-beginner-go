@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	//"errors"
 	"reflect"
 	"testing"
@@ -70,27 +71,27 @@ func TestAddBook(t *testing.T) {
 	}
 }
 
-//func TestFindBorrower(t *testing.T) {
-//	var ErrNoBorrowerFound = errors.New("did not find the requested borrower")
-//	cases := []struct {
-//		n       string
-//		brs     []Borrower
-//		wantBr  Borrower
-//		wantErr error
-//	}{
-//		{"Borrower1", brs2, *br1libPtr, nil},
-//		{"Borrower11", brs2, Borrower{}, ErrNoBorrowerFound},
-//	}
-//	for _, c := range cases {
-//		gotBr, gotErr := FindBorrower(c.n, c.brs)
-//		if !reflect.DeepEqual(gotBr, c.wantBr) ||
-//			!reflect.DeepEqual(gotErr, c.wantErr) {
-//			t.Errorf("FindBorrower(%s, %v) ==\n%v\nwant\n%v\n%v\nwant\n%v",
-//				c.n, c.brs, gotBr, c.wantBr, gotErr, c.wantErr)
-//		}
-//	}
-//}
-//
+func TestFindBorrower(t *testing.T) {
+	var ErrNoBorrowerFound = errors.New("did not find the requested borrower")
+	cases := []struct {
+		n       string
+		brs     []*Borrower
+		wantBr  *Borrower
+		wantErr error
+	}{
+		{"Borrower1", brs2, br1libPtr, nil},
+		{"Borrower11", brs2, &Borrower{}, ErrNoBorrowerFound},
+	}
+	for _, c := range cases {
+		gotErr, gotBr := FindBorrower(c.n, c.brs)
+		if !reflect.DeepEqual(gotBr, c.wantBr) ||
+			!reflect.DeepEqual(gotErr, c.wantErr) {
+			t.Errorf("FindBorrower(%s, %v) ==\n%v\nwant\n%v\n%v\nwant\n%v",
+				c.n, c.brs, gotBr, c.wantBr, gotErr, c.wantErr)
+		}
+	}
+}
+
 //func TestFindBook(t *testing.T) {
 //	var ErrNoBookFound = errors.New("did not find the requested book")
 //	cases := []struct {

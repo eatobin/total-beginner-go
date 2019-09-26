@@ -1,5 +1,7 @@
 package main
 
+import "errors"
+
 func containsBorrower(brs []*Borrower, br *Borrower) bool {
 	for _, b := range brs {
 		if *b == *br {
@@ -34,16 +36,16 @@ func AddBook(bks []*Book, bk *Book) []*Book {
 	return bks
 }
 
-//// FindBorrower finds a Borrower given a Name
-//func FindBorrower(n string, brs []Borrower) (Borrower, error) {
-//	for _, br := range brs {
-//		if br.Name == n {
-//			return br, nil
-//		}
-//	}
-//	return Borrower{}, errors.New("did not find the requested borrower")
-//}
-//
+// FindBorrower finds a Borrower given a Name
+func FindBorrower(n string, brs []*Borrower) (error, *Borrower) {
+	for _, br := range brs {
+		if br.Name == n {
+			return nil, br
+		}
+	}
+	return errors.New("did not find the requested borrower"), &Borrower{}
+}
+
 //// FindBook finds a Book given a Title
 //func FindBook(t string, bks []Book) (int, Book, error) {
 //	for i, bk := range bks {
