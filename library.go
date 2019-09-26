@@ -36,8 +36,8 @@ func AddBook(bks []*Book, bk *Book) []*Book {
 	return bks
 }
 
-// FindBorrower finds a Borrower given a Name
-func FindBorrower(n string, brs []*Borrower) (error, *Borrower) {
+// findBorrower finds a Borrower given a Name
+func findBorrower(n string, brs []*Borrower) (error, *Borrower) {
 	for _, br := range brs {
 		if br.Name == n {
 			return nil, br
@@ -46,8 +46,8 @@ func FindBorrower(n string, brs []*Borrower) (error, *Borrower) {
 	return errors.New("did not find the requested borrower"), &Borrower{}
 }
 
-// FindBook finds a Book given a Title
-func FindBook(t string, bks []*Book) (int, error, *Book) {
+// findBook finds a Book given a Title
+func findBook(t string, bks []*Book) (int, error, *Book) {
 	for i, bk := range bks {
 		if bk.Title == t {
 			return i, nil, bk
@@ -57,7 +57,7 @@ func FindBook(t string, bks []*Book) (int, error, *Book) {
 }
 
 // GetBooksForBorrower will find books given a Borrower and a slice of Books
-func GetBooksForBorrower(br *Borrower, bks []*Book) []*Book {
+func getBooksForBorrower(br *Borrower, bks []*Book) []*Book {
 	nBks := make([]*Book, 0)
 	for _, bk := range bks {
 		if bk.Borrower == br {
@@ -67,36 +67,36 @@ func GetBooksForBorrower(br *Borrower, bks []*Book) []*Book {
 	return nBks
 }
 
-//// NumberBooksOut returns the # Books checked out to a Borrower
-//func NumberBooksOut(br Borrower, bks []Book) int {
-//	return len(GetBooksForBorrower(br, bks))
-//}
-//
-//// NotMaxedOut returns True if books out < max books
-//func NotMaxedOut(br Borrower, bks []Book) bool {
-//	return NumberBooksOut(br, bks) < br.MaxBooks
-//}
-//
-//func BookNotOut(bk Book) bool {
-//	return bk.Borrower == nil
-//}
-//
-//func BookOut(bk Book) bool {
-//	return bk.Borrower != nil
-//}
-//
-//func CheckOut(n string, t string, brs []Borrower, bks []Book) []Book {
-//	mbr, errBr := FindBorrower(n, brs)
-//	i, mbk, errBk := FindBook(t, bks)
-//	if errBr == nil && errBk == nil && NotMaxedOut(mbr, bks) && BookNotOut(mbk) {
-//		bks[i].SetBorrower(&mbr)
-//		return bks
-//	}
-//	return bks
-//}
-//
+// numberBooksOut returns the # Books checked out to a Borrower
+func numberBooksOut(br *Borrower, bks []*Book) int {
+	return len(getBooksForBorrower(br, bks))
+}
+
+// notMaxedOut returns True if books out < max books
+func notMaxedOut(br *Borrower, bks []*Book) bool {
+	return numberBooksOut(br, bks) < br.MaxBooks
+}
+
+func bookNotOut(bk *Book) bool {
+	return bk.Borrower == nil
+}
+
+func bookOut(bk *Book) bool {
+	return bk.Borrower != nil
+}
+
+func CheckOut(n string, t string, brs []*Borrower, bks []*Book) []*Book {
+	errBr, mbr := findBorrower(n, brs)
+	i, errBk, mbk := findBook(t, bks)
+	if errBr == nil && errBk == nil && notMaxedOut(mbr, bks) && bookNotOut(mbk) {
+		bks[i].SetBorrower(mbr)
+		return bks
+	}
+	return bks
+}
+
 //func CheckIn(t string, bks []Book) []Book {
-//	i, mbk, errBk := FindBook(t, bks)
+//	i, mbk, errBk := findBook(t, bks)
 //	if errBk == nil && BookOut(mbk) {
 //		bks[i].SetBorrower(nil)
 //		return bks
