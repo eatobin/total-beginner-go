@@ -13,13 +13,13 @@ var br3libPtr = NewBorrower("Borrower3", 3)
 var brs1 = []*Borrower{br1libPtr, br2libPtr}
 var brs2 = []*Borrower{br1libPtr, br2libPtr, br3libPtr}
 
-var bk1libPtr = &Book{Title: "Title1", Author: "Author1", Borrower: br3libPtr}
+var bk1libPtr = &Book{Title: "Title1", Author: "Author1", Borrower: br1libPtr}
 var bk2libPtr = NewBook("Title2", "Author2")
 var bk3libPtr = &Book{Title: "Title3", Author: "Author3", Borrower: br3libPtr}
 
 var bk4libPtr = &Book{Title: "Title4", Author: "Author4", Borrower: br3libPtr}
 
-var bks1 = []*Book{bk1libPtr, bk3libPtr}
+var bks1 = []*Book{bk1libPtr, bk2libPtr}
 var bks2 = []*Book{bk1libPtr, bk2libPtr, bk3libPtr}
 
 var bks3 = []*Book{bk1libPtr, bk2libPtr, bk3libPtr, bk4libPtr}
@@ -264,8 +264,18 @@ func TestBooksToJSONString(t *testing.T) {
 }
 
 func TestStatusToString(t *testing.T) {
-	bks := bks1
-	brs := brs2
+	br1libPtrL := NewBorrower("Borrower1", 1)
+	br2libPtrL := NewBorrower("Borrower2", 2)
+	br3libPtrL := NewBorrower("Borrower3", 3)
+	brs2L := []*Borrower{br1libPtrL, br2libPtrL, br3libPtrL}
+
+	bk1libPtrL := &Book{Title: "Title1", Author: "Author1", Borrower: br1libPtr}
+	bk2libPtrL := NewBook("Title2", "Author2")
+	bk3libPtrL := &Book{Title: "Title3", Author: "Author3", Borrower: br3libPtr}
+	bks2L := []*Book{bk1libPtrL, bk2libPtrL, bk3libPtrL}
+
+	bks := bks2L
+	brs := brs2L
 	got := StatusToString(bks, brs)
 	want := ss
 	if got != want {
