@@ -267,11 +267,8 @@ func TestStatusToString(t *testing.T) {
 	br1libPtrL := NewBorrower("Borrower1", 1)
 	br2libPtrL := NewBorrower("Borrower2", 2)
 	br3libPtrL := NewBorrower("Borrower3", 3)
-	//brs2L := []*Borrower{br1libPtrL, br2libPtrL, br3libPtrL}
-	var brs2L []*Borrower
-	AddBorrower(brs2L, br1libPtrL)
-	AddBorrower(brs2L, br2libPtrL)
-	AddBorrower(brs2L, br3libPtrL)
+	brs2L := []*Borrower{br1libPtrL, br2libPtrL, br3libPtrL}
+
 	bk1libPtrL := &Book{Title: "Title1", Author: "Author1", Borrower: br1libPtr}
 	bk2libPtrL := NewBook("Title2", "Author2")
 	bk3libPtrL := &Book{Title: "Title3", Author: "Author3", Borrower: br3libPtr}
