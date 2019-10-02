@@ -1,10 +1,12 @@
-package main
+package book
 
 import (
 	"testing"
+
+	"eatobin.com/totalbeginnergo/borrower"
 )
 
-var br2Ptr = NewBorrower("Borrower2", 2)
+var br2Ptr = borrower.NewBorrower("Borrower2", 2)
 var bk1Ptr = NewBook("Title1", "Author1")
 var wantAvail = "Title1 by Author1; Available"
 var wantNotAvail = "Title1 by Author1; Checked out to Borrower2"

@@ -1,13 +1,16 @@
-package main
+package library
 
 import (
 	"encoding/json"
 	"errors"
 	"strconv"
 	"strings"
+
+	"eatobin.com/totalbeginnergo/book"
+	"eatobin.com/totalbeginnergo/borrower"
 )
 
-func containsBorrower(brs []*Borrower, br *Borrower) bool {
+func containsBorrower(brs []*borrower.Borrower, br *borrower.Borrower) bool {
 	for _, b := range brs {
 		if *b == *br {
 			return true
@@ -16,7 +19,7 @@ func containsBorrower(brs []*Borrower, br *Borrower) bool {
 	return false
 }
 
-func containsBook(bks []*Book, bk *Book) bool {
+func containsBook(bks []*book.Book, bk *book.Book) bool {
 	for _, b := range bks {
 		if *b == *bk {
 			return true
@@ -26,7 +29,7 @@ func containsBook(bks []*Book, bk *Book) bool {
 }
 
 // AddBorrower adds a Borrower to a slice of Borrowers
-func AddBorrower(brs []*Borrower, br *Borrower) []*Borrower {
+func AddBorrower(brs []*borrower.Borrower, br *borrower.Borrower) []*borrower.Borrower {
 	if !containsBorrower(brs, br) {
 		return append(brs, br)
 	}
@@ -34,7 +37,7 @@ func AddBorrower(brs []*Borrower, br *Borrower) []*Borrower {
 }
 
 // AddBook adds a book to a slice of Books
-func AddBook(bks []*Book, bk *Book) []*Book {
+func AddBook(bks []*book.Book, bk *book.Book) []*book.Book {
 	if !containsBook(bks, bk) {
 		return append(bks, bk)
 	}
@@ -42,28 +45,28 @@ func AddBook(bks []*Book, bk *Book) []*Book {
 }
 
 // findBorrower finds a Borrower given a Name
-func findBorrower(n string, brs []*Borrower) (error, *Borrower) {
+func findBorrower(n string, brs []*borrower.Borrower) (error, *borrower.Borrower) {
 	for _, br := range brs {
 		if br.Name == n {
 			return nil, br
 		}
 	}
-	return errors.New("did not find the requested borrower"), &Borrower{}
+	return errors.New("did not find the requested borrower"), &borrower.Borrower{}
 }
 
 // findBook finds a Book given a Title
-func findBook(t string, bks []*Book) (int, error, *Book) {
+func findBook(t string, bks []*book.Book) (int, error, *book.Book) {
 	for i, bk := range bks {
 		if bk.Title == t {
 			return i, nil, bk
 		}
 	}
-	return 0, errors.New("did not find the requested book"), &Book{}
+	return 0, errors.New("did not find the requested book"), &book.Book{}
 }
 
 // GetBooksForBorrower will find books given a Borrower and a slice of Books
-func getBooksForBorrower(br *Borrower, bks []*Book) []*Book {
-	nBks := make([]*Book, 0)
+func getBooksForBorrower(br *borrower.Borrower, bks []*book.Book) []*book.Book {
+	nBks := make([]*book.Book, 0)
 	for _, bk := range bks {
 		if bk.Borrower == br {
 			nBks = append(nBks, bk)
@@ -73,24 +76,24 @@ func getBooksForBorrower(br *Borrower, bks []*Book) []*Book {
 }
 
 // numberBooksOut returns the # Books checked out to a Borrower
-func numberBooksOut(br *Borrower, bks []*Book) int {
+func numberBooksOut(br *borrower.Borrower, bks []*book.Book) int {
 	return len(getBooksForBorrower(br, bks))
 }
 
 // notMaxedOut returns True if books out < max books
-func notMaxedOut(br *Borrower, bks []*Book) bool {
+func notMaxedOut(br *borrower.Borrower, bks []*book.Book) bool {
 	return numberBooksOut(br, bks) < br.MaxBooks
 }
 
-func bookNotOut(bk *Book) bool {
+func bookNotOut(bk *book.Book) bool {
 	return bk.Borrower == nil
 }
 
-func bookOut(bk *Book) bool {
+func bookOut(bk *book.Book) bool {
 	return bk.Borrower != nil
 }
 
-func CheckOut(n string, t string, brs []*Borrower, bks []*Book) []*Book {
+func CheckOut(n string, t string, brs []*borrower.Borrower, bks []*book.Book) []*book.Book {
 	errBr, mbr := findBorrower(n, brs)
 	i, errBk, mbk := findBook(t, bks)
 	if errBr == nil && errBk == nil && notMaxedOut(mbr, bks) && bookNotOut(mbk) {
@@ -100,7 +103,7 @@ func CheckOut(n string, t string, brs []*Borrower, bks []*Book) []*Book {
 	return bks
 }
 
-func CheckIn(t string, bks []*Book) []*Book {
+func CheckIn(t string, bks []*book.Book) []*book.Book {
 	i, errBk, mbk := findBook(t, bks)
 	if errBk == nil && bookOut(mbk) {
 		bks[i].SetBorrower(nil)
@@ -109,53 +112,53 @@ func CheckIn(t string, bks []*Book) []*Book {
 	return bks
 }
 
-func jsonStringToBorrowers(js string) (error, []*Borrower) {
-	var res []*Borrower
+func jsonStringToBorrowers(js string) (error, []*borrower.Borrower) {
+	var res []*borrower.Borrower
 	err := json.Unmarshal([]byte(js), &res)
 	if err != nil {
-		return err, []*Borrower{}
+		return err, []*borrower.Borrower{}
 	}
 	for _, br := range res {
 		if br.Name == "" || br.MaxBooks == 0 {
 			err = errors.New("missing Borrower field value - borrowers list is empty")
-			return err, []*Borrower{}
+			return err, []*borrower.Borrower{}
 		}
 	}
 	return err, res
 }
 
-func jsonStringToBooks(js string) (error, []*Book) {
-	var res []*Book
+func jsonStringToBooks(js string) (error, []*book.Book) {
+	var res []*book.Book
 	err := json.Unmarshal([]byte(js), &res)
 	if err != nil {
-		return err, []*Book{}
+		return err, []*book.Book{}
 	}
 	for _, bk := range res {
 		if bk.Title == "" || bk.Author == "" || bk.Borrower.Name == "" || bk.Borrower.MaxBooks == 0 {
 			err = errors.New("missing Book field value - book list is empty")
-			return err, []*Book{}
+			return err, []*book.Book{}
 		}
 	}
 	return nil, res
 }
 
-func BorrowersToJSONSting(brs []*Borrower) string {
+func BorrowersToJSONSting(brs []*borrower.Borrower) string {
 	bytes, _ := json.MarshalIndent(brs, "", "  ")
 	return string(bytes)
 }
 
-func BooksToJSONSting(bks []*Book) string {
+func BooksToJSONSting(bks []*book.Book) string {
 	bytes, _ := json.MarshalIndent(bks, "", "  ")
 	return string(bytes)
 }
 
-func libraryToString(bks []*Book, brs []*Borrower) string {
+func libraryToString(bks []*book.Book, brs []*borrower.Borrower) string {
 	return "Test Library: " +
 		strconv.Itoa(len(bks)) + " books; " +
 		strconv.Itoa(len(brs)) + " borrowers."
 }
 
-func StatusToString(bks []*Book, brs []*Borrower) string {
+func StatusToString(bks []*book.Book, brs []*borrower.Borrower) string {
 	var sb strings.Builder
 	sb.WriteString("\n--- Status Report of Test Library ---\n\n")
 	sb.WriteString(libraryToString(bks, brs) + "\n\n")
