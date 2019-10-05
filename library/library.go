@@ -30,18 +30,18 @@ func containsBook(bks []*book.Book, bk *book.Book) bool {
 
 // AddBorrower adds a Borrower to a slice of Borrowers
 func AddBorrower(brs []*borrower.Borrower, br *borrower.Borrower) []*borrower.Borrower {
-	if !containsBorrower(brs, br) {
-		return append(brs, br)
+	if containsBorrower(brs, br) {
+		return brs
 	}
-	return brs
+	return append(brs, br)
 }
 
 // AddBook adds a book to a slice of Books
 func AddBook(bks []*book.Book, bk *book.Book) []*book.Book {
-	if !containsBook(bks, bk) {
-		return append(bks, bk)
+	if containsBook(bks, bk) {
+		return bks
 	}
-	return bks
+	return append(bks, bk)
 }
 
 // findBorrower finds a Borrower given a Name
