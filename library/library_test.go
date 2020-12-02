@@ -1,12 +1,11 @@
 package library
 
 import (
+	"eatobin.com/totalbeginnergo/book"
+	"eatobin.com/totalbeginnergo/borrower"
 	"errors"
 	"reflect"
 	"testing"
-
-	"eatobin.com/totalbeginnergo/book"
-	"eatobin.com/totalbeginnergo/borrower"
 )
 
 var br1libPtr = borrower.NewBorrower("Borrower1", 1)

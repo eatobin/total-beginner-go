@@ -1,9 +1,8 @@
 package book
 
 import (
-	"testing"
-
 	"eatobin.com/totalbeginnergo/borrower"
+	"testing"
 )
 
 var br2Ptr = borrower.NewBorrower("Borrower2", 2)
