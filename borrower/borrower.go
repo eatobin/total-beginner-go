@@ -9,21 +9,23 @@ type Borrower struct {
 }
 
 // NewBorrower needs a Name and a max books to create
-func NewBorrower(name string, maxBooks int) *Borrower {
-	return &Borrower{Name: name, MaxBooks: maxBooks}
+func NewBorrower(name string, maxBooks int) Borrower {
+	return Borrower{Name: name, MaxBooks: maxBooks}
 }
 
 // SetName sets a Name for a Borrower
-func (b *Borrower) SetName(name string) {
-	b.Name = name
+func SetName(br Borrower, name string) Borrower {
+	br.Name = name
+	return br
 }
 
 // SetMaxBooks sets a max books for a Borrower
-func (b *Borrower) SetMaxBooks(maxBooks int) {
-	b.MaxBooks = maxBooks
+func SetMaxBooks(br Borrower, maxBooks int) Borrower {
+	br.MaxBooks = maxBooks
+	return br
 }
 
-// BorrowerToString makes a Borrower into a string
-func (b *Borrower) BorrowerToString() string {
-	return b.Name + " (" + strconv.Itoa(b.MaxBooks) + " books)"
+// BrToString makes a Borrower into a string
+func BrToString(br Borrower) string {
+	return br.Name + " (" + strconv.Itoa(br.MaxBooks) + " books)"
 }
