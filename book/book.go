@@ -13,32 +13,35 @@ func NewBook(title string, author string) *Book {
 	return &Book{Title: title, Author: author}
 }
 
-// SetTitle sets a Title for a Book
-func (b *Book) SetTitle(title string) {
-	b.Title = title
+// setTitle sets a Title for a Book
+func setTitle(bk Book, title string) Book {
+	bk.Title = title
+	return bk
 }
 
-// SetAuthor sets a Author for a Book
-func (b *Book) SetAuthor(author string) {
-	b.Author = author
+// setAuthor sets a Author for a Book
+func setAuthor(bk Book, author string) Book {
+	bk.Author = author
+	return bk
 }
 
 // SetBorrower takes a BorrowerPtr and sets it for a Book
-func (b *Book) SetBorrower(borrower *borrower.Borrower) {
-	b.Borrower = borrower
+func SetBorrower(bk Book, borrower *borrower.Borrower) Book {
+	bk.Borrower = borrower
+	return bk
 }
 
-func (b *Book) availableString() string {
-	if b.Borrower == nil {
+func availableString(bk Book) string {
+	if bk.Borrower == nil {
 		return "Available"
 	}
 	return "Checked out to " +
-		b.Borrower.Name
+		bk.Borrower.Name
 }
 
-// BookToString makes a description of a Book
-func (b *Book) BookToString() string {
-	return b.Title +
-		" by " + b.Author +
-		"; " + b.availableString()
+// BkToString makes a description of a Book
+func BkToString(bk Book) string {
+	return bk.Title +
+		" by " + bk.Author +
+		"; " + availableString(bk)
 }
