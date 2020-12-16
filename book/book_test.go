@@ -7,8 +7,7 @@ import (
 //var br2Ptr = borrower.NewBorrower("Borrower2", 2)
 //var bk1Ptr = NewBook("Title1", "Author1")
 var wantAvailS = "Title1 by Author1; Available"
-
-//var wantNotAvailS = "Title1 by Author1; Checked out to Borrower2"
+var wantNotAvailS = "Title1 by Author1; Checked out to Borrower2"
 
 //func TestBookToString(t *testing.T) {
 //	gotAvail := bk1Ptr.BookToString()
@@ -29,13 +28,16 @@ func TestSetBookValues(t *testing.T) {
 	if gotBkT != wantAvailS {
 		t.Fatalf("setTitle(%v, %v) == %v, want %v", badBkT, title, gotBkT, wantAvailS)
 	}
-	//author := "Author1"
+	author := "Author1"
+	badBkA := Book{"Title1", "NoAuthor", nil}
+	gotBkA := BkToString(setAuthor(badBkA, author))
+	if gotBkA != wantAvailS {
+		t.Fatalf("setAuthor(%v, %v) == %v, want %v", badBkA, author, gotBkA, wantAvailS)
+	}
 
 	//badTitle.SetTitle(title)
 
 	//badAuthor := Book{"Title1", "NoAuthor", nil}
 	//badAuthor.SetAuthor(author)
-	//if badAuthor.BookToString() != wantAvail {
-	//	t.Fatalf("bk.SetAuthor(%v) == %v, want %v", author, badAuthor.BookToString(), wantAvail)
-	//}
+
 }
