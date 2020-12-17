@@ -15,6 +15,6 @@ func TestSetBorrowerValues(t *testing.T) {
 	badBrMB := Borrower{"Borrower1", 11}
 	gotBrMB := BrToString(setMaxBooks(badBrMB, mb))
 	if gotBrMB != wantS {
-		t.Fatalf("SetMaxBooks(%v, %v) == %v, want %v", badBrMB, mb, gotBrMB, wantS)
+		t.Fatalf("setMaxBooks(%v, %v) == %v, want %v", badBrMB, mb, gotBrMB, wantS)
 	}
 }
