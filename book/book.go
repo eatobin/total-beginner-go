@@ -4,13 +4,15 @@ import "eatobin.com/totalbeginnergo/borrower"
 
 // A Book has a Title and an Author
 type Book struct {
-	Title              string `json:"title"`
-	Author             string `json:"author"`
-	*borrower.Borrower `json:"borrower"`
+	Title    string            `json:"title"`
+	Author   string            `json:"author"`
+	Borrower borrower.Borrower `json:"borrower"`
 }
 
-func NewBook(title string, author string) *Book {
-	return &Book{Title: title, Author: author}
+var zeroBorrower = borrower.Borrower{}
+
+func NewBook(title string, author string) Book {
+	return Book{Title: title, Author: author, Borrower: zeroBorrower}
 }
 
 // setTitle sets a Title for a Book
@@ -26,13 +28,13 @@ func setAuthor(bk Book, author string) Book {
 }
 
 // SetBorrower takes a BorrowerPtr and sets it for a Book
-func SetBorrower(bk Book, borrower *borrower.Borrower) Book {
+func SetBorrower(bk Book, borrower borrower.Borrower) Book {
 	bk.Borrower = borrower
 	return bk
 }
 
 func availableString(bk Book) string {
-	if bk.Borrower == nil {
+	if bk.Borrower == zeroBorrower {
 		return "Available"
 	}
 	return "Checked out to " +
