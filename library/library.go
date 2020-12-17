@@ -10,18 +10,18 @@ import (
 	"eatobin.com/totalbeginnergo/borrower"
 )
 
-func containsBorrower(brs []*borrower.Borrower, br *borrower.Borrower) bool {
+func containsBorrower(brs []borrower.Borrower, br borrower.Borrower) bool {
 	for _, b := range brs {
-		if *b == *br {
+		if b == br {
 			return true
 		}
 	}
 	return false
 }
 
-func containsBook(bks []*book.Book, bk *book.Book) bool {
+func containsBook(bks []book.Book, bk book.Book) bool {
 	for _, b := range bks {
-		if *b == *bk {
+		if b == bk {
 			return true
 		}
 	}
@@ -29,7 +29,7 @@ func containsBook(bks []*book.Book, bk *book.Book) bool {
 }
 
 // AddBorrower adds a Borrower to a slice of Borrowers
-func AddBorrower(brs []*borrower.Borrower, br *borrower.Borrower) []*borrower.Borrower {
+func AddBorrower(brs []borrower.Borrower, br borrower.Borrower) []borrower.Borrower {
 	if containsBorrower(brs, br) {
 		return brs
 	}
@@ -37,7 +37,7 @@ func AddBorrower(brs []*borrower.Borrower, br *borrower.Borrower) []*borrower.Bo
 }
 
 // AddBook adds a book to a slice of Books
-func AddBook(bks []*book.Book, bk *book.Book) []*book.Book {
+func AddBook(bks []book.Book, bk book.Book) []book.Book {
 	if containsBook(bks, bk) {
 		return bks
 	}
@@ -45,28 +45,28 @@ func AddBook(bks []*book.Book, bk *book.Book) []*book.Book {
 }
 
 // findBorrower finds a Borrower given a Name
-func findBorrower(n string, brs []*borrower.Borrower) (error, *borrower.Borrower) {
+func findBorrower(n string, brs []borrower.Borrower) (error, borrower.Borrower) {
 	for _, br := range brs {
 		if br.Name == n {
 			return nil, br
 		}
 	}
-	return errors.New("did not find the requested borrower"), &borrower.Borrower{}
+	return errors.New("did not find the requested borrower"), book.ZeroBorrower
 }
 
 // findBook finds a Book given a Title
-func findBook(t string, bks []*book.Book) (int, error, *book.Book) {
+func findBook(t string, bks []book.Book) (int, error, book.Book) {
 	for i, bk := range bks {
 		if bk.Title == t {
 			return i, nil, bk
 		}
 	}
-	return 0, errors.New("did not find the requested book"), &book.Book{}
+	return 0, errors.New("did not find the requested book"), book.Book{}
 }
 
 // GetBooksForBorrower will find books given a Borrower and a slice of Books
-func getBooksForBorrower(br *borrower.Borrower, bks []*book.Book) []*book.Book {
-	nBks := make([]*book.Book, 0)
+func getBooksForBorrower(br borrower.Borrower, bks []book.Book) []book.Book {
+	nBks := make([]book.Book, 0)
 	for _, bk := range bks {
 		if bk.Borrower == br {
 			nBks = append(nBks, bk)
@@ -76,23 +76,24 @@ func getBooksForBorrower(br *borrower.Borrower, bks []*book.Book) []*book.Book {
 }
 
 // numberBooksOut returns the # Books checked out to a Borrower
-func numberBooksOut(br *borrower.Borrower, bks []*book.Book) int {
+func numberBooksOut(br borrower.Borrower, bks []book.Book) int {
 	return len(getBooksForBorrower(br, bks))
 }
 
 // notMaxedOut returns True if books out < max books
-func notMaxedOut(br *borrower.Borrower, bks []*book.Book) bool {
+func notMaxedOut(br borrower.Borrower, bks []book.Book) bool {
 	return numberBooksOut(br, bks) < br.MaxBooks
 }
 
-func bookNotOut(bk *book.Book) bool {
-	return bk.Borrower == nil
+func bookNotOut(bk book.Book) bool {
+	return bk.Borrower == book.ZeroBorrower
 }
 
-func bookOut(bk *book.Book) bool {
-	return bk.Borrower != nil
+func bookOut(bk book.Book) bool {
+	return bk.Borrower != book.ZeroBorrower
 }
 
+//TODO - make functional
 func CheckOut(n string, t string, brs []*borrower.Borrower, bks []*book.Book) []*book.Book {
 	errBr, mbr := findBorrower(n, brs)
 	i, errBk, mbk := findBook(t, bks)
@@ -103,6 +104,7 @@ func CheckOut(n string, t string, brs []*borrower.Borrower, bks []*book.Book) []
 	return bks
 }
 
+//TODO - make functional
 func CheckIn(t string, bks []*book.Book) []*book.Book {
 	i, errBk, mbk := findBook(t, bks)
 	if errBk == nil && bookOut(mbk) {

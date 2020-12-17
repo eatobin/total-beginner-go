@@ -22,7 +22,7 @@ func TestSetBookValues(t *testing.T) {
 		t.Fatalf("setAuthor(%v, %v) == %v, want %v", badBkA, author, gotBkA, wantAvailS)
 	}
 	newBorrower := borrower.NewBorrower("Borrower2", 2)
-	badBkB := Book{"Title1", "Author1", zeroBorrower}
+	badBkB := Book{"Title1", "Author1", ZeroBorrower}
 	gotBkB := BkToString(SetBorrower(badBkB, newBorrower))
 	if gotBkB != wantNotAvailS {
 		t.Fatalf("SetBorrower(%v, %v) == %v, want %v", badBkB, newBorrower, gotBkB, wantNotAvailS)
