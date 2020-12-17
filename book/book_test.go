@@ -1,25 +1,12 @@
 package book
 
 import (
+	"eatobin.com/totalbeginnergo/borrower"
 	"testing"
 )
 
-//var br2Ptr = borrower.NewBorrower("Borrower2", 2)
-//var bk1Ptr = NewBook("Title1", "Author1")
 var wantAvailS = "Title1 by Author1; Available"
 var wantNotAvailS = "Title1 by Author1; Checked out to Borrower2"
-
-//func TestBookToString(t *testing.T) {
-//	gotAvail := bk1Ptr.BookToString()
-//	if gotAvail != wantAvail {
-//		t.Fatalf("bk.BookToString() == %q, want %q", gotAvail, wantAvail)
-//	}
-//	bk1Ptr.SetBorrower(br2Ptr)
-//	gotNotAvail := bk1Ptr.BookToString()
-//	if gotNotAvail != wantNotAvail {
-//		t.Fatalf("bk.BookToString() == %q, want %q", gotNotAvail, wantNotAvail)
-//	}
-//}
 
 func TestSetBookValues(t *testing.T) {
 	title := "Title1"
@@ -34,10 +21,10 @@ func TestSetBookValues(t *testing.T) {
 	if gotBkA != wantAvailS {
 		t.Fatalf("setAuthor(%v, %v) == %v, want %v", badBkA, author, gotBkA, wantAvailS)
 	}
-
-	//badTitle.SetTitle(title)
-
-	//badAuthor := Book{"Title1", "NoAuthor", nil}
-	//badAuthor.SetAuthor(author)
-
+	newBorrower := borrower.NewBorrower("Borrower2", 2)
+	badBkB := Book{"Title1", "Author1", nil}
+	gotBkB := BkToString(SetBorrower(badBkB, &newBorrower))
+	if gotBkB != wantNotAvailS {
+		t.Fatalf("SetBorrower(%v, %v) == %v, want %v", badBkB, &newBorrower, gotBkB, wantNotAvailS)
+	}
 }
