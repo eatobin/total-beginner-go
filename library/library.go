@@ -29,7 +29,7 @@ func containsBook(bks []book.Book, bk book.Book) bool {
 }
 
 // AddBorrower adds a Borrower to a slice of Borrowers
-func AddBorrower(brs []borrower.Borrower, br borrower.Borrower) []borrower.Borrower {
+func addBorrower(brs []borrower.Borrower, br borrower.Borrower) []borrower.Borrower {
 	if containsBorrower(brs, br) {
 		return brs
 	}
@@ -37,11 +37,21 @@ func AddBorrower(brs []borrower.Borrower, br borrower.Borrower) []borrower.Borro
 }
 
 // AddBook adds a book to a slice of Books
-func AddBook(bks []book.Book, bk book.Book) []book.Book {
+func addBook(bks []book.Book, bk book.Book) []book.Book {
 	if containsBook(bks, bk) {
 		return bks
 	}
 	return append(bks, bk)
+}
+
+func removeBook(bk book.Book, bks []book.Book) []book.Book {
+	nBks := make([]book.Book, 0)
+	for _, nBk := range bks {
+		if nBk != bk {
+			nBks = append(nBks, nBk)
+		}
+	}
+	return nBks
 }
 
 // findBorrower finds a Borrower given a Name
@@ -92,6 +102,27 @@ func bookNotOut(bk book.Book) bool {
 func bookOut(bk book.Book) bool {
 	return bk.Borrower != book.ZeroBorrower
 }
+
+//def checkOut(n: String, t: String, brs: List[Borrower], bks: List[Book]): List[Book] = {
+//val mbk = findItem(t, bks, getTitle)
+//val mbr = findItem(n, brs, getName)
+//
+//if (mbk.isDefined && mbr.isDefined && notMaxedOut(mbr.get, bks) && bookNotOut(mbk.get)) {
+//val newBook = setBorrower(mbr, mbk.get)
+//val fewerBooks = removeBook(mbk.get, bks)
+//addItem(newBook, fewerBooks)
+//} else bks
+//}
+//
+//def checkIn(t: String, bks: List[Book]): List[Book] = {
+//val mbk = findItem(t, bks, getTitle)
+//
+//if (mbk.isDefined && bookOut(mbk.get)) {
+//val newBook = setBorrower(None, mbk.get)
+//val fewerBooks = removeBook(mbk.get, bks)
+//addItem(newBook, fewerBooks)
+//} else bks
+//}
 
 //TODO - make functional
 func CheckOut(n string, t string, brs []*borrower.Borrower, bks []*book.Book) []*book.Book {
