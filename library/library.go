@@ -28,13 +28,13 @@ func containsBook(bks []book.Book, bk book.Book) bool {
 	return false
 }
 
-// AddBorrower adds a Borrower to a slice of Borrowers
-func addBorrower(brs []borrower.Borrower, br borrower.Borrower) []borrower.Borrower {
-	if containsBorrower(brs, br) {
-		return brs
-	}
-	return append(brs, br)
-}
+//// AddBorrower adds a Borrower to a slice of Borrowers
+//func addBorrower(brs []borrower.Borrower, br borrower.Borrower) []borrower.Borrower {
+//	if containsBorrower(brs, br) {
+//		return brs
+//	}
+//	return append(brs, br)
+//}
 
 // AddBook adds a book to a slice of Books
 func addBook(bks []book.Book, bk book.Book) []book.Book {
@@ -145,62 +145,62 @@ func CheckIn(t string, bks []book.Book) []book.Book {
 	return bks
 }
 
-func jsonStringToBorrowers(js string) (error, []*borrower.Borrower) {
-	var res []*borrower.Borrower
+func jsonStringToBorrowers(js string) (error, []borrower.Borrower) {
+	var res []borrower.Borrower
 	err := json.Unmarshal([]byte(js), &res)
 	if err != nil {
-		return err, []*borrower.Borrower{}
+		return err, []borrower.Borrower{}
 	}
 	for _, br := range res {
 		if br.Name == "" || br.MaxBooks == 0 {
 			err = errors.New("missing Borrower field value - borrowers list is empty")
-			return err, []*borrower.Borrower{}
+			return err, []borrower.Borrower{}
 		}
 	}
 	return err, res
 }
 
-func jsonStringToBooks(js string) (error, []*book.Book) {
-	var res []*book.Book
+func jsonStringToBooks(js string) (error, []book.Book) {
+	var res []book.Book
 	err := json.Unmarshal([]byte(js), &res)
 	if err != nil {
-		return err, []*book.Book{}
+		return err, []book.Book{}
 	}
 	for _, bk := range res {
 		if bk.Title == "" || bk.Author == "" || bk.Borrower.Name == "" || bk.Borrower.MaxBooks == 0 {
 			err = errors.New("missing Book field value - book list is empty")
-			return err, []*book.Book{}
+			return err, []book.Book{}
 		}
 	}
 	return nil, res
 }
 
-func BorrowersToJSONSting(brs []*borrower.Borrower) string {
+func BorrowersToJSONSting(brs []borrower.Borrower) string {
 	bytes, _ := json.MarshalIndent(brs, "", "  ")
 	return string(bytes)
 }
 
-func BooksToJSONSting(bks []*book.Book) string {
+func BooksToJSONSting(bks []book.Book) string {
 	bytes, _ := json.MarshalIndent(bks, "", "  ")
 	return string(bytes)
 }
 
-func libraryToString(bks []*book.Book, brs []*borrower.Borrower) string {
+func libraryToString(bks []book.Book, brs []borrower.Borrower) string {
 	return "Test Library: " +
 		strconv.Itoa(len(bks)) + " books; " +
 		strconv.Itoa(len(brs)) + " borrowers."
 }
 
-func StatusToString(bks []*book.Book, brs []*borrower.Borrower) string {
+func StatusToString(bks []book.Book, brs []borrower.Borrower) string {
 	var sb strings.Builder
 	sb.WriteString("\n--- Status Report of Test Library ---\n\n")
 	sb.WriteString(libraryToString(bks, brs) + "\n\n")
 	for _, bk := range bks {
-		sb.WriteString(bk.BookToString() + "\n")
+		sb.WriteString(book.BkToString(bk) + "\n")
 	}
 	sb.WriteString("\n")
 	for _, br := range brs {
-		sb.WriteString(br.BorrowerToString() + "\n")
+		sb.WriteString(borrower.BrToString(br) + "\n")
 	}
 	sb.WriteString("\n--- End of Status Report ---\n")
 	return sb.String()
