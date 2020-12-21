@@ -7,8 +7,8 @@ import (
 )
 
 func main() {
-	var borrowers []*borrower.Borrower
-	var books []*book.Book
+	var borrowers []borrower.Borrower
+	var books []book.Book
 
 	borrowers = library.AddBorrower(borrowers, borrower.NewBorrower("Jim", 3))
 	borrowers = library.AddBorrower(borrowers, borrower.NewBorrower("Sue", 3))

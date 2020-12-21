@@ -29,15 +29,15 @@ func containsBook(bks []book.Book, bk book.Book) bool {
 }
 
 // AddBorrower adds a Borrower to a slice of Borrowers
-func addBorrower(brs []borrower.Borrower, br borrower.Borrower) []borrower.Borrower {
+func AddBorrower(brs []borrower.Borrower, br borrower.Borrower) []borrower.Borrower {
 	if containsBorrower(brs, br) {
 		return brs
 	}
 	return append(brs, br)
 }
 
-// addBook adds a book to a slice of Books
-func addBook(bks []book.Book, bk book.Book) []book.Book {
+// AddBook adds a book to a slice of Books
+func AddBook(bks []book.Book, bk book.Book) []book.Book {
 	if containsBook(bks, bk) {
 		return bks
 	}
@@ -110,7 +110,7 @@ func CheckOut(n string, t string, brs []borrower.Borrower, bks []book.Book) []bo
 	if errBr == nil && errBk == nil && notMaxedOut(mbr, bks) && bookNotOut(mbk) {
 		newBook := book.SetBorrower(mbk, mbr)
 		fewerBooks := removeBook(mbk, bks)
-		return addBook(fewerBooks, newBook)
+		return AddBook(fewerBooks, newBook)
 	}
 	return bks
 }
@@ -120,7 +120,7 @@ func CheckIn(t string, bks []book.Book) []book.Book {
 	if errBk == nil && bookOut(mbk) {
 		newBook := book.SetBorrower(mbk, book.ZeroBorrower)
 		fewerBooks := removeBook(mbk, bks)
-		return addBook(fewerBooks, newBook)
+		return AddBook(fewerBooks, newBook)
 	}
 	return bks
 }

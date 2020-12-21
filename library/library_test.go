@@ -48,7 +48,7 @@ func TestAddBorrower(t *testing.T) {
 		{brs1, br2lib, brs1},
 	}
 	for _, c := range cases {
-		gotBrs := addBorrower(c.brs, c.br)
+		gotBrs := AddBorrower(c.brs, c.br)
 		if !reflect.DeepEqual(gotBrs, c.wantBrs) {
 			t.Errorf("AddBorrower(%v, %v) ==\n%v want\n%v",
 				c.brs, c.br, gotBrs, c.wantBrs)
@@ -66,9 +66,9 @@ func TestAddBook(t *testing.T) {
 		{bks1, bk2lib, bks1},
 	}
 	for _, c := range cases {
-		gotBks := addBook(c.bks, c.bk)
+		gotBks := AddBook(c.bks, c.bk)
 		if !reflect.DeepEqual(gotBks, c.wantBks) {
-			t.Errorf("addBook(%v, %v) ==\n%v want\n%v",
+			t.Errorf("AddBook(%v, %v) ==\n%v want\n%v",
 				c.bks, c.bk, gotBks, c.wantBks)
 		}
 	}
