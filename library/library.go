@@ -10,6 +10,15 @@ import (
 	"eatobin.com/totalbeginnergo/borrower"
 )
 
+func containsBorrower(brs []borrower.Borrower, br borrower.Borrower) bool {
+	for _, b := range brs {
+		if b == br {
+			return true
+		}
+	}
+	return false
+}
+
 func containsBook(bks []book.Book, bk book.Book) bool {
 	for _, b := range bks {
 		if b == bk {
@@ -17,6 +26,14 @@ func containsBook(bks []book.Book, bk book.Book) bool {
 		}
 	}
 	return false
+}
+
+// AddBorrower adds a Borrower to a slice of Borrowers
+func addBorrower(brs []borrower.Borrower, br borrower.Borrower) []borrower.Borrower {
+	if containsBorrower(brs, br) {
+		return brs
+	}
+	return append(brs, br)
 }
 
 // addBook adds a book to a slice of Books

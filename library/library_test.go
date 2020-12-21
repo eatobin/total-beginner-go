@@ -38,6 +38,24 @@ var jsonStringBooksBadBorrowerField = `[{"title":"Title2","author":"Author22","b
 
 var ss = "\n--- Status Report of Test Library ---\n\nTest Library: 3 books; 3 borrowers.\n\nTitle1 by Author1; Checked out to Borrower1\nTitle2 by Author2; Available\nTitle3 by Author3; Checked out to Borrower3\n\nBorrower1 (1 books)\nBorrower2 (2 books)\nBorrower3 (3 books)\n\n--- End of Status Report ---\n"
 
+func TestAddBorrower(t *testing.T) {
+	cases := []struct {
+		brs     []borrower.Borrower
+		br      borrower.Borrower
+		wantBrs []borrower.Borrower
+	}{
+		{brs1, br3lib, brs2},
+		{brs1, br2lib, brs1},
+	}
+	for _, c := range cases {
+		gotBrs := addBorrower(c.brs, c.br)
+		if !reflect.DeepEqual(gotBrs, c.wantBrs) {
+			t.Errorf("AddBorrower(%v, %v) ==\n%v want\n%v",
+				c.brs, c.br, gotBrs, c.wantBrs)
+		}
+	}
+}
+
 func TestAddBook(t *testing.T) {
 	cases := []struct {
 		bks     []book.Book
