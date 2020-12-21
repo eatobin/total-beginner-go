@@ -10,15 +10,6 @@ import (
 	"eatobin.com/totalbeginnergo/borrower"
 )
 
-func containsBorrower(brs []borrower.Borrower, br borrower.Borrower) bool {
-	for _, b := range brs {
-		if b == br {
-			return true
-		}
-	}
-	return false
-}
-
 func containsBook(bks []book.Book, bk book.Book) bool {
 	for _, b := range bks {
 		if b == bk {
@@ -28,15 +19,7 @@ func containsBook(bks []book.Book, bk book.Book) bool {
 	return false
 }
 
-//// AddBorrower adds a Borrower to a slice of Borrowers
-//func addBorrower(brs []borrower.Borrower, br borrower.Borrower) []borrower.Borrower {
-//	if containsBorrower(brs, br) {
-//		return brs
-//	}
-//	return append(brs, br)
-//}
-
-// AddBook adds a book to a slice of Books
+// addBook adds a book to a slice of Books
 func addBook(bks []book.Book, bk book.Book) []book.Book {
 	if containsBook(bks, bk) {
 		return bks
@@ -44,6 +27,7 @@ func addBook(bks []book.Book, bk book.Book) []book.Book {
 	return append(bks, bk)
 }
 
+// removeBook removes a book from a slice of Books
 func removeBook(bk book.Book, bks []book.Book) []book.Book {
 	nBks := make([]book.Book, 0)
 	for _, nBk := range bks {
@@ -74,7 +58,7 @@ func findBook(t string, bks []book.Book) (error, book.Book) {
 	return errors.New("did not find the requested book"), book.Book{}
 }
 
-// GetBooksForBorrower will find books given a Borrower and a slice of Books
+// getBooksForBorrower will find books given a Borrower and a slice of Books
 func getBooksForBorrower(br borrower.Borrower, bks []book.Book) []book.Book {
 	nBks := make([]book.Book, 0)
 	for _, bk := range bks {
@@ -102,27 +86,6 @@ func bookNotOut(bk book.Book) bool {
 func bookOut(bk book.Book) bool {
 	return bk.Borrower != book.ZeroBorrower
 }
-
-//def checkOut(n: String, t: String, brs: List[Borrower], bks: List[Book]): List[Book] = {
-//val mbk = findItem(t, bks, getTitle)
-//val mbr = findItem(n, brs, getName)
-//
-//if (mbk.isDefined && mbr.isDefined && notMaxedOut(mbr.get, bks) && bookNotOut(mbk.get)) {
-//val newBook = setBorrower(mbr, mbk.get)
-//val fewerBooks = removeBook(mbk.get, bks)
-//addItem(newBook, fewerBooks)
-//} else bks
-//}
-//
-//def checkIn(t: String, bks: List[Book]): List[Book] = {
-//val mbk = findItem(t, bks, getTitle)
-//
-//if (mbk.isDefined && bookOut(mbk.get)) {
-//val newBook = setBorrower(None, mbk.get)
-//val fewerBooks = removeBook(mbk.get, bks)
-//addItem(newBook, fewerBooks)
-//} else bks
-//}
 
 func CheckOut(n string, t string, brs []borrower.Borrower, bks []book.Book) []book.Book {
 	errBr, mbr := findBorrower(n, brs)
