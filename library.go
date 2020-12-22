@@ -122,7 +122,7 @@ func CheckIn(t string, bks []Book) []Book {
 	return bks
 }
 
-func jsonStringToBorrowers(js string) (error, []Borrower) {
+func JsonStringToBorrowers(js string) (error, []Borrower) {
 	var res []Borrower
 	err := json.Unmarshal([]byte(js), &res)
 	if err != nil {
@@ -137,7 +137,7 @@ func jsonStringToBorrowers(js string) (error, []Borrower) {
 	return err, res
 }
 
-func jsonStringToBooks(js string) (error, []Book) {
+func JsonStringToBooks(js string) (error, []Book) {
 	var res []Book
 	err := json.Unmarshal([]byte(js), &res)
 	if err != nil {

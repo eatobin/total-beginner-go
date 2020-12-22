@@ -184,9 +184,9 @@ func Test_jsonStringToBorrowersPass(t *testing.T) {
 	wantBrs := brs1
 	wantE := error(nil)
 
-	err, got := jsonStringToBorrowers(js)
+	err, got := JsonStringToBorrowers(js)
 	if !reflect.DeepEqual(got, wantBrs) || err != wantE {
-		t.Errorf("jsonStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
+		t.Errorf("JsonStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
 			js, got, err, wantBrs, wantE)
 	}
 }
@@ -202,9 +202,9 @@ func Test_jsonStringToBorrowersFail(t *testing.T) {
 		{jsonStringBorrowersBadMaxBooksField, []Borrower{}, errors.New("missing Borrower field value - borrowers list is empty")},
 	}
 	for _, c := range cases {
-		err, got := jsonStringToBorrowers(c.js)
+		err, got := JsonStringToBorrowers(c.js)
 		if err.Error() != c.wantE.Error() {
-			t.Errorf("jsonStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
+			t.Errorf("JsonStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
 				c.js, got, err, c.wantBrs, c.wantE)
 		}
 	}
@@ -215,7 +215,7 @@ func Test_jsonStringToBooksPass(t *testing.T) {
 	wantBks := []Book{{Title: "Title2", Author: "Author22", Borrower: Borrower{Name: "NoName", MaxBooks: -1}}}
 	wantE := error(nil)
 
-	err, got := jsonStringToBooks(js)
+	err, got := JsonStringToBooks(js)
 
 	if !reflect.DeepEqual(got, wantBks) || err != wantE {
 		t.Errorf("JSONStringToBooks\n(%s)\n==\n%v and %v\nwant\n%v and %v",
@@ -234,7 +234,7 @@ func Test_jsonStringToBooksFail(t *testing.T) {
 		{jsonStringBooksBadBorrowerField, []Book{}, errors.New("missing Book field value - book list is empty")},
 	}
 	for _, c := range cases {
-		err, got := jsonStringToBooks(c.js)
+		err, got := JsonStringToBooks(c.js)
 		if err.Error() != c.wantE.Error() {
 			t.Errorf("JSONStringToBooks\n(%s)\n==\n%v and %v\nwant\n%v and %v",
 				c.js, got, err, c.wantBks, c.wantE)

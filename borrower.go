@@ -13,14 +13,14 @@ func NewBorrower(name string, maxBooks int) Borrower {
 	return Borrower{Name: name, MaxBooks: maxBooks}
 }
 
-// setName sets a Name for a Borrower
-func setName(br Borrower, name string) Borrower {
+// SetName sets a Name for a Borrower
+func SetName(br Borrower, name string) Borrower {
 	br.Name = name
 	return br
 }
 
-// setMaxBooks sets a max books for a Borrower
-func setMaxBooks(br Borrower, maxBooks int) Borrower {
+// SetMaxBooks sets a max books for a Borrower
+func SetMaxBooks(br Borrower, maxBooks int) Borrower {
 	br.MaxBooks = maxBooks
 	return br
 }

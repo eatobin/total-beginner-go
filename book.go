@@ -13,14 +13,14 @@ func NewBook(title string, author string) Book {
 	return Book{Title: title, Author: author, Borrower: ZeroBorrower}
 }
 
-// setTitle sets a Title for a Book
-func setTitle(bk Book, title string) Book {
+// SetTitle sets a Title for a Book
+func SetTitle(bk Book, title string) Book {
 	bk.Title = title
 	return bk
 }
 
-// setAuthor sets a Author for a Book
-func setAuthor(bk Book, author string) Book {
+// SetAuthor sets a Author for a Book
+func SetAuthor(bk Book, author string) Book {
 	bk.Author = author
 	return bk
 }
