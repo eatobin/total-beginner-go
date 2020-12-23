@@ -13,7 +13,7 @@ func TestSetBorrowerValues(t *testing.T) {
 	badBrPtr.SetName(n)
 	gotBrPtr := badBrPtr.BrToString()
 	if gotBrPtr != wantS1 {
-		t.Fatalf("SetName(%q) == %v, want %v", n, gotBrPtr, wantS1)
+		t.Fatalf("SetName(%v) == %v, want %v", n, gotBrPtr, wantS1)
 	}
 	mb := 1
 	badBrPtr.SetMaxBooks(mb)
