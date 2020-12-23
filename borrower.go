@@ -1,4 +1,4 @@
-package borrower
+package main
 
 import "strconv"
 
