@@ -161,7 +161,7 @@ package main
 //	sb.WriteString("\n--- Status Report of Test Library ---\n\n")
 //	sb.WriteString(libraryToString(bks, brs) + "\n\n")
 //	for _, bk := range bks {
-//		sb.WriteString(bk.BookToString() + "\n")
+//		sb.WriteString(bk.BkToString() + "\n")
 //	}
 //	sb.WriteString("\n")
 //	for _, br := range brs {

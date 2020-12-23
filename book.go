@@ -2,13 +2,13 @@ package main
 
 // A Book has a Title and an Author
 type Book struct {
-	Title     string `json:"title"`
-	Author    string `json:"author"`
-	*Borrower `json:"borrower"`
+	Title    string    `json:"title"`
+	Author   string    `json:"author"`
+	Borrower *Borrower `json:"borrower"`
 }
 
 func NewBook(title string, author string) *Book {
-	return &Book{Title: title, Author: author}
+	return &Book{Title: title, Author: author, Borrower: nil}
 }
 
 // SetTitle sets a Title for a Book
@@ -34,8 +34,8 @@ func (b *Book) availableString() string {
 		b.Borrower.Name
 }
 
-// BookToString makes a description of a Book
-func (b *Book) BookToString() string {
+// BkToString makes a description of a Book
+func (b *Book) BkToString() string {
 	return b.Title +
 		" by " + b.Author +
 		"; " + b.availableString()
