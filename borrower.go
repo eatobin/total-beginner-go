@@ -23,7 +23,7 @@ func (b *Borrower) SetMaxBooks(maxBooks int) {
 	b.MaxBooks = maxBooks
 }
 
-// BorrowerToString makes a Borrower into a string
-func (b *Borrower) BorrowerToString() string {
+// BrToString makes a Borrower into a string
+func (b *Borrower) BrToString() string {
 	return b.Name + " (" + strconv.Itoa(b.MaxBooks) + " books)"
 }
