@@ -14,7 +14,7 @@ func main() {
 	println(StatusToString(books, borrowers))
 	println(StatusToString(books, borrowers))
 	println(StatusToString(books, borrowers))
-	//println(StatusToString(books, borrowers))
+	println(StatusToString(books, borrowers))
 
 	//println("Check out War And Peace to Sue")
 	//books = CheckOut("Sue", "War And Peace", borrowers, books)

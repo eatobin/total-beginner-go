@@ -159,12 +159,12 @@ func StatusToString(bks []*Book, brs []*Borrower) string {
 	var sb strings.Builder
 	sb.WriteString("\n--- Status Report of Test Library ---\n\n")
 	sb.WriteString(libraryToString(bks, brs) + "\n\n")
-	for i, bk := range bks {
-		sb.WriteString(bk.BkToString() + (strconv.Itoa(i)) + "\n")
+	for _, bk := range bks {
+		sb.WriteString(bk.BkToString() + "\n")
 	}
 	sb.WriteString("\n")
-	for i, br := range brs {
-		sb.WriteString(br.BrToString() + (strconv.Itoa(i)) + "\n")
+	for _, br := range brs {
+		sb.WriteString(br.BrToString() + "\n")
 	}
 	sb.WriteString("\n--- End of Status Report ---\n")
 	return sb.String()
