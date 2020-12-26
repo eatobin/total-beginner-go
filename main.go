@@ -36,4 +36,9 @@ func main() {
 	borrowers = AddBorrower(borrowers, NewBorrower("Jim", 3))
 	fmt.Println("No change to Test Library:")
 	fmt.Println(StatusToString(books, borrowers))
+
+	fmt.Println("Add a book that already exists (Book('War And Peace', 'Tolstoy'))")
+	books = AddBook(books, NewBook("War And Peace", "Tolstoy"))
+	fmt.Println("No change to Test Library:")
+	fmt.Println(StatusToString(books, borrowers))
 }
