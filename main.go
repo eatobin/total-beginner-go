@@ -51,4 +51,10 @@ func main() {
 	books = CheckOut("Sue", "Not A Book", borrowers, books)
 	fmt.Println("No change to Test Library:")
 	fmt.Println(StatusToString(books, borrowers))
+
+	fmt.Println("Last - check in a book not checked out (checkIn('War And Peace'))")
+	books = CheckIn("War And Peace", books)
+	fmt.Println("No change to Test Library:")
+	fmt.Println(StatusToString(books, borrowers))
+
 }
