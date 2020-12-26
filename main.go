@@ -29,4 +29,11 @@ func main() {
 	fmt.Println("Check Out Dr. Seuss to Eric")
 	books = CheckOut("Eric", "The Cat In The Hat", borrowers, books)
 	fmt.Println(StatusToString(books, borrowers))
+
+	fmt.Println("Now let's do some BAD stuff...")
+
+	fmt.Println("Add a borrower that already exists (Borrower('Jim', 3))")
+	borrowers = AddBorrower(borrowers, NewBorrower("Jim", 3))
+	fmt.Println("No change to Test Library:")
+	fmt.Println(StatusToString(books, borrowers))
 }
