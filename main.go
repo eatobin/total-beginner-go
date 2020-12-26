@@ -2,10 +2,10 @@ package main
 
 import "fmt"
 
-func main() {
-	var borrowers []*Borrower
-	var books []*Book
+var borrowers []*Borrower
+var books []*Book
 
+func main() {
 	borrowers = AddBorrower(borrowers, NewBorrower("Jim", 3))
 	borrowers = AddBorrower(borrowers, NewBorrower("Sue", 3))
 	books = AddBook(books, NewBook("War And Peace", "Tolstoy"))
@@ -57,4 +57,12 @@ func main() {
 	fmt.Println("No change to Test Library:")
 	fmt.Println(StatusToString(books, borrowers))
 
+	fmt.Println("Okay... let's finish with some persistence. First clear the whole library:")
+	newEmptyV()
+}
+
+func newEmptyV() {
+	borrowers = []*Borrower{}
+	books = []*Book{}
+	fmt.Println(StatusToString(books, borrowers))
 }
