@@ -24,7 +24,7 @@ func TestSetBorrowerValues(t *testing.T) {
 	}
 }
 
-func TestConvertFromJSON(t *testing.T) {
+func TestConvertBorrowerFromJSON(t *testing.T) {
 	gotBrPtr, _ := JsonStringToBorrower(jsonStringBr)
 	if gotBrPtr.BrToString() != badBrPtr.BrToString() {
 		t.Fatalf("JsonStringToBorrower(%v) == %v, want %v", jsonStringBr, gotBrPtr, badBrPtr)
