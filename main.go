@@ -99,11 +99,11 @@ package main
 //	if bkFileErr != nil {
 //		return bkFileErr
 //	}
-//	brs, brParseErr := jsonStringToBorrowers(jsonBrsStr)
+//	brs, brParseErr := JsonStringToBorrowers(jsonBrsStr)
 //	if brParseErr != nil {
 //		return brParseErr
 //	}
-//	bks, bkParseErr := jsonStringToBooks(jsonBksStr)
+//	bks, bkParseErr := JsonStringToBooks(jsonBksStr)
 //	if bkParseErr != nil {
 //		return bkParseErr
 //	}
