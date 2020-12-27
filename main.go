@@ -1,9 +1,18 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"io/ioutil"
+)
 
 var borrowers []*Borrower
 var books []*Book
+var jsonBorrowersFileBefore = "resources/borrowers-before.json"
+var jsonBooksFile = "resources/books-before.json"
+
+//var jsonBorrowersFileAfter = "resources/borrowers-after.json"
+//var jsonBorrowersFileBad = "resources/bad-borrowers.json"
+//var emptyFile = "resources/resources/empty.json"
 
 func main() {
 	borrowers = AddBorrower(borrowers, NewBorrower("Jim", 3))
@@ -59,10 +68,47 @@ func main() {
 
 	fmt.Println("Okay... let's finish with some persistence. First clear the whole library:")
 	newEmptyV()
+
+	fmt.Println("Lets read in a new library from \"borrowers-before.json\" and \"books-before.json\":")
+	newVError := newV(jsonBorrowersFileBefore, jsonBooksFile)
+	if newVError != nil {
+		panic(newVError)
+	}
+	fmt.Println("Add... a new borrower:")
+	borrowers = AddBorrower(borrowers, NewBorrower("BorrowerNew", 300))
+	fmt.Println(StatusToString(books, borrowers))
 }
 
 func newEmptyV() {
 	borrowers = []*Borrower{}
 	books = []*Book{}
 	fmt.Println(StatusToString(books, borrowers))
+}
+
+func readFileIntoJsonString(fp string) (string, error) {
+	dat, err := ioutil.ReadFile(fp)
+	return string(dat), err
+}
+
+func newV(brsFp string, bksFp string) error {
+	jsonBrsStr, brFileErr := readFileIntoJsonString(brsFp)
+	if brFileErr != nil {
+		return brFileErr
+	}
+	jsonBksStr, bkFileErr := readFileIntoJsonString(bksFp)
+	if bkFileErr != nil {
+		return bkFileErr
+	}
+	brs, brParseErr := jsonStringToBorrowers(jsonBrsStr)
+	if brParseErr != nil {
+		return brParseErr
+	}
+	bks, bkParseErr := jsonStringToBooks(jsonBksStr)
+	if bkParseErr != nil {
+		return bkParseErr
+	}
+	borrowers = brs
+	books = bks
+	fmt.Println(StatusToString(books, borrowers))
+	return nil
 }
