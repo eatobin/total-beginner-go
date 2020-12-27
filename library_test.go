@@ -188,25 +188,25 @@ func Test_jsonStringToBorrowersPass(t *testing.T) {
 	}
 }
 
-//func Test_jsonStringToBorrowersFail(t *testing.T) {
-//	cases := []struct {
-//		js      string
-//		wantBrs []*Borrower
-//		wantE   error
-//	}{
-//		{jsonStringBorrowersBadParse, []*Borrower{}, errors.New("invalid character '\"' after object key")},
-//		{jsonStringBorrowersBadNameField, []*Borrower{}, errors.New("missing Borrower field value - borrowers list is empty")},
-//		{jsonStringBorrowersBadMaxBooksField, []*Borrower{}, errors.New("missing Borrower field value - borrowers list is empty")},
-//	}
-//	for _, c := range cases {
-//		err, got := JsonStringToBorrowers(c.js)
-//		if err.Error() != c.wantE.Error() {
-//			t.Errorf("JsonStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
-//				c.js, got, err, c.wantBrs, c.wantE)
-//		}
-//	}
-//}
-//
+func Test_jsonStringToBorrowersFail(t *testing.T) {
+	cases := []struct {
+		js      string
+		wantBrs []*Borrower
+		wantE   error
+	}{
+		{jsonStringBorrowersBad, []*Borrower{}, errors.New("invalid character '\"' after object key")},
+		//{jsonStringBorrowersBad, []*Borrower{}, errors.New("missing Borrower field value - borrowers list is empty")},
+		//{jsonStringBorrowersBad, []*Borrower{}, errors.New("missing Borrower field value - borrowers list is empty")},
+	}
+	for _, c := range cases {
+		got, err := JsonStringToBorrowers(c.js)
+		if err != c.wantE {
+			t.Errorf("JsonStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
+				c.js, got, err, c.wantBrs, c.wantE)
+		}
+	}
+}
+
 //func Test_jsonStringToBooksPass(t *testing.T) {
 //	js := jsonStringBooks
 //	wantBks := []*Book{{Title: "Title2", Author: "Author22", Borrower: &Borrower{Name: "NoName", MaxBooks: -1}}}
