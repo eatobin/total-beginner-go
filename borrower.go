@@ -34,8 +34,5 @@ func (b *Borrower) BrToString() string {
 func JsonStringToBorrower(borrowerString string) (*Borrower, error) {
 	var borrower *Borrower
 	err := json.Unmarshal([]byte(borrowerString), &borrower)
-	if err != nil {
-		return nil, err
-	}
 	return borrower, err
 }
