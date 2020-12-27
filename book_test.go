@@ -11,7 +11,13 @@ var wantAvailS1 = "Title1 by Author11; Available"
 var wantAvailS2 = "Title1 by Author1; Available"
 
 func TestSetBookValues(t *testing.T) {
+	badBkPtrNbS := NewBook("Title11", "Author11").BkToString()
 	badBkPtr, _ := JsonStringToBook(jsonStringBk1)
+	badBkPtrS := badBkPtr.BkToString()
+	if badBkPtrNbS != badBkPtrS {
+		t.Fatalf("NewBook (%v) and JsonStringToBook (%v) are not equal", badBkPtrNbS, badBkPtrS)
+	}
+
 	title := "Title1"
 	badBkPtr.SetTitle(title)
 	gotBkPtrS := badBkPtr.BkToString()
