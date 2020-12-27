@@ -46,8 +46,5 @@ func (b *Book) BkToString() string {
 func JsonStringToBook(bookString string) (*Book, error) {
 	var book *Book
 	err := json.Unmarshal([]byte(bookString), &book)
-	if err != nil {
-		return nil, err
-	}
 	return book, err
 }
