@@ -134,6 +134,23 @@ func JsonStringToBorrowers(borrowersString string) ([]*Borrower, error) {
 }
 
 //FIXME
+
+//func jsonStringToBooks(js string) ([]*Book, error) {
+//	var res []*Book
+//	err := json.Unmarshal([]byte(js), &res)
+//	if err != nil {
+//		return []*Book{}, err
+//	}
+//	for _, bk := range res {
+//		if bk.Title == "" || bk.Author == "" || bk.Borrower.Name == "" || bk.Borrower.MaxBooks == 0 {
+//			err = errors.New("missing Book field value - book list is empty")
+//			return []*Book{}, err
+//		}
+//	}
+//	return res, err
+////}
+//
+
 func JsonStringToBooks(booksString string) ([]*Book, error) {
 	var books []*Book
 	err := json.Unmarshal([]byte(booksString), &books)
