@@ -14,33 +14,33 @@ func NewBook(title string, author string) *Book {
 }
 
 // SetTitle sets a Title for a Book
-func (b *Book) SetTitle(title string) {
-	b.Title = title
+func (bk *Book) SetTitle(title string) {
+	bk.Title = title
 }
 
 // SetAuthor sets a Author for a Book
-func (b *Book) SetAuthor(author string) {
-	b.Author = author
+func (bk *Book) SetAuthor(author string) {
+	bk.Author = author
 }
 
 // SetBorrower takes a BorrowerPtr and sets it for a Book
-func (b *Book) SetBorrower(borrower *Borrower) {
-	b.Borrower = borrower
+func (bk *Book) SetBorrower(borrower *Borrower) {
+	bk.Borrower = borrower
 }
 
-func (b *Book) availableString() string {
-	if b.Borrower == nil {
+func (bk *Book) availableString() string {
+	if bk.Borrower == nil {
 		return "Available"
 	}
 	return "Checked out to " +
-		b.Borrower.Name
+		bk.Borrower.Name
 }
 
 // BkToString makes a description of a Book
-func (b *Book) BkToString() string {
-	return b.Title +
-		" by " + b.Author +
-		"; " + b.availableString()
+func (bk *Book) BkToString() string {
+	return bk.Title +
+		" by " + bk.Author +
+		"; " + bk.availableString()
 }
 
 func JsonStringToBook(bookString string) (*Book, error) {

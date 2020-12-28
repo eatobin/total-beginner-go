@@ -3,9 +3,18 @@ package main
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 )
+
+func (br *Borrower) String() string {
+	return fmt.Sprintf("Name = %s, MaxBooks = %d\n", br.Name, br.MaxBooks)
+}
+
+func (bk *Book) String() string {
+	return fmt.Sprintf("Title = %s, Author = %s, Borrower = %+v\n", bk.Title, bk.Author, bk.Borrower)
+}
 
 func containsBorrower(brs []*Borrower, br *Borrower) bool {
 	for _, b := range brs {
@@ -112,9 +121,19 @@ func CheckIn(t string, bks []*Book) []*Book {
 func JsonStringToBorrowers(borrowersString string) ([]*Borrower, error) {
 	var borrowers []*Borrower
 	err := json.Unmarshal([]byte(borrowersString), &borrowers)
+	if err != nil {
+		return []*Borrower{}, err
+	}
+	for _, br := range borrowers {
+		if br.Name == "" || br.MaxBooks == 0 {
+			err = errors.New("missing Borrower field value - borrowers list is empty")
+			return []*Borrower{}, err
+		}
+	}
 	return borrowers, err
 }
 
+//FIXME
 func JsonStringToBooks(booksString string) ([]*Book, error) {
 	var books []*Book
 	err := json.Unmarshal([]byte(booksString), &books)

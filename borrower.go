@@ -17,18 +17,18 @@ func NewBorrower(name string, maxBooks int) *Borrower {
 }
 
 // SetName sets a Name for a Borrower
-func (b *Borrower) SetName(name string) {
-	b.Name = name
+func (br *Borrower) SetName(name string) {
+	br.Name = name
 }
 
 // SetMaxBooks sets a max books for a Borrower
-func (b *Borrower) SetMaxBooks(maxBooks int) {
-	b.MaxBooks = maxBooks
+func (br *Borrower) SetMaxBooks(maxBooks int) {
+	br.MaxBooks = maxBooks
 }
 
 // BrToString makes a Borrower into a string
-func (b *Borrower) BrToString() string {
-	return b.Name + " (" + strconv.Itoa(b.MaxBooks) + " books)"
+func (br *Borrower) BrToString() string {
+	return br.Name + " (" + strconv.Itoa(br.MaxBooks) + " books)"
 }
 
 func JsonStringToBorrower(borrowerString string) (*Borrower, error) {
