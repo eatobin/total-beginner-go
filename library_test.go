@@ -29,7 +29,7 @@ var jsonStringBorrowersBadParse = `[{"name""Borrower1","maxBooks":1},{"name":"Bo
 var jsonStringBorrowersBadNameField = `[{"noName":"Borrower1","maxBooks":1},{"name":"Borrower2","maxBooks":2}]`
 var jsonStringBorrowersBadMaxBooksField = `[{"name":"Borrower1","noMaxBooks":1},{"name":"Borrower2","maxBooks":2}]`
 
-var jsonStringBooks = "[\n  {\n    \"title\": \"Title2\",\n    \"author\": \"Author22\",\n    \"borrower\": {\n      \"name\": \"NoName\",\n      \"maxBooks\": -1\n    }\n  }\n]"
+var jsonStringBooks = `[{"title":"Title1","author":"Author1","borrower":{"name":"Borrower1","maxBooks":1}},{"title":"Title2","author":"Author2","borrower":null}]`
 var jsonStringBooksBadParse = `[{"title""Title2","author":"Author22","borrower":{"name":"NoName","maxBooks":-1}},{"title":"Title99","author":"Author99","borrower":{"name":"Borrower1","maxBooks":1}}]`
 var jsonStringBooksBadTitleField = `[{"noTitle":"Title2","author":"Author22","borrower":{"name":"NoName","maxBooks":-1}},{"title":"Title99","author":"Author99","borrower":{"name":"Borrower1","maxBooks":1}}]`
 var jsonStringBooksBadBorrowerField = `[{"title":"Title2","author":"Author22","borrower":{"noName":"NoName","maxBooks":-1}},{"title":"Title99","author":"Author99","borrower":{"name":"Borrower1","maxBooks":1}}]`
@@ -210,19 +210,18 @@ func Test_jsonStringToBorrowersFail(t *testing.T) {
 	}
 }
 
-//func Test_jsonStringToBooksPass(t *testing.T) {
-//	js := jsonStringBooks
-//	wantBks := []*Book{{Title: "Title2", Author: "Author22", Borrower: &Borrower{Name: "NoName", MaxBooks: -1}}}
-//	wantE := error(nil)
-//
-//	err, got := JsonStringToBooks(js)
-//
-//	if !reflect.DeepEqual(got, wantBks) || err != wantE {
-//		t.Errorf("JSONStringToBooks\n(%s)\n==\n%v and %v\nwant\n%v and %v",
-//			js, got, err, wantBks, wantE)
-//	}
-//}
-//
+func Test_jsonStringToBooksPass(t *testing.T) {
+	wantBks := []*Book{{Title: "Title1", Author: "Author1", Borrower: &Borrower{Name: "Borrower1", MaxBooks: 1}}, {Title: "Title2", Author: "Author2", Borrower: nil}}
+	wantE := error(nil)
+
+	got, err := JsonStringToBooks(jsonStringBooks)
+
+	if !reflect.DeepEqual(got, wantBks) || err != wantE {
+		t.Errorf("JSONStringToBooks\n(%s)\n==\n%v and %v\nwant\n%v and %v",
+			jsonStringBooks, got, err, wantBks, wantE)
+	}
+}
+
 //func Test_jsonStringToBooksFail(t *testing.T) {
 //	cases := []struct {
 //		js      string
