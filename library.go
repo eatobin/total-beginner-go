@@ -144,6 +144,12 @@ func JsonStringToBooks(bookString string) ([]*Book, error) {
 			err = errors.New("missing Book field value - book list is empty")
 			return []*Book{}, err
 		}
+		if bk.Borrower != nil {
+			if bk.Borrower.Name == "" || bk.Borrower.MaxBooks == 0 {
+				err = errors.New("missing Borrower field value - book list is empty")
+				return []*Book{}, err
+			}
+		}
 	}
 	return books, err
 }
