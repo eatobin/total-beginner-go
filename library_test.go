@@ -203,7 +203,8 @@ func Test_jsonStringToBorrowersFail(t *testing.T) {
 	}
 	for _, c := range cases {
 		got, err := JsonStringToBorrowers(c.js)
-		if err.Error() != c.wantE.Error() {
+		if //goland:noinspection GoNilness
+		err.Error() != c.wantE.Error() {
 			t.Errorf("JsonStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
 				c.js, got, err, c.wantBrs, c.wantE)
 		}
@@ -234,7 +235,8 @@ func Test_jsonStringToBooksFail(t *testing.T) {
 	}
 	for _, c := range cases {
 		got, err := JsonStringToBooks(c.js)
-		if err.Error() != c.wantE.Error() {
+		if //goland:noinspection GoNilness
+		err.Error() != c.wantE.Error() {
 			t.Errorf("JSONStringToBooks\n(%s)\n==\n%v and %v\nwant\n%v and %v",
 				c.js, got, err, c.wantBks, c.wantE)
 		}
@@ -259,23 +261,23 @@ func TestBooksToJSONString(t *testing.T) {
 	}
 }
 
-//func TestStatusToString(t *testing.T) {
-//	br1libPtrL := NewBorrower("Borrower1", 1)
-//	br2libPtrL := NewBorrower("Borrower2", 2)
-//	br3libPtrL := NewBorrower("Borrower3", 3)
-//	brs2L := []*Borrower{br1libPtrL, br2libPtrL, br3libPtrL}
-//
-//	bk1libPtrL := &Book{Title: "Title1", Author: "Author1", Borrower: br1libPtr}
-//	bk2libPtrL := NewBook("Title2", "Author2")
-//	bk3libPtrL := &Book{Title: "Title3", Author: "Author3", Borrower: br3libPtr}
-//	bks2L := []*Book{bk1libPtrL, bk2libPtrL, bk3libPtrL}
-//
-//	bks := bks2L
-//	brs := brs2L
-//	got := StatusToString(bks, brs)
-//	want := ss
-//	if got != want {
-//		t.Errorf("StatusToString(%v, %v) ==\n(%q) want \n(%q)",
-//			bks, brs, got, want)
-//	}
-//}
+func TestStatusToString(t *testing.T) {
+	br1libPtrL := NewBorrower("Borrower1", 1)
+	br2libPtrL := NewBorrower("Borrower2", 2)
+	br3libPtrL := NewBorrower("Borrower3", 3)
+	brs2L := []*Borrower{br1libPtrL, br2libPtrL, br3libPtrL}
+
+	bk1libPtrL := &Book{Title: "Title1", Author: "Author1", Borrower: br1libPtr}
+	bk2libPtrL := NewBook("Title2", "Author2")
+	bk3libPtrL := &Book{Title: "Title3", Author: "Author3", Borrower: br3libPtr}
+	bks2L := []*Book{bk1libPtrL, bk2libPtrL, bk3libPtrL}
+
+	bks := bks2L
+	brs := brs2L
+	got := StatusToString(bks, brs)
+	want := ss
+	if got != want {
+		t.Errorf("StatusToString(%v, %v) ==\n(%q) want \n(%q)",
+			bks, brs, got, want)
+	}
+}
