@@ -3,18 +3,9 @@ package main
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"strconv"
 	"strings"
 )
-
-func (br *Borrower) String() string {
-	return fmt.Sprintf("Name = %s, MaxBooks = %d\n", br.Name, br.MaxBooks)
-}
-
-func (bk *Book) String() string {
-	return fmt.Sprintf("Title = %s, Author = %s, Borrower = %+v\n", bk.Title, bk.Author, bk.Borrower)
-}
 
 func containsBorrower(brs []*Borrower, br *Borrower) bool {
 	for _, b := range brs {
@@ -175,11 +166,11 @@ func StatusToString(bks []*Book, brs []*Borrower) string {
 	sb.WriteString("\n--- Status Report of Test Library ---\n\n")
 	sb.WriteString(libraryToString(bks, brs) + "\n\n")
 	for _, bk := range bks {
-		sb.WriteString(bk.BkToString() + "\n")
+		sb.WriteString(bk.String() + "\n")
 	}
 	sb.WriteString("\n")
 	for _, br := range brs {
-		sb.WriteString(br.BrToString() + "\n")
+		sb.WriteString(br.String() + "\n")
 	}
 	sb.WriteString("\n--- End of Status Report ---\n")
 	return sb.String()

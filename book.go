@@ -1,6 +1,9 @@
 package main
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 // A Book has a Title and an Author
 type Book struct {
@@ -36,11 +39,9 @@ func (bk *Book) availableString() string {
 		bk.Borrower.Name
 }
 
-// BkToString makes a description of a Book
-func (bk *Book) BkToString() string {
-	return bk.Title +
-		" by " + bk.Author +
-		"; " + bk.availableString()
+// String makes a description of a Book
+func (bk *Book) String() string {
+	return fmt.Sprintf("%s by %s; %s", bk.Title, bk.Author, bk.availableString())
 }
 
 func JsonStringToBook(bookString string) (*Book, error) {

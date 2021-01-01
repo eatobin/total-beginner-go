@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"strconv"
+	"fmt"
 )
 
 // A Borrower has a Name and a max books
@@ -26,9 +26,9 @@ func (br *Borrower) SetMaxBooks(maxBooks int) {
 	br.MaxBooks = maxBooks
 }
 
-// BrToString makes a Borrower into a string
-func (br *Borrower) BrToString() string {
-	return br.Name + " (" + strconv.Itoa(br.MaxBooks) + " books)"
+// String makes a Borrower into a string
+func (br *Borrower) String() string {
+	return fmt.Sprintf("%s (%d books)", br.Name, br.MaxBooks)
 }
 
 func JsonStringToBorrower(borrowerString string) (*Borrower, error) {

@@ -12,13 +12,13 @@ func TestSetBorrowerValues(t *testing.T) {
 	badBrPtr, _ := JsonStringToBorrower(jsonStringBr)
 	n := "Borrower1"
 	badBrPtr.SetName(n)
-	gotBrPtrS := badBrPtr.BrToString()
+	gotBrPtrS := badBrPtr.String()
 	if gotBrPtrS != wantS1 {
 		t.Fatalf("SetName(%v) == %v, want %v", n, gotBrPtrS, wantS1)
 	}
 	mb := 1
 	badBrPtr.SetMaxBooks(mb)
-	gotBrPtrS = badBrPtr.BrToString()
+	gotBrPtrS = badBrPtr.String()
 	if gotBrPtrS != wantS2 {
 		t.Fatalf("SetMaxBooks(%v) == %v, want %v", mb, gotBrPtrS, wantS2)
 	}
