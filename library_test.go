@@ -203,10 +203,11 @@ func Test_jsonStringToBorrowersFail(t *testing.T) {
 	}
 	for _, c := range cases {
 		got, err := JsonStringToBorrowers(c.js)
-		if //goland:noinspection GoNilness
-		err.Error() != c.wantE.Error() {
-			t.Errorf("JsonStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
-				c.js, got, err, c.wantBrs, c.wantE)
+		if err != nil {
+			if err.Error() != c.wantE.Error() {
+				t.Errorf("JsonStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
+					c.js, got, err, c.wantBrs, c.wantE)
+			}
 		}
 	}
 }
@@ -235,10 +236,11 @@ func Test_jsonStringToBooksFail(t *testing.T) {
 	}
 	for _, c := range cases {
 		got, err := JsonStringToBooks(c.js)
-		if //goland:noinspection GoNilness
-		err.Error() != c.wantE.Error() {
-			t.Errorf("JSONStringToBooks\n(%s)\n==\n%v and %v\nwant\n%v and %v",
-				c.js, got, err, c.wantBks, c.wantE)
+		if err != nil {
+			if err.Error() != c.wantE.Error() {
+				t.Errorf("JSONStringToBooks\n(%s)\n==\n%v and %v\nwant\n%v and %v",
+					c.js, got, err, c.wantBks, c.wantE)
+			}
 		}
 	}
 }
