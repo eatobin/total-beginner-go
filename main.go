@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
+	"os"
 )
 
 var borrowers []*Borrower
@@ -90,6 +91,19 @@ func main() {
 	newVError = newV(jsonBorrowersFileAfter, jsonBooksFile)
 	if newVError != nil {
 		panic(newVError)
+	}
+
+	fmt.Println("Last... delete the file \"borrowers-after.json\"")
+	err := os.Remove(jsonBorrowersFileAfter)
+	if err != nil {
+		panic(newVError)
+	}
+	newEmptyV()
+
+	fmt.Println("Then try to make a library using the deleted \"borrowers-after.json\" and \"books-before.json\":")
+	newVError = newV(jsonBorrowersFileAfter, jsonBooksFile)
+	if newVError != nil {
+		fmt.Println(newVError.Error())
 	}
 }
 
