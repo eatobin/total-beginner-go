@@ -13,7 +13,8 @@ var jsonBooksFile = "resources/books-before.json"
 
 var jsonBorrowersFileAfter = "resources/borrowers-after.json"
 
-//var jsonBorrowersFileBad = "resources/bad-borrowers.json"
+var jsonBorrowersFileBad = "resources/bad-borrowers.json"
+
 //var emptyFile = "resources/resources/empty.json"
 
 func main() {
@@ -102,6 +103,12 @@ func main() {
 
 	fmt.Println("Then try to make a library using the deleted \"borrowers-after.json\" and \"books-before.json\":")
 	newVError = newV(jsonBorrowersFileAfter, jsonBooksFile)
+	if newVError != nil {
+		fmt.Println(newVError.Error())
+	}
+
+	fmt.Println("\nAnd if we read in a file with mal-formed json content... like \"bad-borrowers.json\" and \"books-before.json\":")
+	newVError = newV(jsonBorrowersFileBad, jsonBooksFile)
 	if newVError != nil {
 		fmt.Println(newVError.Error())
 	}
