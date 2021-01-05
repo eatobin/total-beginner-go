@@ -10,7 +10,8 @@ var books []*Book
 var jsonBorrowersFileBefore = "resources/borrowers-before.json"
 var jsonBooksFile = "resources/books-before.json"
 
-//var jsonBorrowersFileAfter = "resources/borrowers-after.json"
+var jsonBorrowersFileAfter = "resources/borrowers-after.json"
+
 //var jsonBorrowersFileBad = "resources/bad-borrowers.json"
 //var emptyFile = "resources/resources/empty.json"
 
@@ -84,6 +85,12 @@ func main() {
 
 	fmt.Println("Clear the whole library again:")
 	newEmptyV()
+
+	fmt.Println("Then read in the revised library from \"borrowers-after.json\" and \"books-before.json\":")
+	newVError = newV(jsonBorrowersFileAfter, jsonBooksFile)
+	if newVError != nil {
+		panic(newVError)
+	}
 }
 
 func newEmptyV() {
