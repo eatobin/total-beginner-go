@@ -80,8 +80,10 @@ func main() {
 
 	fmt.Println("Save the revised borrowers to \"borrowers-after.json\"")
 	var jsonBrsStr, _ = BorrowersToJSONSting(borrowers)
-	//TODO
 	writeJsonStringToFile(jsonBrsStr)
+
+	fmt.Println("Clear the whole library again:")
+	newEmptyV()
 }
 
 func newEmptyV() {
@@ -93,6 +95,14 @@ func newEmptyV() {
 func readFileIntoJsonString(fp string) (string, error) {
 	dat, err := ioutil.ReadFile(fp)
 	return string(dat), err
+}
+
+func writeJsonStringToFile(js string) {
+	var file = "resources/borrowers-after.json"
+	err := ioutil.WriteFile(file, []byte(js), 0644)
+	if err != nil {
+		panic(err)
+	}
 }
 
 func newV(brsFp string, bksFp string) error {
