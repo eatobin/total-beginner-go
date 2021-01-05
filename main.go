@@ -77,6 +77,11 @@ func main() {
 	fmt.Println("Add... a new borrower:")
 	borrowers = AddBorrower(borrowers, NewBorrower("BorrowerNew", 300))
 	fmt.Println(StatusToString(books, borrowers))
+
+	fmt.Println("Save the revised borrowers to \"borrowers-after.json\"")
+	var jsonBrsStr, _ = BorrowersToJSONSting(borrowers)
+	//TODO
+	writeJsonStringToFile(jsonBrsStr)
 }
 
 func newEmptyV() {
