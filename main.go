@@ -15,7 +15,7 @@ var jsonBorrowersFileAfter = "resources/borrowers-after.json"
 
 var jsonBorrowersFileBad = "resources/bad-borrowers.json"
 
-//var emptyFile = "resources/resources/empty.json"
+var emptyFile = "resources/resources/empty.json"
 
 func main() {
 	borrowers = AddBorrower(borrowers, NewBorrower("Jim", 3))
@@ -112,6 +112,15 @@ func main() {
 	if newVError != nil {
 		fmt.Println(newVError.Error())
 	}
+
+	fmt.Println("\nOr how about reading in an empty file... \"empty.json\" (for borrowers and books):")
+	newVError = newV(emptyFile, emptyFile)
+	if newVError != nil {
+		fmt.Println(newVError.Error())
+	}
+
+	fmt.Println("\nAnd... that's all...")
+	fmt.Println("Thanks - bye!\n")
 }
 
 func newEmptyV() {
