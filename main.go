@@ -120,7 +120,7 @@ func main() {
 	}
 
 	fmt.Println("\nAnd... that's all...")
-	fmt.Println("Thanks - bye!\n")
+	fmt.Println("Thanks - bye!")
 }
 
 func newEmptyV() {
