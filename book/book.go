@@ -1,13 +1,15 @@
-package main
+package book
+
+import "eatobin.com/totalbeginnergo/borrower"
 
 // A Book has a Title and an Author
 type Book struct {
-	Title    string   `json:"title"`
-	Author   string   `json:"author"`
-	Borrower Borrower `json:"borrower"`
+	Title    string            `json:"title"`
+	Author   string            `json:"author"`
+	Borrower borrower.Borrower `json:"borrower"`
 }
 
-var ZeroBorrower = Borrower{}
+var ZeroBorrower = borrower.Borrower{}
 
 func NewBook(title string, author string) Book {
 	return Book{Title: title, Author: author, Borrower: ZeroBorrower}
@@ -26,7 +28,7 @@ func SetAuthor(bk Book, author string) Book {
 }
 
 // SetBorrower takes a BorrowerPtr and sets it for a Book
-func SetBorrower(bk Book, borrower Borrower) Book {
+func SetBorrower(bk Book, borrower borrower.Borrower) Book {
 	bk.Borrower = borrower
 	return bk
 }

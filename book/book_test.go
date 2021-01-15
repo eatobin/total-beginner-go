@@ -1,6 +1,7 @@
-package main
+package book
 
 import (
+	"eatobin.com/totalbeginnergo/borrower"
 	"testing"
 )
 
@@ -20,7 +21,7 @@ func TestSetBookValues(t *testing.T) {
 	if gotBkA != wantAvailS {
 		t.Fatalf("SetAuthor(%v, %v) == %v, want %v", badBkA, author, gotBkA, wantAvailS)
 	}
-	newBorrower := NewBorrower("Borrower2", 2)
+	newBorrower := borrower.NewBorrower("Borrower2", 2)
 	badBkB := Book{"Title1", "Author1", ZeroBorrower}
 	gotBkB := BkToString(SetBorrower(badBkB, newBorrower))
 	if gotBkB != wantNotAvailS {
