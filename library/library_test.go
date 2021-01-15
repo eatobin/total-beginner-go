@@ -1,28 +1,30 @@
-package main
+package library
 
 import (
+	"eatobin.com/totalbeginnergo/book"
+	"eatobin.com/totalbeginnergo/borrower"
 	"errors"
 	"reflect"
 	"testing"
 )
 
-var br1libPtr = NewBorrower("Borrower1", 1)
-var br2libPtr = NewBorrower("Borrower2", 2)
-var br3libPtr = NewBorrower("Borrower3", 3)
+var br1libPtr = borrower.NewBorrower("Borrower1", 1)
+var br2libPtr = borrower.NewBorrower("Borrower2", 2)
+var br3libPtr = borrower.NewBorrower("Borrower3", 3)
 
-var brs1 = []*Borrower{br1libPtr, br2libPtr}
-var brs2 = []*Borrower{br1libPtr, br2libPtr, br3libPtr}
+var brs1 = []*borrower.Borrower{br1libPtr, br2libPtr}
+var brs2 = []*borrower.Borrower{br1libPtr, br2libPtr, br3libPtr}
 
-var bk1libPtr = &Book{Title: "Title1", Author: "Author1", Borrower: br1libPtr}
-var bk2libPtr = NewBook("Title2", "Author2")
-var bk3libPtr = &Book{Title: "Title3", Author: "Author3", Borrower: br3libPtr}
+var bk1libPtr = &book.Book{Title: "Title1", Author: "Author1", Borrower: br1libPtr}
+var bk2libPtr = book.NewBook("Title2", "Author2")
+var bk3libPtr = &book.Book{Title: "Title3", Author: "Author3", Borrower: br3libPtr}
 
-var bk4libPtr = &Book{Title: "Title4", Author: "Author4", Borrower: br3libPtr}
+var bk4libPtr = &book.Book{Title: "Title4", Author: "Author4", Borrower: br3libPtr}
 
-var bks1 = []*Book{bk1libPtr, bk2libPtr}
-var bks2 = []*Book{bk1libPtr, bk2libPtr, bk3libPtr}
+var bks1 = []*book.Book{bk1libPtr, bk2libPtr}
+var bks2 = []*book.Book{bk1libPtr, bk2libPtr, bk3libPtr}
 
-var bks3 = []*Book{bk1libPtr, bk2libPtr, bk3libPtr, bk4libPtr}
+var bks3 = []*book.Book{bk1libPtr, bk2libPtr, bk3libPtr, bk4libPtr}
 
 var jsonStringBorrowers = "[{\"name\":\"Borrower1\",\"maxBooks\":1},{\"name\":\"Borrower2\",\"maxBooks\":2}]"
 var jsonStringBorrowersBadParse = `[{"name""Borrower1","maxBooks":1},{"name":"Borrower2","maxBooks":2}]`
@@ -38,9 +40,9 @@ var ss = "\n--- Status Report of Test Library ---\n\nTest Library: 3 books; 3 bo
 
 func TestAddBorrower(t *testing.T) {
 	cases := []struct {
-		brs     []*Borrower
-		br      *Borrower
-		wantBrs []*Borrower
+		brs     []*borrower.Borrower
+		br      *borrower.Borrower
+		wantBrs []*borrower.Borrower
 	}{
 		{brs1, br3libPtr, brs2},
 		{brs1, br2libPtr, brs1},
@@ -56,9 +58,9 @@ func TestAddBorrower(t *testing.T) {
 
 func TestAddBook(t *testing.T) {
 	cases := []struct {
-		bks     []*Book
-		bk      *Book
-		wantBks []*Book
+		bks     []*book.Book
+		bk      *book.Book
+		wantBks []*book.Book
 	}{
 		{bks1, bk3libPtr, bks2},
 		{bks1, bk2libPtr, bks1},
@@ -76,12 +78,12 @@ func Test_findBorrower(t *testing.T) {
 	var ErrNoBorrowerFound = errors.New("did not find the requested borrower")
 	cases := []struct {
 		n       string
-		brs     []*Borrower
-		wantBr  *Borrower
+		brs     []*borrower.Borrower
+		wantBr  *borrower.Borrower
 		wantErr error
 	}{
 		{"Borrower1", brs2, br1libPtr, nil},
-		{"Borrower11", brs2, &Borrower{}, ErrNoBorrowerFound},
+		{"Borrower11", brs2, &borrower.Borrower{}, ErrNoBorrowerFound},
 	}
 	for _, c := range cases {
 		gotErr, gotBr := findBorrower(c.n, c.brs)
@@ -97,13 +99,13 @@ func Test_findBook(t *testing.T) {
 	var ErrNoBookFound = errors.New("did not find the requested book")
 	cases := []struct {
 		t       string
-		bks     []*Book
+		bks     []*book.Book
 		wantI   int
-		wantBk  *Book
+		wantBk  *book.Book
 		wantErr error
 	}{
 		{"Title1", bks2, 0, bk1libPtr, nil},
-		{"Title11", bks2, 0, &Book{}, ErrNoBookFound},
+		{"Title11", bks2, 0, &book.Book{}, ErrNoBookFound},
 	}
 	for _, c := range cases {
 		gotI, gotErr, gotBk := findBook(c.t, c.bks)
@@ -118,13 +120,13 @@ func Test_findBook(t *testing.T) {
 
 func Test_getBooksForBorrower(t *testing.T) {
 	cases := []struct {
-		br   *Borrower
-		bks  []*Book
-		want []*Book
+		br   *borrower.Borrower
+		bks  []*book.Book
+		want []*book.Book
 	}{
-		{br2libPtr, bks1, []*Book{}},
-		{br1libPtr, bks1, []*Book{bk1libPtr}},
-		{br3libPtr, bks3, []*Book{bk3libPtr, bk4libPtr}},
+		{br2libPtr, bks1, []*book.Book{}},
+		{br1libPtr, bks1, []*book.Book{bk1libPtr}},
+		{br3libPtr, bks3, []*book.Book{bk3libPtr, bk4libPtr}},
 	}
 	for _, c := range cases {
 		got := getBooksForBorrower(c.br, c.bks)
@@ -136,13 +138,13 @@ func Test_getBooksForBorrower(t *testing.T) {
 }
 
 func TestCheckOut(t *testing.T) {
-	var testbks = []*Book{bk1libPtr, {Title: "Title2", Author: "Author2", Borrower: &Borrower{Name: "Borrower2", MaxBooks: 2}}}
+	var testbks = []*book.Book{bk1libPtr, {Title: "Title2", Author: "Author2", Borrower: &borrower.Borrower{Name: "Borrower2", MaxBooks: 2}}}
 	cases := []struct {
 		n    string
 		t    string
-		brs  []*Borrower
-		bks  []*Book
-		want []*Book
+		brs  []*borrower.Borrower
+		bks  []*book.Book
+		want []*book.Book
 	}{
 		{"Borrower2", "Title1", brs1, bks1, bks1},
 		{"Borrower2", "NoTitle", brs1, bks1, bks1},
@@ -160,12 +162,12 @@ func TestCheckOut(t *testing.T) {
 }
 
 func TestCheckIn(t *testing.T) {
-	var testbks1 = []*Book{bk1libPtr, bk2libPtr}
-	var testbks2 = []*Book{{Title: "Title1", Author: "Author1", Borrower: nil}, bk2libPtr}
+	var testbks1 = []*book.Book{bk1libPtr, bk2libPtr}
+	var testbks2 = []*book.Book{{Title: "Title1", Author: "Author1", Borrower: nil}, bk2libPtr}
 	cases := []struct {
 		t    string
-		bks  []*Book
-		want []*Book
+		bks  []*book.Book
+		want []*book.Book
 	}{
 		{"Title1", testbks1, testbks2},
 		{"Title2", testbks1, testbks1},
@@ -194,12 +196,12 @@ func Test_jsonStringToBorrowersPass(t *testing.T) {
 func Test_jsonStringToBorrowersFail(t *testing.T) {
 	cases := []struct {
 		js      string
-		wantBrs []*Borrower
+		wantBrs []*borrower.Borrower
 		wantE   error
 	}{
-		{jsonStringBorrowersBadParse, []*Borrower{}, errors.New("invalid character '\"' after object key")},
-		{jsonStringBorrowersBadNameField, []*Borrower{}, errors.New("missing Borrower field value - borrowers list is empty")},
-		{jsonStringBorrowersBadMaxBooksField, []*Borrower{}, errors.New("missing Borrower field value - borrowers list is empty")},
+		{jsonStringBorrowersBadParse, []*borrower.Borrower{}, errors.New("invalid character '\"' after object key")},
+		{jsonStringBorrowersBadNameField, []*borrower.Borrower{}, errors.New("missing Borrower field value - borrowers list is empty")},
+		{jsonStringBorrowersBadMaxBooksField, []*borrower.Borrower{}, errors.New("missing Borrower field value - borrowers list is empty")},
 	}
 	for _, c := range cases {
 		got, err := JsonStringToBorrowers(c.js)
@@ -213,7 +215,7 @@ func Test_jsonStringToBorrowersFail(t *testing.T) {
 }
 
 func Test_jsonStringToBooksPass(t *testing.T) {
-	wantBks := []*Book{{Title: "Title1", Author: "Author1", Borrower: &Borrower{Name: "Borrower1", MaxBooks: 1}}, {Title: "Title2", Author: "Author2", Borrower: nil}}
+	wantBks := []*book.Book{{Title: "Title1", Author: "Author1", Borrower: &borrower.Borrower{Name: "Borrower1", MaxBooks: 1}}, {Title: "Title2", Author: "Author2", Borrower: nil}}
 	wantE := error(nil)
 
 	got, err := JsonStringToBooks(jsonStringBooks)
@@ -227,12 +229,12 @@ func Test_jsonStringToBooksPass(t *testing.T) {
 func Test_jsonStringToBooksFail(t *testing.T) {
 	cases := []struct {
 		js      string
-		wantBks []*Book
+		wantBks []*book.Book
 		wantE   error
 	}{
-		{jsonStringBooksBadParse, []*Book{}, errors.New("invalid character '\"' after object key")},
-		{jsonStringBooksBadTitleField, []*Book{}, errors.New("missing Book field value - book list is empty")},
-		{jsonStringBooksBadBorrowerField, []*Book{}, errors.New("missing Borrower field value - book list is empty")},
+		{jsonStringBooksBadParse, []*book.Book{}, errors.New("invalid character '\"' after object key")},
+		{jsonStringBooksBadTitleField, []*book.Book{}, errors.New("missing Book field value - book list is empty")},
+		{jsonStringBooksBadBorrowerField, []*book.Book{}, errors.New("missing Borrower field value - book list is empty")},
 	}
 	for _, c := range cases {
 		got, err := JsonStringToBooks(c.js)
@@ -264,15 +266,15 @@ func TestBooksToJSONString(t *testing.T) {
 }
 
 func TestStatusToString(t *testing.T) {
-	br1libPtrL := NewBorrower("Borrower1", 1)
-	br2libPtrL := NewBorrower("Borrower2", 2)
-	br3libPtrL := NewBorrower("Borrower3", 3)
-	brs2L := []*Borrower{br1libPtrL, br2libPtrL, br3libPtrL}
+	br1libPtrL := borrower.NewBorrower("Borrower1", 1)
+	br2libPtrL := borrower.NewBorrower("Borrower2", 2)
+	br3libPtrL := borrower.NewBorrower("Borrower3", 3)
+	brs2L := []*borrower.Borrower{br1libPtrL, br2libPtrL, br3libPtrL}
 
-	bk1libPtrL := &Book{Title: "Title1", Author: "Author1", Borrower: br1libPtr}
-	bk2libPtrL := NewBook("Title2", "Author2")
-	bk3libPtrL := &Book{Title: "Title3", Author: "Author3", Borrower: br3libPtr}
-	bks2L := []*Book{bk1libPtrL, bk2libPtrL, bk3libPtrL}
+	bk1libPtrL := &book.Book{Title: "Title1", Author: "Author1", Borrower: br1libPtr}
+	bk2libPtrL := book.NewBook("Title2", "Author2")
+	bk3libPtrL := &book.Book{Title: "Title3", Author: "Author3", Borrower: br3libPtr}
+	bks2L := []*book.Book{bk1libPtrL, bk2libPtrL, bk3libPtrL}
 
 	bks := bks2L
 	brs := brs2L
