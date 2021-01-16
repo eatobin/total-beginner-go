@@ -175,7 +175,7 @@ func StatusToString(bks []book.Book, brs []borrower.Borrower) string {
 	sb.WriteString("\n--- Status Report of Test Library ---\n\n")
 	sb.WriteString(libraryToString(bks, brs) + "\n\n")
 	for _, bk := range bks {
-		sb.WriteString(book.BkToString(bk) + "\n")
+		sb.WriteString(book.String(bk) + "\n")
 	}
 	sb.WriteString("\n")
 	for _, br := range brs {

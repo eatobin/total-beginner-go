@@ -1,6 +1,9 @@
 package book
 
-import "eatobin.com/totalbeginnergo/borrower"
+import (
+	"eatobin.com/totalbeginnergo/borrower"
+	"fmt"
+)
 
 // A Book has a Title and an Author
 type Book struct {
@@ -37,13 +40,10 @@ func availableString(bk Book) string {
 	if bk.Borrower == ZeroBorrower {
 		return "Available"
 	}
-	return "Checked out to " +
-		bk.Borrower.Name
+	return fmt.Sprintf("Checked out to %s", bk.Borrower.Name)
 }
 
-// BkToString makes a description of a Book
-func BkToString(bk Book) string {
-	return bk.Title +
-		" by " + bk.Author +
-		"; " + availableString(bk)
+// String makes a description of a Book
+func String(bk Book) string {
+	return fmt.Sprintf("%s by %s; %s", bk.Title, bk.Author, availableString(bk))
 }
