@@ -179,7 +179,7 @@ func StatusToString(bks []book.Book, brs []borrower.Borrower) string {
 	}
 	sb.WriteString("\n")
 	for _, br := range brs {
-		sb.WriteString(borrower.BrToString(br) + "\n")
+		sb.WriteString(borrower.String(br) + "\n")
 	}
 	sb.WriteString("\n--- End of Status Report ---\n")
 	return sb.String()

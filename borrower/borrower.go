@@ -1,11 +1,14 @@
 package borrower
 
-import "strconv"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 // A Borrower has a Name and a max books
 type Borrower struct {
 	Name     string `json:"name"`
-	MaxBooks int    `json:"max-books"`
+	MaxBooks int    `json:"maxBooks"`
 }
 
 // NewBorrower needs a Name and a max books to create
@@ -25,7 +28,13 @@ func SetMaxBooks(br Borrower, maxBooks int) Borrower {
 	return br
 }
 
-// BrToString makes a Borrower into a string
-func BrToString(br Borrower) string {
-	return br.Name + " (" + strconv.Itoa(br.MaxBooks) + " books)"
+// String makes a Borrower into a string
+func String(br Borrower) string {
+	return fmt.Sprintf("%s (%d books)", br.Name, br.MaxBooks)
+}
+
+func JsonStringToBorrower(borrowerString string) (Borrower, error) {
+	var borrower Borrower
+	err := json.Unmarshal([]byte(borrowerString), &borrower)
+	return borrower, err
 }

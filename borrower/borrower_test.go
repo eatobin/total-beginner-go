@@ -1,20 +1,23 @@
 package borrower
 
-import "testing"
+import (
+	"testing"
+)
 
-var wantS = "Borrower1 (1 books)"
+var jsonStringBr = "{\"name\":\"Borrower11\",\"maxBooks\":11}"
+var wantS = String(NewBorrower("Borrower1", 11))
+var wantS2 = String(NewBorrower("Borrower11", 1))
 
 func TestSetBorrowerValues(t *testing.T) {
+	badBr, _ := JsonStringToBorrower(jsonStringBr)
 	n := "Borrower1"
-	badBrN := NewBorrower("Jack", 1)
-	gotBrN := BrToString(SetName(badBrN, n))
-	if gotBrN != wantS {
-		t.Fatalf("SetName(%v, %v) == %v, want %v", badBrN, n, gotBrN, wantS)
+	gotBrS := String(SetName(badBr, n))
+	if gotBrS != wantS {
+		t.Fatalf("SetName(%v) == %v, want %v", n, gotBrS, wantS)
 	}
 	mb := 1
-	badBrMB := Borrower{"Borrower1", 11}
-	gotBrMB := BrToString(SetMaxBooks(badBrMB, mb))
-	if gotBrMB != wantS {
-		t.Fatalf("SetMaxBooks(%v, %v) == %v, want %v", badBrMB, mb, gotBrMB, wantS)
+	gotBrS2 := String(SetMaxBooks(badBr, mb))
+	if gotBrS2 != wantS2 {
+		t.Fatalf("SetMaxBooks(%v) == %v, want %v", mb, gotBrS2, wantS2)
 	}
 }
