@@ -61,7 +61,7 @@ func findBorrower(n string, brs []borrower.Borrower) (error, borrower.Borrower) 
 			return nil, br
 		}
 	}
-	return errors.New("did not find the requested borrower"), book.ZeroBorrower
+	return errors.New("did not find the requested borrower"), borrower.ZeroBorrower
 }
 
 // findBook finds a Book given a Title
@@ -96,11 +96,11 @@ func notMaxedOut(br borrower.Borrower, bks []book.Book) bool {
 }
 
 func bookNotOut(bk book.Book) bool {
-	return bk.Borrower == book.ZeroBorrower
+	return bk.Borrower == borrower.ZeroBorrower
 }
 
 func bookOut(bk book.Book) bool {
-	return bk.Borrower != book.ZeroBorrower
+	return bk.Borrower != borrower.ZeroBorrower
 }
 
 func CheckOut(n string, t string, brs []borrower.Borrower, bks []book.Book) []book.Book {
@@ -117,7 +117,7 @@ func CheckOut(n string, t string, brs []borrower.Borrower, bks []book.Book) []bo
 func CheckIn(t string, bks []book.Book) []book.Book {
 	errBk, mbk := findBook(t, bks)
 	if errBk == nil && bookOut(mbk) {
-		newBook := book.SetBorrower(mbk, book.ZeroBorrower)
+		newBook := book.SetBorrower(mbk, borrower.ZeroBorrower)
 		fewerBooks := removeBook(mbk, bks)
 		return AddBook(fewerBooks, newBook)
 	}

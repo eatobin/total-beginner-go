@@ -162,7 +162,7 @@ func TestCheckOut(t *testing.T) {
 
 func TestCheckIn(t *testing.T) {
 	var testbks1 = []book.Book{bk1lib, bk2lib}
-	var testbks2 = []book.Book{bk2lib, {Title: "Title1", Author: "Author1", Borrower: book.ZeroBorrower}}
+	var testbks2 = []book.Book{bk2lib, {Title: "Title1", Author: "Author1", Borrower: borrower.ZeroBorrower}}
 	cases := []struct {
 		t    string
 		bks  []book.Book

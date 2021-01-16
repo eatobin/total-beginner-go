@@ -12,10 +12,8 @@ type Book struct {
 	Borrower borrower.Borrower `json:"borrower"`
 }
 
-var ZeroBorrower = borrower.Borrower{}
-
 func NewBook(title string, author string) Book {
-	return Book{Title: title, Author: author, Borrower: ZeroBorrower}
+	return Book{Title: title, Author: author, Borrower: borrower.ZeroBorrower}
 }
 
 // SetTitle sets a Title for a Book
@@ -37,7 +35,7 @@ func SetBorrower(bk Book, borrower borrower.Borrower) Book {
 }
 
 func availableString(bk Book) string {
-	if bk.Borrower == ZeroBorrower {
+	if bk.Borrower == borrower.ZeroBorrower {
 		return "Available"
 	}
 	return fmt.Sprintf("Checked out to %s", bk.Borrower.Name)
