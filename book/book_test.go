@@ -5,8 +5,12 @@ import (
 	"testing"
 )
 
-var wantAvailS = "Title1 by Author1; Available"
-var wantNotAvailS = "Title1 by Author1; Checked out to Borrower2"
+var jsonStringBk1 = "{\"title\":\"Title11\",\"author\":\"Author11\",\"borrower\":null}"
+var jsonStringBk2 = "{\"title\":\"Title1\",\"author\":\"Author1\",\"borrower\":{\"name\":\"Borrower2\",\"maxBooks\":2}}"
+var br2Ptr = borrower.NewBorrower("Borrower2", 2)
+var wantAvailS1 = "Title1 by Author11; Available"
+var wantAvailS2 = "Title1 by Author1; Available"
+var wantAvailS3 = "Title1 by Author1; Checked out to Borrower2"
 
 func TestSetBookValues(t *testing.T) {
 	title := "Title1"
