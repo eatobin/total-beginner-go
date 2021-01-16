@@ -13,7 +13,7 @@ func TestSetBorrowerValues(t *testing.T) {
 	n := "Borrower1"
 	gotBrS := String(SetName(badBr, n))
 	if gotBrS != wantS {
-		t.Fatalf("SetName(%v) == %v, want %v", n, gotBrS, wantS)
+		t.Fatalf("SetName(%v, %v) == %v, want %v", badBr, n, gotBrS, wantS)
 	}
 	mb := 1
 	gotBrS2 := String(SetMaxBooks(badBr, mb))

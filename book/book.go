@@ -2,6 +2,7 @@ package book
 
 import (
 	"eatobin.com/totalbeginnergo/borrower"
+	"encoding/json"
 	"fmt"
 )
 
@@ -44,4 +45,10 @@ func availableString(bk Book) string {
 // String makes a description of a Book
 func String(bk Book) string {
 	return fmt.Sprintf("%s by %s; %s", bk.Title, bk.Author, availableString(bk))
+}
+
+func JsonStringToBook(bookString string) (Book, error) {
+	var book Book
+	err := json.Unmarshal([]byte(bookString), &book)
+	return book, err
 }
