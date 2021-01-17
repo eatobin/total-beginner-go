@@ -217,7 +217,7 @@ func Test_jsonStringToBooksPass(t *testing.T) {
 	wantBks := []book.Book{{Title: "Title2", Author: "Author22", Borrower: borrower.Borrower{Name: "NoName", MaxBooks: -1}}}
 	wantE := error(nil)
 
-	err, got := JsonStringToBooks(js)
+	got, err := JsonStringToBooks(js)
 
 	if !reflect.DeepEqual(got, wantBks) || err != wantE {
 		t.Errorf("JSONStringToBooks\n(%s)\n==\n%v and %v\nwant\n%v and %v",
@@ -236,7 +236,7 @@ func Test_jsonStringToBooksFail(t *testing.T) {
 		{jsonStringBooksBadBorrowerField, []book.Book{}, errors.New("missing Book field value - book list is empty")},
 	}
 	for _, c := range cases {
-		err, got := JsonStringToBooks(c.js)
+		got, err := JsonStringToBooks(c.js)
 		if err.Error() != c.wantE.Error() {
 			t.Errorf("JSONStringToBooks\n(%s)\n==\n%v and %v\nwant\n%v and %v",
 				c.js, got, err, c.wantBks, c.wantE)
