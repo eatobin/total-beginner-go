@@ -9,6 +9,9 @@ import (
 	"strings"
 )
 
+var zeroBorrowers []borrower.Borrower
+var zeroBooks []book.Book
+
 func containsBorrower(brs []borrower.Borrower, br borrower.Borrower) bool {
 	for _, b := range brs {
 		if b == br {
@@ -124,19 +127,19 @@ func CheckIn(t string, bks []book.Book) []book.Book {
 	return bks
 }
 
-func JsonStringToBorrowers(js string) (error, []borrower.Borrower) {
-	var res []borrower.Borrower
-	err := json.Unmarshal([]byte(js), &res)
+func JsonStringToBorrowers(borrowersString string) ([]borrower.Borrower, error) {
+	borrowers := zeroBorrowers
+	err := json.Unmarshal([]byte(borrowersString), &borrowers)
 	if err != nil {
-		return err, []borrower.Borrower{}
+		return zeroBorrowers, err
 	}
-	for _, br := range res {
+	for _, br := range borrowers {
 		if br.Name == "" || br.MaxBooks == 0 {
 			err = errors.New("missing Borrower field value - borrowers list is empty")
-			return err, []borrower.Borrower{}
+			return zeroBorrowers, err
 		}
 	}
-	return err, res
+	return borrowers, err
 }
 
 func JsonStringToBooks(js string) (error, []book.Book) {
