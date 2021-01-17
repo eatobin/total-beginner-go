@@ -10,7 +10,7 @@ import (
 type Book struct {
 	Title    string            `json:"title"`
 	Author   string            `json:"author"`
-	Borrower borrower.Borrower `json:"borrower"`
+	Borrower borrower.Borrower `json:"borrower,omitempty"`
 }
 
 var ZeroBook = Book{}
