@@ -9,8 +9,8 @@ import (
 	"strings"
 )
 
-var zeroBorrowers []borrower.Borrower
-var zeroBooks []book.Book
+var ZeroBorrowers []borrower.Borrower
+var ZeroBooks []book.Book
 
 func containsBorrower(brs []borrower.Borrower, br borrower.Borrower) bool {
 	for _, b := range brs {
@@ -128,35 +128,35 @@ func CheckIn(t string, bks []book.Book) []book.Book {
 }
 
 func JsonStringToBorrowers(borrowersString string) ([]borrower.Borrower, error) {
-	borrowers := zeroBorrowers
+	borrowers := ZeroBorrowers
 	err := json.Unmarshal([]byte(borrowersString), &borrowers)
 	if err != nil {
-		return zeroBorrowers, err
+		return ZeroBorrowers, err
 	}
 	for _, br := range borrowers {
 		if br.Name == "" || br.MaxBooks == 0 {
 			err = errors.New("missing Borrower field value - borrowers list is empty")
-			return zeroBorrowers, err
+			return ZeroBorrowers, err
 		}
 	}
 	return borrowers, err
 }
 
 func JsonStringToBooks(bookString string) ([]book.Book, error) {
-	books := zeroBooks
+	books := ZeroBooks
 	err := json.Unmarshal([]byte(bookString), &books)
 	if err != nil {
-		return zeroBooks, err
+		return ZeroBooks, err
 	}
 	for _, bk := range books {
 		if bk.Title == "" || bk.Author == "" {
 			err = errors.New("missing Book field value - book list is empty")
-			return zeroBooks, err
+			return ZeroBooks, err
 		}
 		if bk.Borrower != borrower.ZeroBorrower {
 			if bk.Borrower.Name == "" || bk.Borrower.MaxBooks == 0 {
 				err = errors.New("missing Borrower field value - book list is empty")
-				return zeroBooks, err
+				return ZeroBooks, err
 			}
 		}
 	}
