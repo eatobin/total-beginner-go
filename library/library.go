@@ -163,14 +163,14 @@ func JsonStringToBooks(bookString string) ([]book.Book, error) {
 	return books, err
 }
 
-func BorrowersToJSONSting(brs []borrower.Borrower) string {
-	bytes, _ := json.MarshalIndent(brs, "", "  ")
-	return string(bytes)
+func BorrowersToJSONSting(brs []borrower.Borrower) (string, error) {
+	bytes, err := json.Marshal(brs)
+	return string(bytes), err
 }
 
-func BooksToJSONSting(bks []book.Book) string {
-	bytes, _ := json.MarshalIndent(bks, "", "  ")
-	return string(bytes)
+func BooksToJSONSting(bks []book.Book) (string, error) {
+	bytes, err := json.Marshal(bks)
+	return string(bytes), err
 }
 
 func libraryToString(bks []book.Book, brs []borrower.Borrower) string {
