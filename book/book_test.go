@@ -2,6 +2,7 @@ package book
 
 import (
 	"eatobin.com/totalbeginnergo/borrower"
+	"fmt"
 	"testing"
 )
 
@@ -9,6 +10,8 @@ var jsonStringBk1 = "{\"title\":\"Title11\",\"author\":\"Author11\",\"borrower\"
 var jsonStringBk2 = "{\"title\":\"Title11\",\"author\":\"Author11\",\"borrower\":{\"name\":\"Borrower2\",\"maxBooks\":2}}"
 var wantAvailS1 = "Title1 by Author11; Available"
 var wantAvailS2 = "Title11 by Author1; Available"
+
+var jsonStringBk3 = "{\"title\":\"Title11\",\"author\":\"Author11\"}"
 
 func TestSetBookValues(t *testing.T) {
 	badBkAvail, _ := JsonStringToBook(jsonStringBk1)
@@ -28,5 +31,23 @@ func TestSetBookValues(t *testing.T) {
 	gotBkB := String(SetBorrower(badBkAvail, &br2))
 	if gotBkB != wantNotAvailS {
 		t.Fatalf("SetBorrower(%v, %v) == %v, want %v", badBkAvail, br2, gotBkB, wantNotAvailS)
+	}
+	fmt.Println(BkToJsonString(NewBook("me", "you")))
+	fmt.Println(BkToJsonString(Book{
+		Title:  "meeToo",
+		Author: "youToo",
+		Borrower: &borrower.Borrower{
+			Name:     "br",
+			MaxBooks: 33,
+		},
+	}))
+	fmt.Println(BkToJsonString(Book{
+		Title:  "meeToo2",
+		Author: "youToo2",
+	}))
+	gotBk, _ := JsonStringToBook(jsonStringBk3)
+	wantBk := Book{Title: "Title11", Author: "Author11"}
+	if String(gotBk) != String(wantBk) {
+		t.Fatalf("JsonStringToBook(%v) == %v, want %v", jsonStringBk3, gotBk, wantBk)
 	}
 }
