@@ -40,3 +40,8 @@ func JsonStringToBorrower(borrowerString string) (Borrower, error) {
 	err := json.Unmarshal([]byte(borrowerString), &borrower)
 	return borrower, err
 }
+
+func BorrowerToJsonString(borrower Borrower) (string, error) {
+	borrowerByte, err := json.Marshal(borrower)
+	return string(borrowerByte), err
+}
