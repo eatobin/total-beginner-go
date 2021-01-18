@@ -8,15 +8,13 @@ import (
 
 // A Book has a Title and an Author
 type Book struct {
-	Title    string            `json:"title"`
-	Author   string            `json:"author"`
-	Borrower borrower.Borrower `json:"borrower,omitempty"`
+	Title    string             `json:"title"`
+	Author   string             `json:"author"`
+	Borrower *borrower.Borrower `json:"borrower,omitempty"`
 }
 
-var ZeroBook = Book{}
-
 func NewBook(title string, author string) Book {
-	return Book{Title: title, Author: author, Borrower: borrower.ZeroBorrower}
+	return Book{Title: title, Author: author, Borrower: nil}
 }
 
 // SetTitle sets a Title for a Book
@@ -32,13 +30,13 @@ func SetAuthor(bk Book, author string) Book {
 }
 
 // SetBorrower takes a BorrowerPtr and sets it for a Book
-func SetBorrower(bk Book, borrower borrower.Borrower) Book {
+func SetBorrower(bk Book, borrower *borrower.Borrower) Book {
 	bk.Borrower = borrower
 	return bk
 }
 
 func availableString(bk Book) string {
-	if bk.Borrower == borrower.ZeroBorrower {
+	if bk.Borrower == nil {
 		return "Available"
 	}
 	return fmt.Sprintf("Checked out to %s", bk.Borrower.Name)
@@ -53,4 +51,9 @@ func JsonStringToBook(bookString string) (Book, error) {
 	var book Book
 	err := json.Unmarshal([]byte(bookString), &book)
 	return book, err
+}
+
+func BkToJsonString(book Book) (string, error) {
+	bookByte, err := json.Marshal(book)
+	return string(bookByte), err
 }

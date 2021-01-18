@@ -25,7 +25,7 @@ func TestSetBookValues(t *testing.T) {
 	bkNotAvail, _ := JsonStringToBook(jsonStringBk2)
 	wantNotAvailS := String(bkNotAvail)
 	br2 := borrower.NewBorrower("Borrower2", 2)
-	gotBkB := String(SetBorrower(badBkAvail, br2))
+	gotBkB := String(SetBorrower(badBkAvail, &br2))
 	if gotBkB != wantNotAvailS {
 		t.Fatalf("SetBorrower(%v, %v) == %v, want %v", badBkAvail, br2, gotBkB, wantNotAvailS)
 	}
