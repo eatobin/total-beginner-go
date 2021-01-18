@@ -21,9 +21,9 @@ func TestSetBorrowerValues(t *testing.T) {
 		t.Fatalf("SetMaxBooks(%v) == %v, want %v", mb, gotBrS2, wantS2)
 	}
 	nb := NewBorrower("Borrower111", 111)
-	gotBrString, _ := BorrowerToJsonString(nb)
+	gotBrString, _ := ToJsonString(nb)
 	wantBrString := "{\"name\":\"Borrower111\",\"maxBooks\":111}"
 	if gotBrString != wantBrString {
-		t.Fatalf("BorrowerToJsonString(%v) == %v, want %v", nb, gotBrString, wantBrString)
+		t.Fatalf("ToJsonString(%v) == %v, want %v", nb, gotBrString, wantBrString)
 	}
 }

@@ -41,7 +41,7 @@ func JsonStringToBorrower(borrowerString string) (Borrower, error) {
 	return borrower, err
 }
 
-func BorrowerToJsonString(borrower Borrower) (string, error) {
+func ToJsonString(borrower Borrower) (string, error) {
 	borrowerByte, err := json.Marshal(borrower)
 	return string(borrowerByte), err
 }
