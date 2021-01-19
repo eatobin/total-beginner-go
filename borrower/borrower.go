@@ -40,6 +40,7 @@ func JsonStringToBorrower(borrowerString string) (Borrower, error) {
 	return borrower, err
 }
 
+// TODO - test this
 // BrToJsonString turns a Borrower into a Borrower JSON string
 func BrToJsonString(borrower Borrower) (string, error) {
 	borrowerByte, err := json.Marshal(borrower)
