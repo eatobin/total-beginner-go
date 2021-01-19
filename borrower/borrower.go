@@ -33,12 +33,14 @@ func String(br Borrower) string {
 	return fmt.Sprintf("%s (%d books)", br.Name, br.MaxBooks)
 }
 
+// JsonStringToBorrower turns a Borrower JSON string into a Borrower
 func JsonStringToBorrower(borrowerString string) (Borrower, error) {
 	var borrower Borrower
 	err := json.Unmarshal([]byte(borrowerString), &borrower)
 	return borrower, err
 }
 
+// BrToJsonString turns a Borrower into a Borrower JSON string
 func BrToJsonString(borrower Borrower) (string, error) {
 	borrowerByte, err := json.Marshal(borrower)
 	return string(borrowerByte), err
