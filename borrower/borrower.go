@@ -11,7 +11,7 @@ type Borrower struct {
 	MaxBooks int    `json:"maxBooks"`
 }
 
-var ZeroBorrower = Borrower{}
+//var ZeroBorrower = Borrower{}
 
 // NewBorrower needs a Name and a max books to create
 func NewBorrower(name string, maxBooks int) Borrower {

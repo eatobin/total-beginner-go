@@ -5,6 +5,7 @@ import (
 )
 
 var jsonStringBr = "{\"name\":\"Borrower11\",\"maxBooks\":11}"
+var jsonStringBr2 = "{\"name\":\"Borrower111\",\"maxBooks\":111}"
 var wantS = String(NewBorrower("Borrower1", 11))
 var wantS2 = String(NewBorrower("Borrower11", 1))
 
@@ -22,8 +23,7 @@ func TestSetBorrowerValues(t *testing.T) {
 	}
 	nb := NewBorrower("Borrower111", 111)
 	gotBrString, _ := BrToJsonString(nb)
-	wantBrString := "{\"name\":\"Borrower111\",\"maxBooks\":111}"
-	if gotBrString != wantBrString {
-		t.Fatalf("BrToJsonString(%v) == %v, want %v", nb, gotBrString, wantBrString)
+	if gotBrString != jsonStringBr2 {
+		t.Fatalf("BrToJsonString(%v) == %v, want %v", nb, gotBrString, jsonStringBr2)
 	}
 }
