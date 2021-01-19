@@ -7,13 +7,9 @@ import (
 
 var bk1, _ = JsonStringToBook("{\"title\":\"Title1\",\"author\":\"Author1\"}")
 var newBorrower = borrower.NewBorrower("Borrower1", 1)
-
 var bk2, _ = JsonStringToBook("{\"title\":\"Title1\",\"author\":\"Author1\",\"borrower\":null}")
-
-//var jsonStringBk3 = "{\"title\":\"Title11\",\"author\":\"Author11\",\"borrower\":{\"name\":\"Borrower2\",\"maxBooks\":2}}"
-
-//var wantAvailS1 = "Title1 by Author11; Available"
-//var wantAvailS2 = "Title11 by Author1; Available"
+var bk3, _ = JsonStringToBook("{\"title\":\"Title1\",\"author\":\"Author1\",\"borrower\":{\"name\":\"Borrower1\",\"maxBooks\":1}}")
+var wantAvail = "Title1 by Author1; Available"
 var wantCheckedOut = "Title1 by Author1; Checked out to Borrower1"
 
 func TestSetBorrower(t *testing.T) {
@@ -24,6 +20,7 @@ func TestSetBorrower(t *testing.T) {
 	}{
 		{bk1, &newBorrower, wantCheckedOut},
 		{bk2, &newBorrower, wantCheckedOut},
+		{bk3, nil, wantAvail},
 	}
 	for _, c := range cases {
 		gotBkString := String(SetBorrower(c.bk, c.br))
