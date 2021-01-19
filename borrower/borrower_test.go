@@ -4,10 +4,8 @@ import (
 	"testing"
 )
 
-//var br, _ = JsonStringToBorrower("{\"name\":\"Borrower1\",\"maxBooks\":1}")
 var badName, _ = JsonStringToBorrower("{\"name\":\"Borrower1X\",\"maxBooks\":1}")
-
-//var badMB, _ = JsonStringToBorrower("{\"name\":\"Borrower1\",\"maxBooks\":19}")
+var badMB, _ = JsonStringToBorrower("{\"name\":\"Borrower1\",\"maxBooks\":19}")
 var wantBr = "Borrower1 (1 books)"
 
 func TestSetName(t *testing.T) {
@@ -18,16 +16,10 @@ func TestSetName(t *testing.T) {
 	}
 }
 
-//func TestSetBorrowerValues(t *testing.T) {
-//
-//	mb := 1
-//	gotBrS2 := String(SetMaxBooks(badBr, mb))
-//	if gotBrS2 != wantS2 {
-//		t.Fatalf("SetMaxBooks(%v) == %v, want %v", mb, gotBrS2, wantS2)
-//	}
-//	nb := NewBorrower("Borrower11", 11)
-//	gotBrString, _ := BrToJsonString(nb)
-//	if gotBrString != jsonStringBr {
-//		t.Fatalf("BrToJsonString(%v) == %v, want %v", nb, gotBrString, jsonStringBr)
-//	}
-//}
+func TestSetMaxBooks(t *testing.T) {
+	maxBooks := 1
+	gotBrMB := String(SetMaxBooks(badMB, maxBooks))
+	if gotBrMB != wantBr {
+		t.Fatalf("SetMaxBooks(%v, %v) == %v, want %v", badMB, maxBooks, gotBrMB, wantBr)
+	}
+}
