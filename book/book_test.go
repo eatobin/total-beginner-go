@@ -8,10 +8,9 @@ import (
 
 var jsonStringBk1 = "{\"title\":\"Title11\",\"author\":\"Author11\",\"borrower\":null}"
 var jsonStringBk2 = "{\"title\":\"Title11\",\"author\":\"Author11\",\"borrower\":{\"name\":\"Borrower2\",\"maxBooks\":2}}"
+var jsonStringBk3 = "{\"title\":\"Title11\",\"author\":\"Author11\"}"
 var wantAvailS1 = "Title1 by Author11; Available"
 var wantAvailS2 = "Title11 by Author1; Available"
-
-var jsonStringBk3 = "{\"title\":\"Title11\",\"author\":\"Author11\"}"
 
 func TestSetBookValues(t *testing.T) {
 	badBkAvail, _ := JsonStringToBook(jsonStringBk1)
