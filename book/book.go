@@ -47,12 +47,14 @@ func String(bk Book) string {
 	return fmt.Sprintf("%s by %s; %s", bk.Title, bk.Author, availableString(bk))
 }
 
+// JsonStringToBook turns a Book JSON string into a Book
 func JsonStringToBook(bookString string) (Book, error) {
 	var book Book
 	err := json.Unmarshal([]byte(bookString), &book)
 	return book, err
 }
 
+// BkToJsonString turns a Book into a Book JSON string
 func BkToJsonString(book Book) (string, error) {
 	bookByte, err := json.Marshal(book)
 	return string(bookByte), err
