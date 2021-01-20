@@ -9,6 +9,8 @@ import (
 	"strings"
 )
 
+var ZeroBorrower borrower.Borrower
+var ZeroBook book.Book
 var ZeroBorrowers []borrower.Borrower
 var ZeroBooks []book.Book
 
@@ -64,7 +66,7 @@ func findBorrower(n string, brs []borrower.Borrower) (borrower.Borrower, error) 
 			return br, nil
 		}
 	}
-	return borrower.ZeroBorrower, errors.New("did not find the requested borrower")
+	return ZeroBorrower, errors.New("did not find the requested borrower")
 }
 
 // findBook finds a Book given a Title
@@ -74,14 +76,14 @@ func findBook(t string, bks []book.Book) (book.Book, error) {
 			return bk, nil
 		}
 	}
-	return book.ZeroBook, errors.New("did not find the requested book")
+	return ZeroBook, errors.New("did not find the requested book")
 }
 
 // getBooksForBorrower will find books given a Borrower and a slice of Books
 func getBooksForBorrower(br borrower.Borrower, bks []book.Book) []book.Book {
 	nBks := make([]book.Book, 0)
 	for _, bk := range bks {
-		if bk.Borrower == br {
+		if *bk.Borrower == br {
 			nBks = append(nBks, bk)
 		}
 	}
@@ -99,18 +101,18 @@ func notMaxedOut(br borrower.Borrower, bks []book.Book) bool {
 }
 
 func bookNotOut(bk book.Book) bool {
-	return bk.Borrower == borrower.ZeroBorrower
+	return bk.Borrower == nil
 }
 
 func bookOut(bk book.Book) bool {
-	return bk.Borrower != borrower.ZeroBorrower
+	return bk.Borrower != nil
 }
 
 func CheckOut(n string, t string, brs []borrower.Borrower, bks []book.Book) []book.Book {
 	mbr, errBr := findBorrower(n, brs)
 	mbk, errBk := findBook(t, bks)
 	if errBr == nil && errBk == nil && notMaxedOut(mbr, bks) && bookNotOut(mbk) {
-		newBook := book.SetBorrower(mbk, mbr)
+		newBook := book.SetBorrower(mbk, &mbr)
 		fewerBooks := removeBook(mbk, bks)
 		return AddBook(fewerBooks, newBook)
 	}
@@ -120,7 +122,7 @@ func CheckOut(n string, t string, brs []borrower.Borrower, bks []book.Book) []bo
 func CheckIn(t string, bks []book.Book) []book.Book {
 	mbk, errBk := findBook(t, bks)
 	if errBk == nil && bookOut(mbk) {
-		newBook := book.SetBorrower(mbk, borrower.ZeroBorrower)
+		newBook := book.SetBorrower(mbk, nil)
 		fewerBooks := removeBook(mbk, bks)
 		return AddBook(fewerBooks, newBook)
 	}
@@ -153,7 +155,7 @@ func JsonStringToBooks(bookString string) ([]book.Book, error) {
 			err = errors.New("missing Book field value - book list is empty")
 			return ZeroBooks, err
 		}
-		if bk.Borrower != borrower.ZeroBorrower {
+		if bk.Borrower != nil {
 			if bk.Borrower.Name == "" || bk.Borrower.MaxBooks == 0 {
 				err = errors.New("missing Borrower field value - book list is empty")
 				return ZeroBooks, err
