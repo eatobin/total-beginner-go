@@ -13,6 +13,7 @@ var wantAvail = "Title1 by Author1; Available"
 var wantCheckedOut = "Title1 by Author1; Checked out to Borrower1"
 var badTitle, _ = JsonStringToBook("{\"title\":\"Title1X\",\"author\":\"Author1\"}")
 var badAuthor, _ = JsonStringToBook("{\"title\":\"Title1\",\"author\":\"Author1X\"}")
+var jsonString = "{\"title\":\"Title1X\",\"author\":\"Author1\"}"
 
 func TestSetTitle(t *testing.T) {
 	title := "Title1"
@@ -45,5 +46,12 @@ func TestSetBorrower(t *testing.T) {
 		if gotBkString != c.wantBkString {
 			t.Fatalf("SetBorrower(%v, %v) == %v, want %v", c.bk, c.br, gotBkString, c.wantBkString)
 		}
+	}
+}
+
+func TestBkToJsonString(t *testing.T) {
+	gotJsonString, _ := BkToJsonString(badTitle)
+	if gotJsonString != jsonString {
+		t.Fatalf("BkToJsonString(%v) == %v, want %v", badTitle, gotJsonString, jsonString)
 	}
 }

@@ -54,7 +54,6 @@ func JsonStringToBook(bookString string) (Book, error) {
 	return book, err
 }
 
-// TODO - test this
 // BkToJsonString turns a Book into a Book JSON string
 func BkToJsonString(book Book) (string, error) {
 	bookByte, err := json.Marshal(book)
