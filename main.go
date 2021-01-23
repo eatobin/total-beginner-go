@@ -21,4 +21,10 @@ func main() {
 	fmt.Println("Check out War And Peace to Sue")
 	books = library.CheckOut("Sue", "War And Peace", borrowers, books)
 	fmt.Println(library.StatusToString(books, borrowers))
+
+	fmt.Println("Now check in War And Peace from Sue...")
+	books = library.CheckIn("War And Peace", books)
+	fmt.Println("...and check out Great Expectations to Jim")
+	books = library.CheckOut("Jim", "Great Expectations", borrowers, books)
+	fmt.Println(library.StatusToString(books, borrowers))
 }
