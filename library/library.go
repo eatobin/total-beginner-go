@@ -83,8 +83,10 @@ func findBook(t string, bks []book.Book) (book.Book, error) {
 func getBooksForBorrower(br borrower.Borrower, bks []book.Book) []book.Book {
 	nBks := make([]book.Book, 0)
 	for _, bk := range bks {
-		if *bk.Borrower == br {
-			nBks = append(nBks, bk)
+		if bk.Borrower != nil {
+			if *bk.Borrower == br {
+				nBks = append(nBks, bk)
+			}
 		}
 	}
 	return nBks

@@ -117,25 +117,25 @@ func Test_findBook(t *testing.T) {
 	}
 }
 
-// FIXME
-//func Test_getBooksForBorrower(t *testing.T) {
-//	cases := []struct {
-//		br   borrower.Borrower
-//		bks  []book.Book
-//		want []book.Book
-//	}{
-//		{br2lib, bks1, []book.Book{}},
-//		{br1lib, bks1, []book.Book{bk1lib}},
-//		{br3lib, bks3, []book.Book{bk3lib, bk4lib}},
-//	}
-//	for _, c := range cases {
-//		got := getBooksForBorrower(c.br, c.bks)
-//		if !reflect.DeepEqual(got, c.want) {
-//			t.Errorf("GetBooksForborrower(%v, %v) ==\n%v want \n%v",
-//				c.br, c.bks, got, c.want)
-//		}
-//	}
-//}
+func Test_getBooksForBorrower(t *testing.T) {
+	cases := []struct {
+		br   borrower.Borrower
+		bks  []book.Book
+		want []book.Book
+	}{
+		{br2lib, bks1, []book.Book{}},
+		{br1lib, bks1, []book.Book{bk1lib}},
+		{br3lib, bks3, []book.Book{bk3lib, bk4lib}},
+	}
+	for _, c := range cases {
+		got := getBooksForBorrower(c.br, c.bks)
+		if !reflect.DeepEqual(got, c.want) {
+			t.Errorf("GetBooksForborrower(%v, %v) ==\n%v want \n%v",
+				c.br, c.bks, got, c.want)
+		}
+	}
+}
+
 // FIXME
 //func TestCheckOut(t *testing.T) {
 //	var testbks = []book.Book{bk1lib, {Title: "Title2", Author: "Author2", Borrower: &borrower.Borrower{Name: "Borrower2", MaxBooks: 2}}}
