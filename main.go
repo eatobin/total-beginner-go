@@ -27,4 +27,12 @@ func main() {
 	fmt.Println("...and check out Great Expectations to Jim")
 	books = library.CheckOut("Jim", "Great Expectations", borrowers, books)
 	fmt.Println(library.StatusToString(books, borrowers))
+
+	fmt.Println("Add Eric and The Cat In The Hat")
+	borrowers = library.AddBorrower(borrowers, borrower.Borrower{Name: "Eric", MaxBooks: 1})
+	books = library.AddBook(books, book.Book{Title: "The Cat In The Hat", Author: "Dr. Seuss"})
+	fmt.Println("Check Out Dr. Seuss to Eric")
+	books = library.CheckOut("Eric", "The Cat In The Hat", borrowers, books)
+	fmt.Println(library.StatusToString(books, borrowers))
+
 }
