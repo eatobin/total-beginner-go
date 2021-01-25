@@ -5,6 +5,7 @@ import (
 	"eatobin.com/totalbeginnergo/borrower"
 	"eatobin.com/totalbeginnergo/library"
 	"fmt"
+	"io/ioutil"
 )
 
 var borrowers []borrower.Borrower
@@ -70,4 +71,9 @@ func newEmptyV() {
 	borrowers = library.ZeroBorrowers
 	books = library.ZeroBooks
 	fmt.Println(library.StatusToString(books, borrowers))
+}
+
+func readFileIntoJsonString(fp string) (string, error) {
+	b, err := ioutil.ReadFile(fp)
+	return string(b), err
 }
