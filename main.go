@@ -41,4 +41,9 @@ func main() {
 	borrowers = library.AddBorrower(borrowers, borrower.Borrower{Name: "Jim", MaxBooks: 3})
 	fmt.Println("No change to Test Library:")
 	fmt.Println(library.StatusToString(books, borrowers))
+
+	fmt.Println("Add a book that already exists (total.Book('War And Peace', 'Tolstoy', None))")
+	books = library.AddBook(books, book.Book{Title: "War And Peace", Author: "Tolstoy"})
+	fmt.Println("No change to Test Library:")
+	fmt.Println(library.StatusToString(books, borrowers))
 }
