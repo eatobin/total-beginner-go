@@ -35,4 +35,10 @@ func main() {
 	books = library.CheckOut("Eric", "The Cat In The Hat", borrowers, books)
 	fmt.Println(library.StatusToString(books, borrowers))
 
+	fmt.Println("Now let's do some BAD stuff...")
+
+	fmt.Println("Add a borrower that already exists (total.Borrower('Jim', 3))")
+	borrowers = library.AddBorrower(borrowers, borrower.Borrower{Name: "Jim", MaxBooks: 3})
+	fmt.Println("No change to Test Library:")
+	fmt.Println(library.StatusToString(books, borrowers))
 }
