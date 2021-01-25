@@ -46,4 +46,9 @@ func main() {
 	books = library.AddBook(books, book.Book{Title: "War And Peace", Author: "Tolstoy"})
 	fmt.Println("No change to Test Library:")
 	fmt.Println(library.StatusToString(books, borrowers))
+
+	fmt.Println("Check out a valid book to an invalid person (checkOut('JoJo', 'War And Peace', borrowers))")
+	books = library.CheckOut("JoJo", "War And Peace", borrowers, books)
+	fmt.Println("No change to Test Library:")
+	fmt.Println(library.StatusToString(books, borrowers))
 }
