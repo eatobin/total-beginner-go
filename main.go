@@ -51,4 +51,9 @@ func main() {
 	books = library.CheckOut("JoJo", "War And Peace", borrowers, books)
 	fmt.Println("No change to Test Library:")
 	fmt.Println(library.StatusToString(books, borrowers))
+
+	fmt.Println("Check out an invalid book to an valid person (checkOut('Sue', 'Not A total.Book', borrowers))")
+	books = library.CheckOut("Sue", "Not A Book", borrowers, books)
+	fmt.Println("No change to Test Library:")
+	fmt.Println(library.StatusToString(books, borrowers))
 }
