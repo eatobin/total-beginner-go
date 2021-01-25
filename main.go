@@ -7,10 +7,10 @@ import (
 	"fmt"
 )
 
-func main() {
-	var borrowers []borrower.Borrower
-	var books []book.Book
+var borrowers []borrower.Borrower
+var books []book.Book
 
+func main() {
 	borrowers = library.AddBorrower(borrowers, borrower.NewBorrower("Jim", 3))
 	borrowers = library.AddBorrower(borrowers, borrower.NewBorrower("Sue", 3))
 	books = library.AddBook(books, book.NewBook("War And Peace", "Tolstoy"))
@@ -60,5 +60,14 @@ func main() {
 	fmt.Println("Last - check in a book not checked out (checkIn('War And Peace'))")
 	books = library.CheckIn("War And Peace", books)
 	fmt.Println("No change to Test Library:")
+	fmt.Println(library.StatusToString(books, borrowers))
+
+	fmt.Println("Okay... let's finish with some persistence. First clear the whole library:")
+	newEmptyV()
+}
+
+func newEmptyV() {
+	borrowers = library.ZeroBorrowers
+	books = library.ZeroBooks
 	fmt.Println(library.StatusToString(books, borrowers))
 }
