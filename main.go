@@ -73,7 +73,7 @@ func newEmptyV() {
 	fmt.Println(library.StatusToString(books, borrowers))
 }
 
-func readFileIntoJsonString(fp string) (string, error) {
+func ReadFileIntoJsonString(fp string) (string, error) {
 	b, err := ioutil.ReadFile(fp)
 	return string(b), err
 }
