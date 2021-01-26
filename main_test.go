@@ -38,7 +38,8 @@ func TestNewV(t *testing.T) {
 	}{
 		{"resources/borrowers-before.json", "resources/books-before.json",
 			"\n--- Status Report of Test Library ---\n\nTest Library: 2 books; 2 borrowers.\n\nBook100 by Author100; Checked out to Borrower100\nBook200 by Author200; Available\n\nBorrower100 (100 books)\nBorrower200 (200 books)\n\n--- End of Status Report ---\n"},
-		//{"resources/testText.txt", "This is test text\n", errors.New("")},
+		{"resources/bad-borrowers.json", "resources/books-before.json",
+			"\n--- Status Report of Test Library ---\n\nTest Library: 0 books; 0 borrowers.\n\n\n\n--- End of Status Report ---\n"},
 	}
 	for _, c := range cases {
 		borrowers := library.ZeroBorrowers
