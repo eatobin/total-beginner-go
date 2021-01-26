@@ -32,16 +32,12 @@ func TestReadFileIntoJsonString(t *testing.T) {
 
 func TestNewV(t *testing.T) {
 	cases := []struct {
-		brsfp         string
-		bksfp         string
-		wantLib       string
-		wantBrFileErr error
-		wantBkFileErr error
+		brsfp   string
+		bksfp   string
+		wantLib string
 	}{
 		{"resources/borrowers-before.json", "resources/books-before.json",
-			"\n--- Status Report of Test Library ---\n\nTest Library: 2 books; 2 borrowers.\n\nBook100 by Author100; Checked out to Borrower100\nBook200 by Author200; Available\n\nBorrower100 (100 books)\nBorrower200 (200 books)\n\n--- End of Status Report ---\n",
-			errors.New("open resources/noFile.txt: no such file or directory"),
-			errors.New("open resources/noFile.txt: no such file or directory")},
+			"\n--- Status Report of Test Library ---\n\nTest Library: 2 books; 2 borrowers.\n\nBook100 by Author100; Checked out to Borrower100\nBook200 by Author200; Available\n\nBorrower100 (100 books)\nBorrower200 (200 books)\n\n--- End of Status Report ---\n"},
 		//{"resources/testText.txt", "This is test text\n", errors.New("")},
 	}
 	for _, c := range cases {

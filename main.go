@@ -88,18 +88,22 @@ func NewV(brsfp string, bksfp string) ([]borrower.Borrower, []book.Book) {
 	jsonBrsStr, brFileErr := ReadFileIntoJsonString(brsfp)
 	if brFileErr != nil {
 		fmt.Println(brFileErr.Error())
+		return library.ZeroBorrowers, library.ZeroBooks
 	}
 	jsonBksStr, bkFileErr := ReadFileIntoJsonString(bksfp)
 	if bkFileErr != nil {
 		fmt.Println(bkFileErr.Error())
+		return library.ZeroBorrowers, library.ZeroBooks
 	}
 	brs, brParseErr := library.JsonStringToBorrowers(jsonBrsStr)
 	if brParseErr != nil {
 		fmt.Println(brParseErr.Error())
+		return library.ZeroBorrowers, library.ZeroBooks
 	}
 	bks, bkParseErr := library.JsonStringToBooks(jsonBksStr)
 	if bkParseErr != nil {
 		fmt.Println(bkParseErr.Error())
+		return library.ZeroBorrowers, library.ZeroBooks
 	}
 	return brs, bks
 }
