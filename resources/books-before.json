@@ -4,15 +4,11 @@
     "author": "Author100",
     "borrower": {
       "name": "Borrower100",
-      "max-books": 100
+      "maxBooks": 100
     }
   },
   {
     "title": "Book200",
-    "author": "Author200",
-    "borrower": {
-      "name": "NoName",
-      "max-books": -1
-    }
+    "author": "Author200"
   }
 ]

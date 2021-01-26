@@ -1,6 +1,7 @@
 package main
 
 import (
+	"eatobin.com/totalbeginnergo/library"
 	"errors"
 	"testing"
 )
@@ -11,8 +12,8 @@ func TestReadFileIntoJsonString(t *testing.T) {
 		wantJsonString string
 		wantError      error
 	}{
-		{"resources/noFile.txt", "", errors.New("open resources/noFile.txt: no such file or directory")},
-		{"resources/testText.txt", "This is test text\n", errors.New("")},
+		{"resources-test/noFile.txt", "", errors.New("open resources-test/noFile.txt: no such file or directory")},
+		{"resources-test/testText.txt", "This is test text\n", errors.New("")},
 	}
 	for _, c := range cases {
 		gotString, gotError := ReadFileIntoJsonString(c.fp)
@@ -25,6 +26,32 @@ func TestReadFileIntoJsonString(t *testing.T) {
 		if gotString != c.wantJsonString {
 			t.Errorf("ReadFileIntoJsonString(%s) ==\n%s%s",
 				c.fp, gotString, c.wantJsonString)
+		}
+	}
+}
+
+func TestNewV(t *testing.T) {
+	cases := []struct {
+		brsfp         string
+		bksfp         string
+		wantLib       string
+		wantBrFileErr error
+		wantBkFileErr error
+	}{
+		{"resources/borrowers-before.json", "resources/books-before.json",
+			"\n--- Status Report of Test Library ---\n\nTest Library: 2 books; 2 borrowers.\n\nBook100 by Author100; Checked out to Borrower100\nBook200 by Author200; Available\n\nBorrower100 (100 books)\nBorrower200 (200 books)\n\n--- End of Status Report ---\n",
+			errors.New("open resources/noFile.txt: no such file or directory"),
+			errors.New("open resources/noFile.txt: no such file or directory")},
+		//{"resources/testText.txt", "This is test text\n", errors.New("")},
+	}
+	for _, c := range cases {
+		borrowers := library.ZeroBorrowers
+		books := library.ZeroBooks
+		borrowers, books = NewV(c.brsfp, c.bksfp)
+		gotLib := library.StatusToString(books, borrowers)
+		if gotLib != c.wantLib {
+			t.Errorf("NewV(%s, %s) ==\n%s\nwant\n%s",
+				c.brsfp, c.bksfp, gotLib, c.wantLib)
 		}
 	}
 }

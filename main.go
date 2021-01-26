@@ -65,6 +65,12 @@ func main() {
 
 	fmt.Println("Okay... let's finish with some persistence. First clear the whole library:")
 	newEmptyV()
+
+	fmt.Println("Lets read in a new library from \"borrowers-before.json\" and \"books-before.json\":")
+	//newV(tvBooks, tvBorrowers, jsonBorrowersFileBefore, jsonBooksFile)
+	//fmt.Println("Add... a new borrower:")
+	//tvBorrowers.transform(addItem(Borrower("BorrowerNew", 300), _))
+	//fmt.Println(statusToString(tvBooks.get, tvBorrowers.get))
 }
 
 func newEmptyV() {
@@ -74,6 +80,26 @@ func newEmptyV() {
 }
 
 func ReadFileIntoJsonString(fp string) (string, error) {
-	b, err := ioutil.ReadFile(fp)
-	return string(b), err
+	jsonStr, err := ioutil.ReadFile(fp)
+	return string(jsonStr), err
+}
+
+func NewV(brsfp string, bksfp string) ([]borrower.Borrower, []book.Book) {
+	jsonBrsStr, brFileErr := ReadFileIntoJsonString(brsfp)
+	if brFileErr != nil {
+		fmt.Println(brFileErr.Error())
+	}
+	jsonBksStr, bkFileErr := ReadFileIntoJsonString(bksfp)
+	if bkFileErr != nil {
+		fmt.Println(bkFileErr.Error())
+	}
+	brs, brParseErr := library.JsonStringToBorrowers(jsonBrsStr)
+	if brParseErr != nil {
+		fmt.Println(brParseErr.Error())
+	}
+	bks, bkParseErr := library.JsonStringToBooks(jsonBksStr)
+	if bkParseErr != nil {
+		fmt.Println(bkParseErr.Error())
+	}
+	return brs, bks
 }
