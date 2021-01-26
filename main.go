@@ -79,18 +79,18 @@ func newEmptyV() {
 	fmt.Println(library.StatusToString(books, borrowers))
 }
 
-func ReadFileIntoJsonString(fp string) (string, error) {
+func readFileIntoJsonString(fp string) (string, error) {
 	jsonStr, err := ioutil.ReadFile(fp)
 	return string(jsonStr), err
 }
 
 func NewV(brsfp string, bksfp string) ([]borrower.Borrower, []book.Book) {
-	jsonBrsStr, brFileErr := ReadFileIntoJsonString(brsfp)
+	jsonBrsStr, brFileErr := readFileIntoJsonString(brsfp)
 	if brFileErr != nil {
 		fmt.Println(brFileErr.Error())
 		return library.ZeroBorrowers, library.ZeroBooks
 	}
-	jsonBksStr, bkFileErr := ReadFileIntoJsonString(bksfp)
+	jsonBksStr, bkFileErr := readFileIntoJsonString(bksfp)
 	if bkFileErr != nil {
 		fmt.Println(bkFileErr.Error())
 		return library.ZeroBorrowers, library.ZeroBooks

@@ -16,15 +16,15 @@ func TestReadFileIntoJsonString(t *testing.T) {
 		{"resources-test/testText.txt", "This is test text\n", errors.New("")},
 	}
 	for _, c := range cases {
-		gotString, gotError := ReadFileIntoJsonString(c.fp)
+		gotString, gotError := readFileIntoJsonString(c.fp)
 		if gotError != nil {
 			if gotError.Error() != c.wantError.Error() {
-				t.Errorf("ReadFileIntoJsonString(%s) ==\n%s\n%s",
+				t.Errorf("readFileIntoJsonString(%s) ==\n%s\n%s",
 					c.fp, gotError, c.wantError)
 			}
 		}
 		if gotString != c.wantJsonString {
-			t.Errorf("ReadFileIntoJsonString(%s) ==\n%s%s",
+			t.Errorf("readFileIntoJsonString(%s) ==\n%s%s",
 				c.fp, gotString, c.wantJsonString)
 		}
 	}
