@@ -2,7 +2,6 @@ package main
 
 import (
 	"errors"
-	"fmt"
 	"testing"
 )
 
@@ -12,17 +11,20 @@ func TestReadFileIntoJsonString(t *testing.T) {
 		wantJsonString string
 		wantError      error
 	}{
-		{"resources/noFile.txt", "'no-string'", errors.New("open resources/noFile.txt: no such file or directory")},
-		//{brs1, br2lib, brs1},
+		{"resources/noFile.txt", "", errors.New("open resources/noFile.txt: no such file or directory")},
+		{"resources/testText.txt", "This is test text\n", errors.New("")},
 	}
 	for _, c := range cases {
 		gotString, gotError := ReadFileIntoJsonString(c.fp)
 		if gotError != nil {
 			if gotError.Error() != c.wantError.Error() {
-				t.Errorf("ReadFileIntoJsonString(%s)\n==\n'no-string' and %v\nwant\n%v and %v",
-					c.fp, gotError, c.wantJsonString, c.wantError)
+				t.Errorf("ReadFileIntoJsonString(%s) ==\n%s\n%s",
+					c.fp, gotError, c.wantError)
 			}
 		}
-		fmt.Println(gotString)
+		if gotString != c.wantJsonString {
+			t.Errorf("ReadFileIntoJsonString(%s) ==\n%s%s",
+				c.fp, gotString, c.wantJsonString)
+		}
 	}
 }
