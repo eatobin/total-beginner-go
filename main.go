@@ -11,6 +11,13 @@ import (
 var borrowers []borrower.Borrower
 var books []book.Book
 
+var jsonBorrowersFileBefore = "resources/borrowers-before.json"
+var jsonBooksFile = "resources/books-before.json"
+
+//var jsonBorrowersFileAfter = "resources/borrowers-after.json"
+//var jsonBorrowersFileBad = "resources/bad-borrowers.json"
+//var emptyFile = "resources/resources/empty.json"
+
 func main() {
 	borrowers = library.AddBorrower(borrowers, borrower.NewBorrower("Jim", 3))
 	borrowers = library.AddBorrower(borrowers, borrower.NewBorrower("Sue", 3))
@@ -67,10 +74,10 @@ func main() {
 	newEmptyV()
 
 	fmt.Println("Lets read in a new library from \"borrowers-before.json\" and \"books-before.json\":")
-	//newV(tvBooks, tvBorrowers, jsonBorrowersFileBefore, jsonBooksFile)
-	//fmt.Println("Add... a new borrower:")
-	//tvBorrowers.transform(addItem(Borrower("BorrowerNew", 300), _))
-	//fmt.Println(statusToString(tvBooks.get, tvBorrowers.get))
+	borrowers, books = NewV(jsonBorrowersFileBefore, jsonBooksFile)
+	fmt.Println("Add... a new borrower:")
+	borrowers = library.AddBorrower(borrowers, borrower.Borrower{Name: "BorrowerNew", MaxBooks: 300})
+	fmt.Println(library.StatusToString(books, borrowers))
 }
 
 func newEmptyV() {
