@@ -92,6 +92,12 @@ func main() {
 	fmt.Println("Last... delete the file \"borrowers-after.json\"")
 	_ = os.Remove(jsonBorrowersFileAfter)
 	newEmptyV()
+
+	fmt.Println("Then try to make a library using the deleted \"borrowers-after.json\" and \"books-before.json\":")
+	borrowers, books = newV(jsonBorrowersFileAfter, jsonBooksFile)
+
+	fmt.Println("\nAnd if we read in a file with mal-formed json content... like \"bad-borrowers.json\" and \"books-before.json\":")
+	borrowers, books = newV(jsonBorrowersFileBad, jsonBooksFile)
 }
 
 func newEmptyV() {
