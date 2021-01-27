@@ -98,6 +98,12 @@ func main() {
 
 	fmt.Println("\nAnd if we read in a file with mal-formed json content... like \"bad-borrowers.json\" and \"books-before.json\":")
 	borrowers, books = newV(jsonBorrowersFileBad, jsonBooksFile)
+
+	fmt.Println("\nOr how about reading in an empty file... \"empty.json\" (for borrowers and books):")
+	borrowers, books = newV(emptyFile, emptyFile)
+
+	fmt.Println("\nAnd... that's all...")
+	fmt.Println("Thanks - bye!")
 }
 
 func newEmptyV() {
