@@ -4,22 +4,30 @@ import (
 	"testing"
 )
 
-var jsonStringBr = "{\"name\":\"Borrower1\",\"maxBooks\":11}"
-var wantS1 = "Borrower1 (11 books)"
-var wantS2 = "Borrower1 (1 books)"
+var badName, _ = JsonStringToBorrower("{\"name\":\"Borrower1X\",\"maxBooks\":1}")
+var badMB, _ = JsonStringToBorrower("{\"name\":\"Borrower1\",\"maxBooks\":19}")
+var wantBr = "Borrower1 (1 books)"
+var jsonString = "{\"name\":\"Borrower1X\",\"maxBooks\":1}"
 
-func TestSetBorrowerValues(t *testing.T) {
-	badBrPtr, _ := JsonStringToBorrower(jsonStringBr)
-	n := "Borrower1"
-	badBrPtr.SetName(n)
-	gotBrPtrS := badBrPtr.String()
-	if gotBrPtrS != wantS1 {
-		t.Fatalf("SetName(%v) == %v, want %v", n, gotBrPtrS, wantS1)
+func TestSetName(t *testing.T) {
+	name := "Borrower1"
+	gotBrN := String(SetName(badName, name))
+	if gotBrN != wantBr {
+		t.Fatalf("SetName(%v, %v) == %v, want %v", badName, name, gotBrN, wantBr)
 	}
-	mb := 1
-	badBrPtr.SetMaxBooks(mb)
-	gotBrPtrS = badBrPtr.String()
-	if gotBrPtrS != wantS2 {
-		t.Fatalf("SetMaxBooks(%v) == %v, want %v", mb, gotBrPtrS, wantS2)
+}
+
+func TestSetMaxBooks(t *testing.T) {
+	maxBooks := 1
+	gotBrMB := String(SetMaxBooks(badMB, maxBooks))
+	if gotBrMB != wantBr {
+		t.Fatalf("SetMaxBooks(%v, %v) == %v, want %v", badMB, maxBooks, gotBrMB, wantBr)
+	}
+}
+
+func TestBrToJsonString(t *testing.T) {
+	gotJsonString, _ := BrToJsonString(badName)
+	if gotJsonString != jsonString {
+		t.Fatalf("BrToJsonString(%v) == %v, want %v", badName, gotJsonString, jsonString)
 	}
 }
