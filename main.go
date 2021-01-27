@@ -14,10 +14,9 @@ var books []book.Book
 
 var jsonBorrowersFileBefore = "resources/borrowers-before.json"
 var jsonBooksFile = "resources/books-before.json"
-
-//var jsonBorrowersFileAfter = "resources/borrowers-after.json"
-//var jsonBorrowersFileBad = "resources/bad-borrowers.json"
-//var emptyFile = "resources/resources/empty.json"
+var jsonBorrowersFileAfter = "resources/borrowers-after.json"
+var jsonBorrowersFileBad = "resources/bad-borrowers.json"
+var emptyFile = "resources/resources/empty.json"
 
 func main() {
 	borrowers = library.AddBorrower(borrowers, borrower.NewBorrower("Jim", 3))
@@ -79,6 +78,20 @@ func main() {
 	fmt.Println("Add... a new borrower:")
 	borrowers = library.AddBorrower(borrowers, borrower.Borrower{Name: "BorrowerNew", MaxBooks: 300})
 	fmt.Println(library.StatusToString(books, borrowers))
+
+	fmt.Println("Save the revised borrowers to \"borrowers-after.json\"")
+	jsonBrsStr, _ := library.BorrowersToJSONSting(borrowers)
+	_ = writeJsonStringToFile("resources/borrowers-after.json", jsonBrsStr)
+
+	fmt.Println("Clear the whole library again:")
+	newEmptyV()
+
+	fmt.Println("Then read in the revised library from \"borrowers-after.json\" and \"books-before.json\":")
+	borrowers, books = newV(jsonBorrowersFileAfter, jsonBooksFile)
+
+	fmt.Println("Last... delete the file \"borrowers-after.json\"")
+	_ = os.Remove(jsonBorrowersFileAfter)
+	newEmptyV()
 }
 
 func newEmptyV() {
