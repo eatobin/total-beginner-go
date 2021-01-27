@@ -56,3 +56,23 @@ func TestNewV(t *testing.T) {
 		}
 	}
 }
+
+func TestWriteJsonStringToFile(t *testing.T) {
+	cases := []struct {
+		fp        string
+		txt       string
+		wantError error
+	}{
+		{"resourcesX/borrowers-after.json", "This is test text\n", errors.New("open resourcesX/borrowers-after.json: no such file or directory")},
+		//{"resources-test/testText.txt", "This is test text\n", errors.New("")},
+	}
+	for _, c := range cases {
+		gotError := writeJsonStringToFile(c.fp, c.txt)
+		if gotError != nil {
+			if gotError.Error() != c.wantError.Error() {
+				t.Errorf("writeJsonStringToFile(%s, %s) ==\n%s\nwant\n%s",
+					c.fp, c.txt, gotError, c.wantError)
+			}
+		}
+	}
+}

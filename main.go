@@ -6,6 +6,7 @@ import (
 	"eatobin.com/totalbeginnergo/library"
 	"fmt"
 	"io/ioutil"
+	"os"
 )
 
 var borrowers []borrower.Borrower
@@ -89,6 +90,18 @@ func newEmptyV() {
 func readFileIntoJsonString(fp string) (string, error) {
 	jsonStr, err := ioutil.ReadFile(fp)
 	return string(jsonStr), err
+}
+
+func writeJsonStringToFile(fp string, js string) error {
+	f, createErr := os.Create(fp)
+	if createErr != nil {
+		return createErr
+	}
+	_, writeErr := f.WriteString(js)
+	if writeErr != nil {
+		return writeErr
+	}
+	return nil
 }
 
 func NewV(brsfp string, bksfp string) ([]borrower.Borrower, []book.Book) {
