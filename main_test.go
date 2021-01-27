@@ -3,10 +3,21 @@ package main
 import (
 	"eatobin.com/totalbeginnergo/library"
 	"errors"
+	"fmt"
+	"os"
 	"testing"
 )
 
-func TestReadFileIntoJsonString(t *testing.T) {
+func exists(name string) bool {
+	if _, err := os.Stat(name); err != nil {
+		if os.IsNotExist(err) {
+			return false
+		}
+	}
+	return true
+}
+
+func Test_readFileIntoJsonString(t *testing.T) {
 	cases := []struct {
 		fp             string
 		wantJsonString string
@@ -30,7 +41,7 @@ func TestReadFileIntoJsonString(t *testing.T) {
 	}
 }
 
-func TestNewV(t *testing.T) {
+func Test_newV(t *testing.T) {
 	cases := []struct {
 		brsfp   string
 		bksfp   string
@@ -48,25 +59,32 @@ func TestNewV(t *testing.T) {
 	for _, c := range cases {
 		borrowers := library.ZeroBorrowers
 		books := library.ZeroBooks
-		borrowers, books = NewV(c.brsfp, c.bksfp)
+		borrowers, books = newV(c.brsfp, c.bksfp)
 		gotLib := library.StatusToString(books, borrowers)
 		if gotLib != c.wantLib {
-			t.Errorf("NewV(%s, %s) ==\n%s\nwant\n%s",
+			t.Errorf("newV(%s, %s) ==\n%s\nwant\n%s",
 				c.brsfp, c.bksfp, gotLib, c.wantLib)
 		}
 	}
 }
 
-func TestWriteJsonStringToFile(t *testing.T) {
+func Test_writeJsonStringToFile(t *testing.T) {
 	cases := []struct {
-		fp        string
-		txt       string
-		wantError error
+		fp         string
+		txt        string
+		wantError  error
+		wantExists bool
 	}{
-		{"resourcesX/borrowers-after.json", "This is test text\n", errors.New("open resourcesX/borrowers-after.json: no such file or directory")},
-		//{"resources-test/testText.txt", "This is test text\n", errors.New("")},
+		{"resourcesX/borrowers-after.txt", "This is test text", errors.New("open resourcesX/borrowers-after.txt: no such file or directory"), false},
+		{"resources/borrowers-after.txt", "This is test text", nil, true},
 	}
 	for _, c := range cases {
+		if exists("resources/borrowers-after.txt") {
+			e := os.Remove("resources/borrowers-after.txt")
+			if e != nil {
+				fmt.Println(e.Error())
+			}
+		}
 		gotError := writeJsonStringToFile(c.fp, c.txt)
 		if gotError != nil {
 			if gotError.Error() != c.wantError.Error() {
@@ -74,5 +92,13 @@ func TestWriteJsonStringToFile(t *testing.T) {
 					c.fp, c.txt, gotError, c.wantError)
 			}
 		}
+		if exists(c.fp) != c.wantExists {
+			t.Errorf("writeJsonStringToFile(%s, %s) ==\n(exists) %v\nwant\n(exists) %v",
+				c.fp, c.txt, exists(c.fp), c.wantExists)
+		}
+	}
+	e := os.Remove("resources/borrowers-after.txt")
+	if e != nil {
+		fmt.Println(e.Error())
 	}
 }

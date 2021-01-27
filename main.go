@@ -75,7 +75,7 @@ func main() {
 	newEmptyV()
 
 	fmt.Println("Lets read in a new library from \"borrowers-before.json\" and \"books-before.json\":")
-	borrowers, books = NewV(jsonBorrowersFileBefore, jsonBooksFile)
+	borrowers, books = newV(jsonBorrowersFileBefore, jsonBooksFile)
 	fmt.Println("Add... a new borrower:")
 	borrowers = library.AddBorrower(borrowers, borrower.Borrower{Name: "BorrowerNew", MaxBooks: 300})
 	fmt.Println(library.StatusToString(books, borrowers))
@@ -104,7 +104,7 @@ func writeJsonStringToFile(fp string, js string) error {
 	return nil
 }
 
-func NewV(brsfp string, bksfp string) ([]borrower.Borrower, []book.Book) {
+func newV(brsfp string, bksfp string) ([]borrower.Borrower, []book.Book) {
 	jsonBrsStr, brFileErr := readFileIntoJsonString(brsfp)
 	if brFileErr != nil {
 		fmt.Println(brFileErr.Error())
