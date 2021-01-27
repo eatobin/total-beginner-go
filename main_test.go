@@ -23,8 +23,8 @@ func Test_readFileIntoJsonString(t *testing.T) {
 		wantJsonString string
 		wantError      error
 	}{
-		{"/home/eric/go_projects/totalbeginnergo/resources-test/noFile.txt", "", errors.New("open /home/eric/go_projects/totalbeginnergo/resources-test/noFile.txt: no such file or directory")},
-		{"/home/eric/go_projects/totalbeginnergo/resources-test/testText.txt", "This is test text\n", errors.New("")},
+		{"resources-test/noFile.txt", "", errors.New("open resources-test/noFile.txt: no such file or directory")},
+		{"resources-test/testText.txt", "This is test text\n", errors.New("")},
 	}
 	for _, c := range cases {
 		gotString, gotError := readFileIntoJsonString(c.fp)
@@ -47,13 +47,13 @@ func Test_newV(t *testing.T) {
 		bksfp   string
 		wantLib string
 	}{
-		{"/home/eric/go_projects/totalbeginnergo/resources/borrowers-before.json", "/home/eric/go_projects/totalbeginnergo/resources/books-before.json",
+		{"resources/borrowers-before.json", "resources/books-before.json",
 			"\n--- Status Report of Test Library ---\n\nTest Library: 2 books; 2 borrowers.\n\nBook100 by Author100; Checked out to Borrower100\nBook200 by Author200; Available\n\nBorrower100 (100 books)\nBorrower200 (200 books)\n\n--- End of Status Report ---\n"},
-		{"/home/eric/go_projects/totalbeginnergo/resources/bad-borrowers.json", "/home/eric/go_projects/totalbeginnergo/resources/books-before.json",
+		{"resources/bad-borrowers.json", "resources/books-before.json",
 			"\n--- Status Report of Test Library ---\n\nTest Library: 0 books; 0 borrowers.\n\n\n\n--- End of Status Report ---\n"},
-		{"/home/eric/go_projects/totalbeginnergo/resources/noFile.json", "/home/eric/go_projects/totalbeginnergo/resources/books-before.json",
+		{"resources/noFile.json", "resources/books-before.json",
 			"\n--- Status Report of Test Library ---\n\nTest Library: 0 books; 0 borrowers.\n\n\n\n--- End of Status Report ---\n"},
-		{"/home/eric/go_projects/totalbeginnergo/resources/empty.json", "/home/eric/go_projects/totalbeginnergo/resources/books-before.json",
+		{"resources/empty.json", "resources/books-before.json",
 			"\n--- Status Report of Test Library ---\n\nTest Library: 0 books; 0 borrowers.\n\n\n\n--- End of Status Report ---\n"},
 	}
 	for _, c := range cases {
@@ -75,12 +75,12 @@ func Test_writeJsonStringToFile(t *testing.T) {
 		wantError  error
 		wantExists bool
 	}{
-		{"/home/eric/go_projects/totalbeginnergo/resourcesX/borrowers-after.txt", "This is test text", errors.New("open /home/eric/go_projects/totalbeginnergo/resourcesX/borrowers-after.txt: no such file or directory"), false},
-		{"/home/eric/go_projects/totalbeginnergo/resources/borrowers-after.txt", "This is test text", nil, true},
+		{"resourcesX/borrowers-after.txt", "This is test text", errors.New("open resourcesX/borrowers-after.txt: no such file or directory"), false},
+		{"resources/borrowers-after.txt", "This is test text", nil, true},
 	}
 	for _, c := range cases {
-		if exists("/home/eric/go_projects/totalbeginnergo/resources/borrowers-after.txt") {
-			e := os.Remove("/home/eric/go_projects/totalbeginnergo/resources/borrowers-after.txt")
+		if exists("resources/borrowers-after.txt") {
+			e := os.Remove("resources/borrowers-after.txt")
 			if e != nil {
 				fmt.Println(e.Error())
 			}
@@ -97,7 +97,7 @@ func Test_writeJsonStringToFile(t *testing.T) {
 				c.fp, c.txt, exists(c.fp), c.wantExists)
 		}
 	}
-	e := os.Remove("/home/eric/go_projects/totalbeginnergo/resources/borrowers-after.txt")
+	e := os.Remove("resources/borrowers-after.txt")
 	if e != nil {
 		fmt.Println(e.Error())
 	}
