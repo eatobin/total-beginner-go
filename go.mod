@@ -1,3 +1,3 @@
 module eatobin.com/totalbeginnergo
 
-go 1.15
+go 1.16
