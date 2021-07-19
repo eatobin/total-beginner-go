@@ -6,11 +6,15 @@ import (
 	"fmt"
 )
 
-// A Book has a Title and an Author
+// A Book has a Title and an Author - and maybe a Borrower
 type Book struct {
 	Title    string             `json:"title"`
 	Author   string             `json:"author"`
 	Borrower *borrower.Borrower `json:"borrower,omitempty"`
+}
+
+func NewBook(title string, author string) Book {
+	return Book{Title: title, Author: author, Borrower: nil}
 }
 
 // SetTitle sets a Title for a Book
@@ -25,7 +29,7 @@ func (bk Book) SetAuthor(author string) Book {
 	return bk
 }
 
-// SetBorrower takes a BorrowerPtr and sets it for a Book
+// SetBorrower takes a Borrower pointer and sets it for a Book
 func (bk Book) SetBorrower(borrower *borrower.Borrower) Book {
 	bk.Borrower = borrower
 	return bk
