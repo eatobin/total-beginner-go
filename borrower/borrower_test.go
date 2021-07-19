@@ -9,7 +9,6 @@ var jsonString = "{\"name\":\"Borrower1X\",\"maxBooks\":1}"
 
 func TestSetName(t *testing.T) {
 	name := "Borrower1"
-	//gotBrN := String(SetName(badName, name))
 	gotBrN := Borrower.String(Borrower.SetName(badName, name))
 	if gotBrN != wantBr {
 		t.Fatalf("SetName(%v, %v) == %v, want %v", badName, name, gotBrN, wantBr)

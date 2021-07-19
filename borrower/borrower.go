@@ -11,11 +11,6 @@ type Borrower struct {
 	MaxBooks int    `json:"maxBooks"`
 }
 
-//// NewBorrower needs a Name and a MaxBooks to create
-//func NewBorrower(name string, maxBooks int) Borrower {
-//	return Borrower{Name: name, MaxBooks: maxBooks}
-//}
-
 // SetName sets a Name for a Borrower
 func (br Borrower) SetName(name string) Borrower {
 	br.Name = name
