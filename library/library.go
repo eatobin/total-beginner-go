@@ -48,7 +48,7 @@ func AddBook(bks []book.Book, bk book.Book) []book.Book {
 	return append(bks, bk)
 }
 
-// removeBook removes a book from a slice of Books
+// removeBook removes a book.Book from a slice of Books
 func removeBook(bk book.Book, bks []book.Book) []book.Book {
 	nBks := make([]book.Book, 0)
 	for _, nBk := range bks {
@@ -59,7 +59,7 @@ func removeBook(bk book.Book, bks []book.Book) []book.Book {
 	return nBks
 }
 
-// findBorrower finds a Borrower given a Name
+// findBorrower finds a borrower.Borrower given a Name
 func findBorrower(n string, brs []borrower.Borrower) (borrower.Borrower, error) {
 	for _, br := range brs {
 		if br.Name == n {
@@ -69,7 +69,7 @@ func findBorrower(n string, brs []borrower.Borrower) (borrower.Borrower, error) 
 	return ZeroBorrower, errors.New("did not find the requested borrower")
 }
 
-// findBook finds a Book given a Title
+// findBook finds a book.Book given a Title
 func findBook(t string, bks []book.Book) (book.Book, error) {
 	for _, bk := range bks {
 		if bk.Title == t {
@@ -79,7 +79,7 @@ func findBook(t string, bks []book.Book) (book.Book, error) {
 	return ZeroBook, errors.New("did not find the requested book")
 }
 
-// getBooksForBorrower will find books given a Borrower and a slice of Books
+// getBooksForBorrower will find books given a borrower.Borrower and a slice of Books
 func getBooksForBorrower(br borrower.Borrower, bks []book.Book) []book.Book {
 	nBks := make([]book.Book, 0)
 	for _, bk := range bks {
