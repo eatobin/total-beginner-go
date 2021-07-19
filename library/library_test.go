@@ -1,61 +1,60 @@
 package library
 
-//import (
-//	"eatobin.com/totalbeginnergo/book"
-//	"eatobin.com/totalbeginnergo/borrower"
-//	"errors"
-//	"reflect"
-//	"testing"
-//)
-//
-//var br1lib = borrower.NewBorrower("Borrower1", 1)
-//var br2lib = borrower.NewBorrower("Borrower2", 2)
-//var br3lib = borrower.NewBorrower("Borrower3", 3)
-//
-//var brs1 = []borrower.Borrower{br1lib, br2lib}
-//var brs2 = []borrower.Borrower{br1lib, br2lib, br3lib}
-//
-//var bk1lib = book.Book{Title: "Title1", Author: "Author1", Borrower: &br1lib}
-//var bk2lib = book.NewBook("Title2", "Author2")
-//var bk3lib = book.Book{Title: "Title3", Author: "Author3", Borrower: &br3lib}
-//
-//var bk4lib = book.Book{Title: "Title4", Author: "Author4", Borrower: &br3lib}
-//
-//var bks1 = []book.Book{bk1lib, bk2lib}
-//var bks2 = []book.Book{bk1lib, bk2lib, bk3lib}
-//
-//var bks3 = []book.Book{bk1lib, bk2lib, bk3lib, bk4lib}
-//
-//var jsonStringBorrowers = "[{\"name\":\"Borrower1\",\"maxBooks\":1},{\"name\":\"Borrower2\",\"maxBooks\":2}]"
-//var jsonStringBorrowersBadParse = `[{"name""Borrower1","maxBooks":1},{"name":"Borrower2","maxBooks":2}]`
-//var jsonStringBorrowersBadNameField = `[{"noName":"Borrower1","maxBooks":1},{"name":"Borrower2","maxBooks":2}]`
-//var jsonStringBorrowersBadMaxBooksField = `[{"name":"Borrower1","noMaxBooks":1},{"name":"Borrower2","maxBooks":2}]`
-//
-//var jsonStringBooks = `[{"title":"Title1","author":"Author1","borrower":{"name":"Borrower1","maxBooks":1}},{"title":"Title2","author":"Author2"}]`
-//var jsonStringBooksBadParse = `[{"title""Title2","author":"Author22","borrower":{"name":"NoName","maxBooks":-1}},{"title":"Title99","author":"Author99","borrower":{"name":"Borrower1","maxBooks":1}}]`
-//var jsonStringBooksBadTitleField = `[{"noTitle":"Title2","author":"Author22","borrower":{"name":"NoName","maxBooks":-1}},{"title":"Title99","author":"Author99","borrower":{"name":"Borrower1","maxBooks":1}}]`
-//var jsonStringBooksBadBorrowerField = `[{"title":"Title1","author":"Author1","borrower":{"noName":"Borrower1","maxBooks":1}},{"title":"Title2","author":"Author2","borrower":{"name":"Borrower2","maxBooks":2}}]`
-//
-//var ss = "\n--- Status Report of Test Library ---\n\nTest Library: 3 books; 3 borrowers.\n\nTitle1 by Author1; Checked out to Borrower1\nTitle2 by Author2; Available\nTitle3 by Author3; Checked out to Borrower3\n\nBorrower1 (1 books)\nBorrower2 (2 books)\nBorrower3 (3 books)\n\n--- End of Status Report ---\n"
-//
-//func TestAddBorrower(t *testing.T) {
-//	cases := []struct {
-//		brs     []borrower.Borrower
-//		br      borrower.Borrower
-//		wantBrs []borrower.Borrower
-//	}{
-//		{brs1, br3lib, brs2},
-//		{brs1, br2lib, brs1},
-//	}
-//	for _, c := range cases {
-//		gotBrs := AddBorrower(c.brs, c.br)
-//		if !reflect.DeepEqual(gotBrs, c.wantBrs) {
-//			t.Errorf("AddBorrower(%v, %v) ==\n%v want\n%v",
-//				c.brs, c.br, gotBrs, c.wantBrs)
-//		}
-//	}
-//}
-//
+import (
+	"eatobin.com/totalbeginnergo/book"
+	"eatobin.com/totalbeginnergo/borrower"
+	"reflect"
+	"testing"
+)
+
+var br1lib = borrower.NewBorrower("Borrower1", 1)
+var br2lib = borrower.NewBorrower("Borrower2", 2)
+var br3lib = borrower.NewBorrower("Borrower3", 3)
+
+var brs1 = []borrower.Borrower{br1lib, br2lib}
+var brs2 = []borrower.Borrower{br1lib, br2lib, br3lib}
+
+var bk1lib = book.Book{Title: "Title1", Author: "Author1", Borrower: &br1lib}
+var bk2lib = book.NewBook("Title2", "Author2")
+var bk3lib = book.Book{Title: "Title3", Author: "Author3", Borrower: &br3lib}
+
+var bk4lib = book.Book{Title: "Title4", Author: "Author4", Borrower: &br3lib}
+
+var bks1 = []book.Book{bk1lib, bk2lib}
+var bks2 = []book.Book{bk1lib, bk2lib, bk3lib}
+
+var bks3 = []book.Book{bk1lib, bk2lib, bk3lib, bk4lib}
+
+var jsonStringBorrowers = "[{\"name\":\"Borrower1\",\"maxBooks\":1},{\"name\":\"Borrower2\",\"maxBooks\":2}]"
+var jsonStringBorrowersBadParse = `[{"name""Borrower1","maxBooks":1},{"name":"Borrower2","maxBooks":2}]`
+var jsonStringBorrowersBadNameField = `[{"noName":"Borrower1","maxBooks":1},{"name":"Borrower2","maxBooks":2}]`
+var jsonStringBorrowersBadMaxBooksField = `[{"name":"Borrower1","noMaxBooks":1},{"name":"Borrower2","maxBooks":2}]`
+
+var jsonStringBooks = `[{"title":"Title1","author":"Author1","borrower":{"name":"Borrower1","maxBooks":1}},{"title":"Title2","author":"Author2"}]`
+var jsonStringBooksBadParse = `[{"title""Title2","author":"Author22","borrower":{"name":"NoName","maxBooks":-1}},{"title":"Title99","author":"Author99","borrower":{"name":"Borrower1","maxBooks":1}}]`
+var jsonStringBooksBadTitleField = `[{"noTitle":"Title2","author":"Author22","borrower":{"name":"NoName","maxBooks":-1}},{"title":"Title99","author":"Author99","borrower":{"name":"Borrower1","maxBooks":1}}]`
+var jsonStringBooksBadBorrowerField = `[{"title":"Title1","author":"Author1","borrower":{"noName":"Borrower1","maxBooks":1}},{"title":"Title2","author":"Author2","borrower":{"name":"Borrower2","maxBooks":2}}]`
+
+var ss = "\n--- Status Report of Test Library ---\n\nTest Library: 3 books; 3 borrowers.\n\nTitle1 by Author1; Checked out to Borrower1\nTitle2 by Author2; Available\nTitle3 by Author3; Checked out to Borrower3\n\nBorrower1 (1 books)\nBorrower2 (2 books)\nBorrower3 (3 books)\n\n--- End of Status Report ---\n"
+
+func TestAddBorrower(t *testing.T) {
+	cases := []struct {
+		brs     []borrower.Borrower
+		br      borrower.Borrower
+		wantBrs []borrower.Borrower
+	}{
+		{brs1, br3lib, brs2},
+		{brs1, br2lib, brs1},
+	}
+	for _, c := range cases {
+		gotBrs := AddBorrower(c.brs, c.br)
+		if !reflect.DeepEqual(gotBrs, c.wantBrs) {
+			t.Errorf("AddBorrower(%v, %v) ==\n%v want\n%v",
+				c.brs, c.br, gotBrs, c.wantBrs)
+		}
+	}
+}
+
 //func TestAddBook(t *testing.T) {
 //	cases := []struct {
 //		bks     []book.Book

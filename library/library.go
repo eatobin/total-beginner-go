@@ -1,45 +1,41 @@
 package library
 
-//import (
-//	"eatobin.com/totalbeginnergo/book"
-//	"eatobin.com/totalbeginnergo/borrower"
-//	"encoding/json"
-//	"errors"
-//	"strconv"
-//	"strings"
-//)
-//
-//var ZeroBorrower borrower.Borrower
-//var ZeroBook book.Book
-//var ZeroBorrowers []borrower.Borrower
-//var ZeroBooks []book.Book
-//
-//func containsBorrower(brs []borrower.Borrower, br borrower.Borrower) bool {
-//	for _, b := range brs {
-//		if b == br {
-//			return true
-//		}
-//	}
-//	return false
-//}
-//
-//func containsBook(bks []book.Book, bk book.Book) bool {
-//	for _, b := range bks {
-//		if b == bk {
-//			return true
-//		}
-//	}
-//	return false
-//}
-//
-//// AddBorrower adds a Borrower to a slice of Borrowers
-//func AddBorrower(brs []borrower.Borrower, br borrower.Borrower) []borrower.Borrower {
-//	if containsBorrower(brs, br) {
-//		return brs
-//	}
-//	return append(brs, br)
-//}
-//
+import (
+	"eatobin.com/totalbeginnergo/book"
+	"eatobin.com/totalbeginnergo/borrower"
+)
+
+var ZeroBorrower borrower.Borrower
+var ZeroBook book.Book
+var ZeroBorrowers []borrower.Borrower
+var ZeroBooks []book.Book
+
+func containsBorrower(brs []borrower.Borrower, br borrower.Borrower) bool {
+	for _, b := range brs {
+		if b == br {
+			return true
+		}
+	}
+	return false
+}
+
+func containsBook(bks []book.Book, bk book.Book) bool {
+	for _, b := range bks {
+		if b == bk {
+			return true
+		}
+	}
+	return false
+}
+
+// AddBorrower adds a Borrower to a slice of Borrowers
+func AddBorrower(brs []borrower.Borrower, br borrower.Borrower) []borrower.Borrower {
+	if containsBorrower(brs, br) {
+		return brs
+	}
+	return append(brs, br)
+}
+
 //// AddBook adds a book to a slice of Books
 //func AddBook(bks []book.Book, bk book.Book) []book.Book {
 //	if containsBook(bks, bk) {
