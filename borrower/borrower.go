@@ -30,7 +30,7 @@ func (br Borrower) SetMaxBooks(maxBooks int) Borrower {
 
 // String makes a Borrower into a string
 func (br Borrower) String() string {
-	return fmt.Sprintf("%s (%d books)", br.Name, br.MaxBooks)
+	return fmt.Sprintf("%s [%d books]", br.Name, br.MaxBooks)
 }
 
 // JsonStringToBorrower turns a Borrower JSON string into a Borrower

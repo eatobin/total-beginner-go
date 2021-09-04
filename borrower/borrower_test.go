@@ -4,14 +4,14 @@ import "testing"
 
 var badName, _ = JsonStringToBorrower("{\"name\":\"Borrower1X\",\"maxBooks\":1}")
 var badMB, _ = JsonStringToBorrower("{\"name\":\"Borrower1\",\"maxBooks\":19}")
-var wantBr = "Borrower1 (1 books)"
+var wantBr = "Borrower1 [1 books]"
 var jsonString = "{\"name\":\"Borrower1X\",\"maxBooks\":1}"
 
 func TestSetName(t *testing.T) {
-	name := "Borrower1"
-	gotBrN := Borrower.String(Borrower.SetName(badName, name))
+	name := "Borrower1Y"
+	gotBrN := badName.SetName(name).String()
 	if gotBrN != wantBr {
-		t.Fatalf("SetName(%v, %v) == %v, want %v", badName, name, gotBrN, wantBr)
+		t.Fatalf("(%v) SetName(%v) == %v, want %v", badName, name, gotBrN, wantBr)
 	}
 }
 
