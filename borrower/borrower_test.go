@@ -18,15 +18,15 @@ func TestSetName(t *testing.T) {
 }
 
 func TestSetMaxBooks(t *testing.T) {
-	maxBooks := 1
-	gotBrMB := Borrower.String(Borrower.SetMaxBooks(badMB, maxBooks))
+	goodMB := 1
+	gotBrMB := badMB.SetMaxBooks(goodMB).String()
 	if gotBrMB != wantBr {
-		t.Fatalf("SetMaxBooks(%v, %v) == %v, want %v", badMB, maxBooks, gotBrMB, wantBr)
+		t.Fatalf("(%v) SetMaxBooks(%v) == %v, want %v", badMB, goodMB, gotBrMB, wantBr)
 	}
 }
 
 func TestBrToJsonString(t *testing.T) {
-	gotJsonString, _ := Borrower.BrToJsonString(badName)
+	gotJsonString, _ := badName.BrToJsonString()
 	if gotJsonString != jsonString {
 		t.Fatalf("BrToJsonString(%v) == %v, want %v", badName, gotJsonString, jsonString)
 	}

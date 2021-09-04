@@ -11,9 +11,11 @@ type Borrower struct {
 	MaxBooks int    `json:"maxBooks"`
 }
 
-// NewBorrower needs a Name and a max books to create
-func NewBorrower(name string, maxBooks int) Borrower {
-	return Borrower{Name: name, MaxBooks: maxBooks}
+// JsonStringToBorrower turns a Borrower JSON string into a Borrower
+func JsonStringToBorrower(borrowerString string) (Borrower, error) {
+	var borrower Borrower
+	err := json.Unmarshal([]byte(borrowerString), &borrower)
+	return borrower, err
 }
 
 // SetName sets a Name for a Borrower
@@ -31,13 +33,6 @@ func (br Borrower) SetMaxBooks(maxBooks int) Borrower {
 // String makes a Borrower into a string
 func (br Borrower) String() string {
 	return fmt.Sprintf("%s [%d books]", br.Name, br.MaxBooks)
-}
-
-// JsonStringToBorrower turns a Borrower JSON string into a Borrower
-func JsonStringToBorrower(borrowerString string) (Borrower, error) {
-	var borrower Borrower
-	err := json.Unmarshal([]byte(borrowerString), &borrower)
-	return borrower, err
 }
 
 // BrToJsonString turns a Borrower into a Borrower JSON string
