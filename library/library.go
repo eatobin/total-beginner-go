@@ -11,14 +11,14 @@ import (
 //var ZeroBorrowers []borrower.Borrower
 //var ZeroBooks []book.Book
 
-type Borrower = borrower.Borrower
+type Borrower = *borrower.Borrower
 type Borrowers = []*borrower.Borrower
-type Book = book.Book
+type Book = *book.Book
 type Books = []*book.Book
 
 func containsBorrower(brs Borrowers, br Borrower) bool {
 	for _, b := range brs {
-		if *b == br {
+		if *b == *br {
 			return true
 		}
 	}
@@ -27,7 +27,7 @@ func containsBorrower(brs Borrowers, br Borrower) bool {
 
 func containsBook(bks Books, bk Book) bool {
 	for _, b := range bks {
-		if *b == bk {
+		if *b == *bk {
 			return true
 		}
 	}
@@ -39,7 +39,7 @@ func AddBorrower(brs Borrowers, br Borrower) Borrowers {
 	if containsBorrower(brs, br) {
 		return brs
 	}
-	return append(brs, &br)
+	return append(brs, br)
 }
 
 // AddBook adds a Book pointer to a slice of Book pointers
@@ -47,14 +47,14 @@ func AddBook(bks Books, bk Book) Books {
 	if containsBook(bks, bk) {
 		return bks
 	}
-	return append(bks, &bk)
+	return append(bks, bk)
 }
 
 // removeBook removes a Book pointer from a slice of Book pointers
 func removeBook(bks Books, bk Book) Books {
 	nBks := make(Books, 0)
 	for _, nBk := range bks {
-		if *nBk != bk {
+		if *nBk != *bk {
 			nBks = append(nBks, nBk)
 		}
 	}
@@ -62,7 +62,7 @@ func removeBook(bks Books, bk Book) Books {
 }
 
 // findBorrower finds a Borrower pointer given a Name
-func findBorrower(n string, brs Borrowers) (*Borrower, error) {
+func findBorrower(n string, brs Borrowers) (Borrower, error) {
 	for _, br := range brs {
 		if br.Name == n {
 			return br, nil
@@ -72,7 +72,7 @@ func findBorrower(n string, brs Borrowers) (*Borrower, error) {
 }
 
 // findBook finds a Book pointer given a Title
-func findBook(t string, bks Books) (*Book, error) {
+func findBook(t string, bks Books) (Book, error) {
 	for _, bk := range bks {
 		if bk.Title == t {
 			return bk, nil
@@ -86,7 +86,7 @@ func getBooksForBorrower(br Borrower, bks Books) Books {
 	nBks := make(Books, 0)
 	for _, bk := range bks {
 		if bk.Borrower != nil {
-			if *bk.Borrower == br {
+			if *bk.Borrower == *br {
 				nBks = append(nBks, bk)
 			}
 		}
@@ -115,10 +115,10 @@ func bookOut(bk Book) bool {
 func CheckOut(n string, t string, brs Borrowers, bks Books) Books {
 	mbr, errBr := findBorrower(n, brs)
 	mbk, errBk := findBook(t, bks)
-	if errBr == nil && errBk == nil && notMaxedOut(*mbr, bks) && bookNotOut(*mbk) {
+	if errBr == nil && errBk == nil && notMaxedOut(mbr, bks) && bookNotOut(mbk) {
 		newBook := mbk.SetBorrower(mbr)
-		fewerBooks := removeBook(bks, *mbk)
-		return AddBook(fewerBooks, newBook)
+		fewerBooks := removeBook(bks, mbk)
+		return AddBook(fewerBooks, &newBook)
 	}
 	return bks
 }
