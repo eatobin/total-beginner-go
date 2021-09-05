@@ -11,7 +11,9 @@ var bk2, _ = JsonStringToBook("{\"title\":\"Title1\",\"author\":\"Author1\",\"bo
 var bk3, _ = JsonStringToBook("{\"title\":\"Title1\",\"author\":\"Author1\",\"borrower\":{\"name\":\"Borrower1\",\"maxBooks\":1}}")
 var wantAvail = "Title1 by Author1; Available"
 var wantCheckedOut = "Title1 by Author1; Checked out to Borrower1"
-var newBorrower = borrower.NewBorrower("Borrower1", 1)
+
+//var newBorrower = borrower.NewBorrower("Borrower1", 1)
+var newBorrower = borrower.Borrower{Name: "Borrower1", MaxBooks: 1}
 var badAuthor, _ = JsonStringToBook("{\"title\":\"Title1\",\"author\":\"Author1X\"}")
 var jsonString = "{\"title\":\"Title1X\",\"author\":\"Author1\"}"
 

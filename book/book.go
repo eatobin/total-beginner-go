@@ -13,8 +13,11 @@ type Book struct {
 	Borrower *borrower.Borrower `json:"borrower,omitempty"`
 }
 
-func NewBook(title string, author string) Book {
-	return Book{Title: title, Author: author, Borrower: nil}
+// JsonStringToBook turns a Book JSON string into a Book
+func JsonStringToBook(bookString string) (Book, error) {
+	var book Book
+	err := json.Unmarshal([]byte(bookString), &book)
+	return book, err
 }
 
 // SetTitle sets a Title for a Book
@@ -45,13 +48,6 @@ func (bk Book) availableString() string {
 // String makes a description of a Book
 func (bk Book) String() string {
 	return fmt.Sprintf("%s by %s; %s", bk.Title, bk.Author, Book.availableString(bk))
-}
-
-// JsonStringToBook turns a Book JSON string into a Book
-func JsonStringToBook(bookString string) (Book, error) {
-	var book Book
-	err := json.Unmarshal([]byte(bookString), &book)
-	return book, err
 }
 
 // BkToJsonString turns a Book into a Book JSON string
