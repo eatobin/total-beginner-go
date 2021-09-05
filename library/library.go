@@ -3,18 +3,19 @@ package library
 import (
 	"eatobin.com/totalbeginnergo/book"
 	"eatobin.com/totalbeginnergo/borrower"
+	"encoding/json"
 	"errors"
+	"strconv"
+	"strings"
 )
 
-//var ZeroBorrower borrower.Borrower
-//var ZeroBook book.Book
-//var ZeroBorrowers []borrower.Borrower
-//var ZeroBooks []book.Book
-
 type BorrowerPtr = *borrower.Borrower
-type Borrowers = []*borrower.Borrower
+type Borrowers = []BorrowerPtr
 type BookPtr = *book.Book
-type Books = []*book.Book
+type Books = []BookPtr
+
+var ZeroBorrowers Borrowers
+var ZeroBooks Books
 
 func containsBorrower(brs Borrowers, br BorrowerPtr) bool {
 	for _, b := range brs {
@@ -123,79 +124,79 @@ func CheckOut(n string, t string, brs Borrowers, bks Books) Books {
 	return bks
 }
 
-//func CheckIn(t string, bks []book.Book) []book.Book {
-//	mbk, errBk := findBook(t, bks)
-//	if errBk == nil && bookOut(mbk) {
-//		newBook := book.Book.SetBorrower(mbk, nil)
-//		fewerBooks := removeBook(mbk, bks)
-//		return AddBook(fewerBooks, newBook)
-//	}
-//	return bks
-//}
-//
-//func JsonStringToBorrowers(borrowersString string) ([]borrower.Borrower, error) {
-//	borrowers := ZeroBorrowers
-//	err := json.Unmarshal([]byte(borrowersString), &borrowers)
-//	if err != nil {
-//		return ZeroBorrowers, err
-//	}
-//	for _, br := range borrowers {
-//		if br.Name == "" || br.MaxBooks == 0 {
-//			err = errors.New("missing Borrower field value - borrowers list is empty")
-//			return ZeroBorrowers, err
-//		}
-//	}
-//	return borrowers, err
-//}
-//
-//func JsonStringToBooks(bookString string) ([]book.Book, error) {
-//	books := ZeroBooks
-//	err := json.Unmarshal([]byte(bookString), &books)
-//	if err != nil {
-//		return ZeroBooks, err
-//	}
-//	for _, bk := range books {
-//		if bk.Title == "" || bk.Author == "" {
-//			err = errors.New("missing Book field value - book list is empty")
-//			return ZeroBooks, err
-//		}
-//		if bk.Borrower != nil {
-//			if bk.Borrower.Name == "" || bk.Borrower.MaxBooks == 0 {
-//				err = errors.New("missing Borrower field value - book list is empty")
-//				return ZeroBooks, err
-//			}
-//		}
-//	}
-//	return books, err
-//}
-//
-//func BorrowersToJSONSting(brs []borrower.Borrower) (string, error) {
-//	bytes, err := json.Marshal(brs)
-//	return string(bytes), err
-//}
-//
-//func BooksToJSONSting(bks []book.Book) (string, error) {
-//	bytes, err := json.Marshal(bks)
-//	return string(bytes), err
-//}
-//
-//func libraryToString(bks []book.Book, brs []borrower.Borrower) string {
-//	return "Test Library: " +
-//		strconv.Itoa(len(bks)) + " books; " +
-//		strconv.Itoa(len(brs)) + " borrowers."
-//}
-//
-//func StatusToString(bks []book.Book, brs []borrower.Borrower) string {
-//	var sb strings.Builder
-//	sb.WriteString("\n--- Status Report of Test Library ---\n\n")
-//	sb.WriteString(libraryToString(bks, brs) + "\n\n")
-//	for _, bk := range bks {
-//		sb.WriteString(book.Book.String(bk) + "\n")
-//	}
-//	sb.WriteString("\n")
-//	for _, br := range brs {
-//		sb.WriteString(borrower.Borrower.String(br) + "\n")
-//	}
-//	sb.WriteString("\n--- End of Status Report ---\n")
-//	return sb.String()
-//}
+func CheckIn(t string, bks Books) Books {
+	mbk, errBk := findBook(t, bks)
+	if errBk == nil && bookOut(mbk) {
+		newBook := book.Book.SetBorrower(mbk, nil)
+		fewerBooks := removeBook(bks, mbk)
+		return AddBook(fewerBooks, &newBook)
+	}
+	return bks
+}
+
+func JsonStringToBorrowers(borrowersString string) (Borrowers, error) {
+	borrowers := ZeroBorrowers
+	err := json.Unmarshal([]byte(borrowersString), &borrowers)
+	if err != nil {
+		return ZeroBorrowers, err
+	}
+	for _, br := range borrowers {
+		if br.Name == "" || br.MaxBooks == 0 {
+			err = errors.New("missing Borrower field value - borrowers list is empty")
+			return ZeroBorrowers, err
+		}
+	}
+	return borrowers, err
+}
+
+func JsonStringToBooks(bookString string) (Books, error) {
+	books := ZeroBooks
+	err := json.Unmarshal([]byte(bookString), &books)
+	if err != nil {
+		return ZeroBooks, err
+	}
+	for _, bk := range books {
+		if bk.Title == "" || bk.Author == "" {
+			err = errors.New("missing Book field value - book list is empty")
+			return ZeroBooks, err
+		}
+		if bk.Borrower != nil {
+			if bk.Borrower.Name == "" || bk.Borrower.MaxBooks == 0 {
+				err = errors.New("missing Borrower field value - book list is empty")
+				return ZeroBooks, err
+			}
+		}
+	}
+	return books, err
+}
+
+func BorrowersToJSONSting(brs Borrowers) (string, error) {
+	bytes, err := json.Marshal(brs)
+	return string(bytes), err
+}
+
+func BooksToJSONSting(bks Books) (string, error) {
+	bytes, err := json.Marshal(bks)
+	return string(bytes), err
+}
+
+func libraryToString(bks Books, brs Borrowers) string {
+	return "Test Library: " +
+		strconv.Itoa(len(bks)) + " books; " +
+		strconv.Itoa(len(brs)) + " borrowers."
+}
+
+func StatusToString(bks Books, brs Borrowers) string {
+	var sb strings.Builder
+	sb.WriteString("\n--- Status Report of Test Library ---\n\n")
+	sb.WriteString(libraryToString(bks, brs) + "\n\n")
+	for _, bk := range bks {
+		sb.WriteString(book.Book.String(bk) + "\n")
+	}
+	sb.WriteString("\n")
+	for _, br := range brs {
+		sb.WriteString(borrower.Borrower.String(br) + "\n")
+	}
+	sb.WriteString("\n--- End of Status Report ---\n")
+	return sb.String()
+}
