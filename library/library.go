@@ -127,7 +127,7 @@ func CheckOut(n string, t string, brs Borrowers, bks Books) Books {
 func CheckIn(t string, bks Books) Books {
 	mbk, errBk := findBook(t, bks)
 	if errBk == nil && bookOut(mbk) {
-		newBook := book.Book.SetBorrower(*mbk, nil)
+		newBook := mbk.SetBorrower(nil)
 		fewerBooks := removeBook(bks, mbk)
 		return AddBook(fewerBooks, &newBook)
 	}
