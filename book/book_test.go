@@ -25,9 +25,9 @@ func TestSetTitle(t *testing.T) {
 
 func TestSetAuthor(t *testing.T) {
 	author := "Author1"
-	gotBkA := Book.String(Book.SetAuthor(badAuthor, author))
+	gotBkA := badAuthor.SetAuthor(author).String()
 	if gotBkA != wantAvail {
-		t.Fatalf("SetAuthor(%v, %v) == %v, want %v", badAuthor, author, gotBkA, wantAvail)
+		t.Fatalf("(%v) SetAuthor(%v) == %v, want %v", badAuthor, author, gotBkA, wantAvail)
 	}
 }
 
