@@ -1,6 +1,7 @@
 package library
 
 import (
+	"eatobin.com/totalbeginnergo/book"
 	"eatobin.com/totalbeginnergo/borrower"
 )
 
@@ -11,6 +12,8 @@ import (
 
 type Borrower = borrower.Borrower
 type Borrowers = []*borrower.Borrower
+type Book = book.Book
+type Books = []*book.Book
 
 func containsBorrower(brs Borrowers, br Borrower) bool {
 	for _, b := range brs {
@@ -21,14 +24,14 @@ func containsBorrower(brs Borrowers, br Borrower) bool {
 	return false
 }
 
-//func containsBook(bks []book.Book, bk book.Book) bool {
-//	for _, b := range bks {
-//		if b == bk {
-//			return true
-//		}
-//	}
-//	return false
-//}
+func containsBook(bks Books, bk Book) bool {
+	for _, b := range bks {
+		if *b == bk {
+			return true
+		}
+	}
+	return false
+}
 
 // AddBorrower adds a Borrower pointer to a slice of Borrower pointers
 func AddBorrower(brs Borrowers, br Borrower) Borrowers {
@@ -38,14 +41,14 @@ func AddBorrower(brs Borrowers, br Borrower) Borrowers {
 	return append(brs, &br)
 }
 
-//// AddBook adds a book.Book to a slice of Books
-//func AddBook(bks []book.Book, bk book.Book) []book.Book {
-//	if containsBook(bks, bk) {
-//		return bks
-//	}
-//	return append(bks, bk)
-//}
-//
+// AddBook adds a Book pointer to a slice of Book pointers
+func AddBook(bks Books, bk Book) Books {
+	if containsBook(bks, bk) {
+		return bks
+	}
+	return append(bks, &bk)
+}
+
 //// removeBook removes a book.Book from a slice of Books
 //func removeBook(bk book.Book, bks []book.Book) []book.Book {
 //	nBks := make([]book.Book, 0)
