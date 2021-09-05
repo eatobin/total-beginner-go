@@ -11,12 +11,12 @@ import (
 //var ZeroBorrowers []borrower.Borrower
 //var ZeroBooks []book.Book
 
-type Borrower = *borrower.Borrower
+type BorrowerPtr = *borrower.Borrower
 type Borrowers = []*borrower.Borrower
-type Book = *book.Book
+type BookPtr = *book.Book
 type Books = []*book.Book
 
-func containsBorrower(brs Borrowers, br Borrower) bool {
+func containsBorrower(brs Borrowers, br BorrowerPtr) bool {
 	for _, b := range brs {
 		if *b == *br {
 			return true
@@ -25,7 +25,7 @@ func containsBorrower(brs Borrowers, br Borrower) bool {
 	return false
 }
 
-func containsBook(bks Books, bk Book) bool {
+func containsBook(bks Books, bk BookPtr) bool {
 	for _, b := range bks {
 		if *b == *bk {
 			return true
@@ -35,7 +35,7 @@ func containsBook(bks Books, bk Book) bool {
 }
 
 // AddBorrower adds a Borrower pointer to a slice of Borrower pointers
-func AddBorrower(brs Borrowers, br Borrower) Borrowers {
+func AddBorrower(brs Borrowers, br BorrowerPtr) Borrowers {
 	if containsBorrower(brs, br) {
 		return brs
 	}
@@ -43,7 +43,7 @@ func AddBorrower(brs Borrowers, br Borrower) Borrowers {
 }
 
 // AddBook adds a Book pointer to a slice of Book pointers
-func AddBook(bks Books, bk Book) Books {
+func AddBook(bks Books, bk BookPtr) Books {
 	if containsBook(bks, bk) {
 		return bks
 	}
@@ -51,7 +51,7 @@ func AddBook(bks Books, bk Book) Books {
 }
 
 // removeBook removes a Book pointer from a slice of Book pointers
-func removeBook(bks Books, bk Book) Books {
+func removeBook(bks Books, bk BookPtr) Books {
 	nBks := make(Books, 0)
 	for _, nBk := range bks {
 		if *nBk != *bk {
@@ -62,7 +62,7 @@ func removeBook(bks Books, bk Book) Books {
 }
 
 // findBorrower finds a Borrower pointer given a Name
-func findBorrower(n string, brs Borrowers) (Borrower, error) {
+func findBorrower(n string, brs Borrowers) (BorrowerPtr, error) {
 	for _, br := range brs {
 		if br.Name == n {
 			return br, nil
@@ -72,7 +72,7 @@ func findBorrower(n string, brs Borrowers) (Borrower, error) {
 }
 
 // findBook finds a Book pointer given a Title
-func findBook(t string, bks Books) (Book, error) {
+func findBook(t string, bks Books) (BookPtr, error) {
 	for _, bk := range bks {
 		if bk.Title == t {
 			return bk, nil
@@ -82,7 +82,7 @@ func findBook(t string, bks Books) (Book, error) {
 }
 
 // getBooksForBorrower will find books given a Borrower and a slice of Book pointers
-func getBooksForBorrower(br Borrower, bks Books) Books {
+func getBooksForBorrower(br BorrowerPtr, bks Books) Books {
 	nBks := make(Books, 0)
 	for _, bk := range bks {
 		if bk.Borrower != nil {
@@ -95,20 +95,20 @@ func getBooksForBorrower(br Borrower, bks Books) Books {
 }
 
 // numberBooksOut returns the # Books checked out to a Borrower
-func numberBooksOut(br Borrower, bks Books) int {
+func numberBooksOut(br BorrowerPtr, bks Books) int {
 	return len(getBooksForBorrower(br, bks))
 }
 
 // notMaxedOut returns True if books out < max books
-func notMaxedOut(br Borrower, bks Books) bool {
+func notMaxedOut(br BorrowerPtr, bks Books) bool {
 	return numberBooksOut(br, bks) < br.MaxBooks
 }
 
-func bookNotOut(bk Book) bool {
+func bookNotOut(bk BookPtr) bool {
 	return bk.Borrower == nil
 }
 
-func bookOut(bk Book) bool {
+func bookOut(bk BookPtr) bool {
 	return bk.Borrower != nil
 }
 
