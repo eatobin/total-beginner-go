@@ -3,6 +3,7 @@ package library
 import (
 	"eatobin.com/totalbeginnergo/book"
 	"eatobin.com/totalbeginnergo/borrower"
+	"errors"
 )
 
 //var ZeroBorrower borrower.Borrower
@@ -49,27 +50,27 @@ func AddBook(bks Books, bk Book) Books {
 	return append(bks, &bk)
 }
 
-//// removeBook removes a book.Book from a slice of Books
-//func removeBook(bk book.Book, bks []book.Book) []book.Book {
-//	nBks := make([]book.Book, 0)
-//	for _, nBk := range bks {
-//		if nBk != bk {
-//			nBks = append(nBks, nBk)
-//		}
-//	}
-//	return nBks
-//}
-//
-//// findBorrower finds a borrower.Borrower given a Name
-//func findBorrower(n string, brs []borrower.Borrower) (borrower.Borrower, error) {
-//	for _, br := range brs {
-//		if br.Name == n {
-//			return br, nil
-//		}
-//	}
-//	return ZeroBorrower, errors.New("did not find the requested borrower")
-//}
-//
+// removeBook removes a Book pointer from a slice of Book pointers
+func removeBook(bks Books, bk Book) Books {
+	nBks := make(Books, 0)
+	for _, nBk := range bks {
+		if *nBk != bk {
+			nBks = append(nBks, nBk)
+		}
+	}
+	return nBks
+}
+
+// findBorrower finds a borrower.Borrower given a Name
+func findBorrower(n string, brs []borrower.Borrower) (borrower.Borrower, error) {
+	for _, br := range brs {
+		if br.Name == n {
+			return br, nil
+		}
+	}
+	return ZeroBorrower, errors.New("did not find the requested borrower")
+}
+
 //// findBook finds a book.Book given a Title
 //func findBook(t string, bks []book.Book) (book.Book, error) {
 //	for _, bk := range bks {
