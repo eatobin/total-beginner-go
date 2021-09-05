@@ -8,15 +8,16 @@ import (
 	"testing"
 )
 
-var br1lib = borrower.NewBorrower("Borrower1", 1)
-var br2lib = borrower.NewBorrower("Borrower2", 2)
-var br3lib = borrower.NewBorrower("Borrower3", 3)
+var br1lib = borrower.Borrower{Name: "Borrower1", MaxBooks: 1}
+var br2lib = borrower.Borrower{Name: "Borrower2", MaxBooks: 2}
+var br3lib = borrower.Borrower{Name: "Borrower3", MaxBooks: 3}
 
 var brs1 = []borrower.Borrower{br1lib, br2lib}
 var brs2 = []borrower.Borrower{br1lib, br2lib, br3lib}
 
 var bk1lib = book.Book{Title: "Title1", Author: "Author1", Borrower: &br1lib}
-var bk2lib = book.NewBook("Title2", "Author2")
+
+var bk2lib = book.Book{Title: "Title2", Author: "Author2"}
 var bk3lib = book.Book{Title: "Title3", Author: "Author3", Borrower: &br3lib}
 
 var bk4lib = book.Book{Title: "Title4", Author: "Author4", Borrower: &br3lib}
@@ -36,7 +37,7 @@ var jsonStringBooksBadParse = `[{"title""Title2","author":"Author22","borrower":
 var jsonStringBooksBadTitleField = `[{"noTitle":"Title2","author":"Author22","borrower":{"name":"NoName","maxBooks":-1}},{"title":"Title99","author":"Author99","borrower":{"name":"Borrower1","maxBooks":1}}]`
 var jsonStringBooksBadBorrowerField = `[{"title":"Title1","author":"Author1","borrower":{"noName":"Borrower1","maxBooks":1}},{"title":"Title2","author":"Author2","borrower":{"name":"Borrower2","maxBooks":2}}]`
 
-var ss = "\n--- Status Report of Test Library ---\n\nTest Library: 3 books; 3 borrowers.\n\nTitle1 by Author1; Checked out to Borrower1\nTitle2 by Author2; Available\nTitle3 by Author3; Checked out to Borrower3\n\nBorrower1 (1 books)\nBorrower2 (2 books)\nBorrower3 (3 books)\n\n--- End of Status Report ---\n"
+var ss = "\n--- Status Report of Test Library ---\n\nTest Library: 3 books; 3 borrowers.\n\nTitle1 by Author1; Checked out to Borrower1\nTitle2 by Author2; Available\nTitle3 by Author3; Checked out to Borrower3\n\nBorrower1 [1 books]\nBorrower2 [2 books]\nBorrower3 [3 books]\n\n--- End of Status Report ---\n"
 
 func TestAddBorrower(t *testing.T) {
 	cases := []struct {
@@ -267,13 +268,13 @@ func TestBooksToJSONString(t *testing.T) {
 }
 
 func TestStatusToString(t *testing.T) {
-	br1libL := borrower.NewBorrower("Borrower1", 1)
-	br2libL := borrower.NewBorrower("Borrower2", 2)
-	br3libL := borrower.NewBorrower("Borrower3", 3)
+	br1libL := borrower.Borrower{Name: "Borrower1", MaxBooks: 1}
+	br2libL := borrower.Borrower{Name: "Borrower2", MaxBooks: 2}
+	br3libL := borrower.Borrower{Name: "Borrower3", MaxBooks: 3}
 	brs2L := []borrower.Borrower{br1libL, br2libL, br3libL}
 
 	bk1libL := book.Book{Title: "Title1", Author: "Author1", Borrower: &br1lib}
-	bk2libL := book.NewBook("Title2", "Author2")
+	bk2libL := book.Book{Title: "Title2", Author: "Author2"}
 	bk3libL := book.Book{Title: "Title3", Author: "Author3", Borrower: &br3lib}
 	bks2L := []book.Book{bk1libL, bk2libL, bk3libL}
 
