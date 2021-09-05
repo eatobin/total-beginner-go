@@ -12,16 +12,16 @@ var bk3, _ = JsonStringToBook("{\"title\":\"Title1\",\"author\":\"Author1\",\"bo
 var wantAvail = "Title1 by Author1; Available"
 var wantCheckedOut = "Title1 by Author1; Checked out to Borrower1"
 
-//var newBorrower = borrower.NewBorrower("Borrower1", 1)
 var newBorrower = borrower.Borrower{Name: "Borrower1", MaxBooks: 1}
 var badAuthor, _ = JsonStringToBook("{\"title\":\"Title1\",\"author\":\"Author1X\"}")
 var jsonString = "{\"title\":\"Title1X\",\"author\":\"Author1\"}"
 
 func TestSetTitle(t *testing.T) {
 	title := "Title1"
-	gotBkT := Book.String(Book.SetTitle(badTitle, title))
+	//gotBkT := Book.String(Book.SetTitle(badTitle, title))
+	gotBkT := badTitle.SetTitle(title).String()
 	if gotBkT != wantAvail {
-		t.Fatalf("SetTitle(%v, %v) == %v, want %v", badTitle, title, gotBkT, wantAvail)
+		t.Fatalf("(%v) SetTitle(%v) == %v, want %v", badTitle, title, gotBkT, wantAvail)
 	}
 }
 
@@ -44,9 +44,10 @@ func TestSetBorrower(t *testing.T) {
 		{bk3, nil, wantAvail},
 	}
 	for _, c := range cases {
-		gotBkString := Book.String(Book.SetBorrower(c.bk, c.br))
+		//gotBkString := Book.String(Book.SetBorrower(c.bk, c.br))
+		gotBkString := c.bk.SetBorrower(c.br).String()
 		if gotBkString != c.wantBkString {
-			t.Fatalf("SetBorrower(%v, %v) == %v, want %v", c.bk, c.br, gotBkString, c.wantBkString)
+			t.Fatalf("(%v) SetBorrower(%v) == %v, want %v", c.bk, c.br, gotBkString, c.wantBkString)
 		}
 	}
 }
