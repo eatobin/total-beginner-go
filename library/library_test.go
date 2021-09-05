@@ -1,20 +1,22 @@
 package library
 
 import (
+	"eatobin.com/totalbeginnergo/book"
+	"eatobin.com/totalbeginnergo/borrower"
 	"reflect"
 	"testing"
 )
 
-var br1lib = Borrower{Name: "Borrower1", MaxBooks: 1}
-var br2lib = Borrower{Name: "Borrower2", MaxBooks: 2}
-var br3lib = Borrower{Name: "Borrower3", MaxBooks: 3}
+var br1lib = borrower.Borrower{Name: "Borrower1", MaxBooks: 1}
+var br2lib = borrower.Borrower{Name: "Borrower2", MaxBooks: 2}
+var br3lib = borrower.Borrower{Name: "Borrower3", MaxBooks: 3}
 
 var brs1 = Borrowers{&br1lib, &br2lib}
 var brs2 = Borrowers{&br1lib, &br2lib, &br3lib}
 
-var bk1lib = Book{Title: "Title1", Author: "Author1", Borrower: &br1lib}
-var bk2lib = Book{Title: "Title2", Author: "Author2"}
-var bk3lib = Book{Title: "Title3", Author: "Author3", Borrower: &br3lib}
+var bk1lib = book.Book{Title: "Title1", Author: "Author1", Borrower: &br1lib}
+var bk2lib = book.Book{Title: "Title2", Author: "Author2"}
+var bk3lib = book.Book{Title: "Title3", Author: "Author3", Borrower: &br3lib}
 
 //var bk4lib = Book{Title: "Title4", Author: "Author4", Borrower: &br3lib}
 
@@ -38,11 +40,11 @@ var bks2 = Books{&bk1lib, &bk2lib, &bk3lib}
 func TestAddBorrower(t *testing.T) {
 	cases := []struct {
 		brs     Borrowers
-		br      Borrower
+		br      BorrowerPtr
 		wantBrs Borrowers
 	}{
-		{brs1, br3lib, brs2},
-		{brs1, br2lib, brs1},
+		{brs1, &br3lib, brs2},
+		{brs1, &br2lib, brs1},
 	}
 	for _, c := range cases {
 		gotBrs := AddBorrower(c.brs, c.br)
@@ -56,11 +58,11 @@ func TestAddBorrower(t *testing.T) {
 func TestAddBook(t *testing.T) {
 	cases := []struct {
 		bks     Books
-		bk      Book
+		bk      BookPtr
 		wantBks Books
 	}{
-		{bks1, bk3lib, bks2},
-		{bks1, bk2lib, bks1},
+		{bks1, &bk3lib, bks2},
+		{bks1, &bk2lib, bks1},
 	}
 	for _, c := range cases {
 		gotBks := AddBook(c.bks, c.bk)

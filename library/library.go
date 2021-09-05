@@ -127,7 +127,7 @@ func CheckOut(n string, t string, brs Borrowers, bks Books) Books {
 func CheckIn(t string, bks Books) Books {
 	mbk, errBk := findBook(t, bks)
 	if errBk == nil && bookOut(mbk) {
-		newBook := book.Book.SetBorrower(mbk, nil)
+		newBook := book.Book.SetBorrower(*mbk, nil)
 		fewerBooks := removeBook(bks, mbk)
 		return AddBook(fewerBooks, &newBook)
 	}
@@ -191,11 +191,11 @@ func StatusToString(bks Books, brs Borrowers) string {
 	sb.WriteString("\n--- Status Report of Test Library ---\n\n")
 	sb.WriteString(libraryToString(bks, brs) + "\n\n")
 	for _, bk := range bks {
-		sb.WriteString(book.Book.String(bk) + "\n")
+		sb.WriteString(book.Book.String(*bk) + "\n")
 	}
 	sb.WriteString("\n")
 	for _, br := range brs {
-		sb.WriteString(borrower.Borrower.String(br) + "\n")
+		sb.WriteString(borrower.Borrower.String(*br) + "\n")
 	}
 	sb.WriteString("\n--- End of Status Report ---\n")
 	return sb.String()
