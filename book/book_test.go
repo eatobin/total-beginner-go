@@ -1,7 +1,6 @@
 package book
 
 import (
-	"eatobin.com/totalbeginnergo/borrower"
 	"testing"
 )
 
@@ -12,7 +11,7 @@ var bk3, _ = JsonStringToBook("{\"title\":\"Title1\",\"author\":\"Author1\",\"bo
 var wantAvail = "Title1 by Author1; Available"
 var wantCheckedOut = "Title1 by Author1; Checked out to Borrower1"
 
-var newBorrower = borrower.Borrower{Name: "Borrower1", MaxBooks: 1}
+var newBorrower = Borrower{Name: "Borrower1", MaxBooks: 1}
 var badAuthor, _ = JsonStringToBook("{\"title\":\"Title1\",\"author\":\"Author1X\"}")
 var jsonString = "{\"title\":\"Title1X\",\"author\":\"Author1\"}"
 
@@ -35,7 +34,7 @@ func TestSetAuthor(t *testing.T) {
 func TestSetBorrower(t *testing.T) {
 	cases := []struct {
 		bk           Book
-		br           *borrower.Borrower
+		br           *Borrower
 		wantBkString string
 	}{
 		{bk1, &newBorrower, wantCheckedOut},

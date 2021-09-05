@@ -9,7 +9,10 @@ import (
 //var ZeroBorrowers []borrower.Borrower
 //var ZeroBooks []book.Book
 
-func containsBorrower(brs []*borrower.Borrower, br borrower.Borrower) bool {
+type Borrower = borrower.Borrower
+type Borrowers = []*borrower.Borrower
+
+func containsBorrower(brs Borrowers, br Borrower) bool {
 	for _, b := range brs {
 		if *b == br {
 			return true
@@ -28,7 +31,7 @@ func containsBorrower(brs []*borrower.Borrower, br borrower.Borrower) bool {
 //}
 
 // AddBorrower adds a Borrower pointer to a slice of Borrower pointers
-func AddBorrower(brs []*borrower.Borrower, br borrower.Borrower) []*borrower.Borrower {
+func AddBorrower(brs Borrowers, br Borrower) Borrowers {
 	if containsBorrower(brs, br) {
 		return brs
 	}
