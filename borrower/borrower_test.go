@@ -28,6 +28,6 @@ func TestSetMaxBooks(t *testing.T) {
 func TestBrToJsonString(t *testing.T) {
 	gotJsonString, _ := badName.BrToJsonString()
 	if gotJsonString != jsonString {
-		t.Fatalf("BrToJsonString(%v) == %v, want %v", badName, gotJsonString, jsonString)
+		t.Fatalf("(%v) BrToJsonString() == %v, want %v", badName, gotJsonString, jsonString)
 	}
 }

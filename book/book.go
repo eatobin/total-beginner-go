@@ -51,7 +51,7 @@ func (bk Book) String() string {
 }
 
 // BkToJsonString turns a Book into a Book JSON string
-func BkToJsonString(book Book) (string, error) {
-	bookByte, err := json.Marshal(book)
+func (bk Book) BkToJsonString() (string, error) {
+	bookByte, err := json.Marshal(bk)
 	return string(bookByte), err
 }
