@@ -18,13 +18,11 @@ var brs2 = Borrowers{&br1lib, &br2lib, &br3lib}
 var bk1lib = book.Book{Title: "Title1", Author: "Author1", Borrower: &br1lib}
 var bk2lib = book.Book{Title: "Title2", Author: "Author2"}
 var bk3lib = book.Book{Title: "Title3", Author: "Author3", Borrower: &br3lib}
-
-//var bk4lib = Book{Title: "Title4", Author: "Author4", Borrower: &br3lib}
+var bk4lib = book.Book{Title: "Title4", Author: "Author4", Borrower: &br3lib}
 
 var bks1 = Books{&bk1lib, &bk2lib}
 var bks2 = Books{&bk1lib, &bk2lib, &bk3lib}
-
-//var bks3 = Books{&bk1lib, &bk2lib, &bk3lib, &bk4lib}
+var bks3 = Books{&bk1lib, &bk2lib, &bk3lib, &bk4lib}
 
 //var jsonStringBorrowers = "[{\"name\":\"Borrower1\",\"maxBooks\":1},{\"name\":\"Borrower2\",\"maxBooks\":2}]"
 //var jsonStringBorrowersBadParse = `[{"name""Borrower1","maxBooks":1},{"name":"Borrower2","maxBooks":2}]`
@@ -117,25 +115,25 @@ func Test_findBook(t *testing.T) {
 	}
 }
 
-//func Test_getBooksForBorrower(t *testing.T) {
-//	cases := []struct {
-//		br   borrower.Borrower
-//		bks  []book.Book
-//		want []book.Book
-//	}{
-//		{br2lib, bks1, []book.Book{}},
-//		{br1lib, bks1, []book.Book{bk1lib}},
-//		{br3lib, bks3, []book.Book{bk3lib, bk4lib}},
-//	}
-//	for _, c := range cases {
-//		got := getBooksForBorrower(c.br, c.bks)
-//		if !reflect.DeepEqual(got, c.want) {
-//			t.Errorf("GetBooksForborrower(%v, %v) ==\n%v want \n%v",
-//				c.br, c.bks, got, c.want)
-//		}
-//	}
-//}
-//
+func Test_getBooksForBorrower(t *testing.T) {
+	cases := []struct {
+		br   BorrowerPtr
+		bks  Books
+		want Books
+	}{
+		{&br2lib, bks1, []*book.Book{}},
+		{&br1lib, bks1, []*book.Book{&bk1lib}},
+		{&br3lib, bks3, []*book.Book{&bk3lib, &bk4lib}},
+	}
+	for _, c := range cases {
+		got := getBooksForBorrower(c.br, c.bks)
+		if !reflect.DeepEqual(got, c.want) {
+			t.Errorf("GetBooksForborrower(%v, %v) ==\n%v want \n%v",
+				c.br, c.bks, got, c.want)
+		}
+	}
+}
+
 //func TestCheckOut(t *testing.T) {
 //	var testbks = []book.Book{bk1lib, {Title: "Title2", Author: "Author2", Borrower: &borrower.Borrower{Name: "Borrower2", MaxBooks: 2}}}
 //	cases := []struct {
