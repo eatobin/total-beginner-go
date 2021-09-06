@@ -24,10 +24,11 @@ var bks1 = Books{&bk1lib, &bk2lib}
 var bks2 = Books{&bk1lib, &bk2lib, &bk3lib}
 var bks3 = Books{&bk1lib, &bk2lib, &bk3lib, &bk4lib}
 
-//var jsonStringBorrowers = "[{\"name\":\"Borrower1\",\"maxBooks\":1},{\"name\":\"Borrower2\",\"maxBooks\":2}]"
-//var jsonStringBorrowersBadParse = `[{"name""Borrower1","maxBooks":1},{"name":"Borrower2","maxBooks":2}]`
-//var jsonStringBorrowersBadNameField = `[{"noName":"Borrower1","maxBooks":1},{"name":"Borrower2","maxBooks":2}]`
-//var jsonStringBorrowersBadMaxBooksField = `[{"name":"Borrower1","noMaxBooks":1},{"name":"Borrower2","maxBooks":2}]`
+var jsonStringBorrowers = "[{\"name\":\"Borrower1\",\"maxBooks\":1},{\"name\":\"Borrower2\",\"maxBooks\":2}]"
+var jsonStringBorrowersBadParse = `[{"name""Borrower1","maxBooks":1},{"name":"Borrower2","maxBooks":2}]`
+var jsonStringBorrowersBadNameField = `[{"noName":"Borrower1","maxBooks":1},{"name":"Borrower2","maxBooks":2}]`
+var jsonStringBorrowersBadMaxBooksField = `[{"name":"Borrower1","noMaxBooks":1},{"name":"Borrower2","maxBooks":2}]`
+
 //
 //var jsonStringBooks = `[{"title":"Title1","author":"Author1","borrower":{"name":"Borrower1","maxBooks":1}},{"title":"Title2","author":"Author2"}]`
 //var jsonStringBooksBadParse = `[{"title""Title2","author":"Author22","borrower":{"name":"NoName","maxBooks":-1}},{"title":"Title99","author":"Author99","borrower":{"name":"Borrower1","maxBooks":1}}]`
@@ -179,39 +180,39 @@ func TestCheckIn(t *testing.T) {
 	}
 }
 
-//func Test_jsonStringToBorrowersPass(t *testing.T) {
-//	js := jsonStringBorrowers
-//	wantBrs := brs1
-//	wantError := error(nil)
-//
-//	got, err := JsonStringToBorrowers(js)
-//	if !reflect.DeepEqual(got, wantBrs) || err != wantError {
-//		t.Errorf("JsonStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
-//			js, got, err, wantBrs, wantError)
-//	}
-//}
-//
-//func Test_jsonStringToBorrowersFail(t *testing.T) {
-//	cases := []struct {
-//		js        string
-//		wantBrs   []borrower.Borrower
-//		wantError error
-//	}{
-//		{jsonStringBorrowersBadParse, ZeroBorrowers, errors.New("invalid character '\"' after object key")},
-//		{jsonStringBorrowersBadNameField, ZeroBorrowers, errors.New("missing Borrower field value - borrowers list is empty")},
-//		{jsonStringBorrowersBadMaxBooksField, ZeroBorrowers, errors.New("missing Borrower field value - borrowers list is empty")},
-//	}
-//	for _, c := range cases {
-//		got, err := JsonStringToBorrowers(c.js)
-//		if err != nil {
-//			if err.Error() != c.wantError.Error() {
-//				t.Errorf("JsonStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
-//					c.js, got, err, c.wantBrs, c.wantError)
-//			}
-//		}
-//	}
-//}
-//
+func Test_jsonStringToBorrowersPass(t *testing.T) {
+	js := jsonStringBorrowers
+	wantBrs := brs1
+	wantError := error(nil)
+
+	got, err := JsonStringToBorrowers(js)
+	if !reflect.DeepEqual(got, wantBrs) || err != wantError {
+		t.Errorf("JsonStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
+			js, got, err, wantBrs, wantError)
+	}
+}
+
+func Test_jsonStringToBorrowersFail(t *testing.T) {
+	cases := []struct {
+		js        string
+		wantBrs   Borrowers
+		wantError error
+	}{
+		{jsonStringBorrowersBadParse, ZeroBorrowers, errors.New("invalid character '\"' after object key")},
+		{jsonStringBorrowersBadNameField, ZeroBorrowers, errors.New("missing Borrower field value - borrowers list is empty")},
+		{jsonStringBorrowersBadMaxBooksField, ZeroBorrowers, errors.New("missing Borrower field value - borrowers list is empty")},
+	}
+	for _, c := range cases {
+		got, err := JsonStringToBorrowers(c.js)
+		if err != nil {
+			if err.Error() != c.wantError.Error() {
+				t.Errorf("JsonStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
+					c.js, got, err, c.wantBrs, c.wantError)
+			}
+		}
+	}
+}
+
 //func Test_jsonStringToBooksPass(t *testing.T) {
 //	js := jsonStringBooks
 //	wantBks := []book.Book{{Title: "Title1", Author: "Author1", Borrower: &borrower.Borrower{Name: "Borrower1", MaxBooks: 1}}, {Title: "Title2", Author: "Author2", Borrower: nil}}
