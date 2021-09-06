@@ -3,6 +3,7 @@ package library
 import (
 	"eatobin.com/totalbeginnergo/book"
 	"eatobin.com/totalbeginnergo/borrower"
+	"errors"
 	"reflect"
 	"testing"
 )
@@ -73,27 +74,27 @@ func TestAddBook(t *testing.T) {
 	}
 }
 
-//func Test_findBorrower(t *testing.T) {
-//	var ErrNoBorrowerFound = errors.New("did not find the requested borrower")
-//	cases := []struct {
-//		n       string
-//		brs     []borrower.Borrower
-//		wantBr  borrower.Borrower
-//		wantErr error
-//	}{
-//		{"Borrower1", brs2, br1lib, nil},
-//		{"Borrower11", brs2, borrower.Borrower{}, ErrNoBorrowerFound},
-//	}
-//	for _, c := range cases {
-//		gotBr, gotErr := findBorrower(c.n, c.brs)
-//		if !reflect.DeepEqual(gotBr, c.wantBr) ||
-//			!reflect.DeepEqual(gotErr, c.wantErr) {
-//			t.Errorf("findBorrower(%s, %v) ==\n%v\nwant\n%v\n%v\nwant\n%v",
-//				c.n, c.brs, gotBr, c.wantBr, gotErr, c.wantErr)
-//		}
-//	}
-//}
-//
+func Test_findBorrower(t *testing.T) {
+	var ErrNoBorrowerFound = errors.New("did not find the requested borrower")
+	cases := []struct {
+		n       string
+		brs     Borrowers
+		wantBr  BorrowerPtr
+		wantErr error
+	}{
+		{"Borrower1", brs2, &br1lib, nil},
+		{"Borrower11", brs2, nil, ErrNoBorrowerFound},
+	}
+	for _, c := range cases {
+		gotBr, gotErr := findBorrower(c.n, c.brs)
+		if !reflect.DeepEqual(gotBr, c.wantBr) ||
+			!reflect.DeepEqual(gotErr, c.wantErr) {
+			t.Errorf("findBorrower(%s, %v) ==\n%v\nwant\n%v\n%v\nwant\n%v",
+				c.n, c.brs, gotBr, c.wantBr, gotErr, c.wantErr)
+		}
+	}
+}
+
 //func Test_findBook(t *testing.T) {
 //	var ErrNoBookFound = errors.New("did not find the requested book")
 //	cases := []struct {
