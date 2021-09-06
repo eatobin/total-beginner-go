@@ -134,30 +134,30 @@ func Test_getBooksForBorrower(t *testing.T) {
 	}
 }
 
-//func TestCheckOut(t *testing.T) {
-//	var testbks = []book.Book{bk1lib, {Title: "Title2", Author: "Author2", Borrower: &borrower.Borrower{Name: "Borrower2", MaxBooks: 2}}}
-//	cases := []struct {
-//		n    string
-//		t    string
-//		brs  []borrower.Borrower
-//		bks  []book.Book
-//		want []book.Book
-//	}{
-//		{"Borrower2", "Title1", brs1, bks1, bks1},
-//		{"Borrower2", "NoTitle", brs1, bks1, bks1},
-//		{"NoName", "Title1", brs1, bks1, bks1},
-//		{"Borrower1", "Title2", brs1, bks1, bks1},
-//		{"Borrower2", "Title2", brs1, bks1, testbks},
-//	}
-//	for _, c := range cases {
-//		got := CheckOut(c.n, c.t, c.brs, c.bks)
-//		if !reflect.DeepEqual(got, c.want) {
-//			t.Errorf("CheckOut(%s, %s, %v, %v) ==\n%v want \n%v",
-//				c.n, c.t, c.brs, c.bks, got, c.want)
-//		}
-//	}
-//}
-//
+func TestCheckOut(t *testing.T) {
+	var testbks = []BookPtr{&bk1lib, {Title: "Title2", Author: "Author2", Borrower: &borrower.Borrower{Name: "Borrower2", MaxBooks: 2}}}
+	cases := []struct {
+		n    string
+		t    string
+		brs  Borrowers
+		bks  Books
+		want Books
+	}{
+		{"Borrower2", "Title1", brs1, bks1, bks1},
+		{"Borrower2", "NoTitle", brs1, bks1, bks1},
+		{"NoName", "Title1", brs1, bks1, bks1},
+		{"Borrower1", "Title2", brs1, bks1, bks1},
+		{"Borrower2", "Title2", brs1, bks1, testbks},
+	}
+	for _, c := range cases {
+		got := CheckOut(c.n, c.t, c.brs, c.bks)
+		if !reflect.DeepEqual(got, c.want) {
+			t.Errorf("CheckOut(%s, %s, %v, %v) ==\n%v want \n%v",
+				c.n, c.t, c.brs, c.bks, got, c.want)
+		}
+	}
+}
+
 //func TestCheckIn(t *testing.T) {
 //	var testbks1 = []book.Book{bk1lib, bk2lib}
 //	var testbks2 = []book.Book{bk2lib, {Title: "Title1", Author: "Author1", Borrower: nil}}
