@@ -225,27 +225,27 @@ func Test_jsonStringToBooksPass(t *testing.T) {
 	}
 }
 
-//func Test_jsonStringToBooksFail(t *testing.T) {
-//	cases := []struct {
-//		js        string
-//		wantBks   []book.Book
-//		wantError error
-//	}{
-//		{jsonStringBooksBadParse, ZeroBooks, errors.New("invalid character '\"' after object key")},
-//		{jsonStringBooksBadTitleField, ZeroBooks, errors.New("missing Book field value - book list is empty")},
-//		{jsonStringBooksBadBorrowerField, ZeroBooks, errors.New("missing Borrower field value - book list is empty")},
-//	}
-//	for _, c := range cases {
-//		got, err := JsonStringToBooks(c.js)
-//		if err != nil {
-//			if err.Error() != c.wantError.Error() {
-//				t.Errorf("JSONStringToBooks\n(%s)\n==\n%v and %v\nwant\n%v and %v",
-//					c.js, got, err, c.wantBks, c.wantError)
-//			}
-//		}
-//	}
-//}
-//
+func Test_jsonStringToBooksFail(t *testing.T) {
+	cases := []struct {
+		js        string
+		wantBks   Books
+		wantError error
+	}{
+		{jsonStringBooksBadParse, ZeroBooks, errors.New("invalid character '\"' after object key")},
+		{jsonStringBooksBadTitleField, ZeroBooks, errors.New("missing Book field value - book list is empty")},
+		{jsonStringBooksBadBorrowerField, ZeroBooks, errors.New("missing Borrower field value - book list is empty")},
+	}
+	for _, c := range cases {
+		got, err := JsonStringToBooks(c.js)
+		if err != nil {
+			if err.Error() != c.wantError.Error() {
+				t.Errorf("JSONStringToBooks\n(%s)\n==\n%v and %v\nwant\n%v and %v",
+					c.js, got, err, c.wantBks, c.wantError)
+			}
+		}
+	}
+}
+
 //func TestBorrowersToJSONString(t *testing.T) {
 //	got, err := BorrowersToJSONSting(brs1)
 //	want := jsonStringBorrowers
