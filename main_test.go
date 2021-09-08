@@ -1,9 +1,9 @@
 package main
 
 import (
-	"eatobin.com/totalbeginnergo/library"
 	"errors"
 	"fmt"
+	"github.com/eatobin/totalbeginnergo/library"
 	"os"
 	"testing"
 )

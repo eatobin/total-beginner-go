@@ -1,10 +1,10 @@
 package main
 
 import (
-	"eatobin.com/totalbeginnergo/book"
-	"eatobin.com/totalbeginnergo/borrower"
-	"eatobin.com/totalbeginnergo/library"
 	"fmt"
+	"github.com/eatobin/totalbeginnergo/book"
+	"github.com/eatobin/totalbeginnergo/borrower"
+	"github.com/eatobin/totalbeginnergo/library"
 	"io/ioutil"
 	"os"
 )

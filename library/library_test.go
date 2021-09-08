@@ -1,9 +1,9 @@
 package library
 
 import (
-	"eatobin.com/totalbeginnergo/book"
-	"eatobin.com/totalbeginnergo/borrower"
 	"errors"
+	"github.com/eatobin/totalbeginnergo/book"
+	"github.com/eatobin/totalbeginnergo/borrower"
 	"reflect"
 	"testing"
 )

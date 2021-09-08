@@ -1,9 +1,9 @@
 package book
 
 import (
-	"eatobin.com/totalbeginnergo/borrower"
 	"encoding/json"
 	"fmt"
+	"github.com/eatobin/totalbeginnergo/borrower"
 )
 
 type Borrower = borrower.Borrower
