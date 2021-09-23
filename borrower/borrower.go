@@ -11,11 +11,8 @@ type Borrower struct {
 	MaxBooks int    `json:"maxBooks"`
 }
 
-func newBorrower(name string, maxBooks int) *Borrower {
-	br := Borrower{Name: name, MaxBooks: maxBooks}
-	br.Name = name
-	br.MaxBooks = maxBooks
-	return &br
+func NewBorrower(name string, maxBooks int) *Borrower {
+	return &Borrower{Name: name, MaxBooks: maxBooks}
 }
 
 // JsonStringToBorrower turns a Borrower JSON string into a Borrower
