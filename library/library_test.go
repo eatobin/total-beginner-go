@@ -1,6 +1,7 @@
 package library
 
 import (
+	"errors"
 	"reflect"
 	"testing"
 )
@@ -69,215 +70,215 @@ func TestAddBook(t *testing.T) {
 	}
 }
 
-//func Test_findBorrower(t *testing.T) {
-//	var ErrNoBorrowerFound = errors.New("did not find the requested borrower")
-//	cases := []struct {
-//		n       string
-//		brs     Borrowers
-//		wantBr  BorrowerPtr
-//		wantErr error
-//	}{
-//		{"Borrower1", brs2, &br1lib, nil},
-//		{"Borrower11", brs2, nil, ErrNoBorrowerFound},
-//	}
-//	for _, c := range cases {
-//		gotBr, gotErr := findBorrower(c.n, c.brs)
-//		if !reflect.DeepEqual(gotBr, c.wantBr) ||
-//			!reflect.DeepEqual(gotErr, c.wantErr) {
-//			t.Errorf("findBorrower(%s, %v) ==\n%v\nwant\n%v\n%v\nwant\n%v",
-//				c.n, c.brs, gotBr, c.wantBr, gotErr, c.wantErr)
-//		}
-//	}
-//}
-//
-//func Test_findBook(t *testing.T) {
-//	var ErrNoBookFound = errors.New("did not find the requested book")
-//	cases := []struct {
-//		t       string
-//		bks     Books
-//		wantBk  BookPtr
-//		wantErr error
-//	}{
-//		{"Title1", bks2, &bk1lib, nil},
-//		{"Title11", bks2, nil, ErrNoBookFound},
-//	}
-//	for _, c := range cases {
-//		gotBk, gotErr := findBook(c.t, c.bks)
-//		if gotBk != c.wantBk ||
-//			!reflect.DeepEqual(gotBk, c.wantBk) ||
-//			!reflect.DeepEqual(gotErr, c.wantErr) {
-//			t.Errorf("findBook(%s, %v) ==\n%v\nwant\n%v\n%v\nwant\n%v",
-//				c.t, c.bks, gotBk, c.wantBk, gotErr, c.wantErr)
-//		}
-//	}
-//}
-//
-//func Test_getBooksForBorrower(t *testing.T) {
-//	cases := []struct {
-//		br   BorrowerPtr
-//		bks  Books
-//		want Books
-//	}{
-//		{&br2lib, bks1, []*book.Book{}},
-//		{&br1lib, bks1, []*book.Book{&bk1lib}},
-//		{&br3lib, bks3, []*book.Book{&bk3lib, &bk4lib}},
-//	}
-//	for _, c := range cases {
-//		got := getBooksForBorrower(c.br, c.bks)
-//		if !reflect.DeepEqual(got, c.want) {
-//			t.Errorf("GetBooksForborrower(%v, %v) ==\n%v want \n%v",
-//				c.br, c.bks, got, c.want)
-//		}
-//	}
-//}
-//
-//func TestCheckOut(t *testing.T) {
-//	var testbks = []BookPtr{&bk1lib, {Title: "Title2", Author: "Author2", Borrower: &borrower.Borrower{Name: "Borrower2", MaxBooks: 2}}}
-//	cases := []struct {
-//		n    string
-//		t    string
-//		brs  Borrowers
-//		bks  Books
-//		want Books
-//	}{
-//		{"Borrower2", "Title1", brs1, bks1, bks1},
-//		{"Borrower2", "NoTitle", brs1, bks1, bks1},
-//		{"NoName", "Title1", brs1, bks1, bks1},
-//		{"Borrower1", "Title2", brs1, bks1, bks1},
-//		{"Borrower2", "Title2", brs1, bks1, testbks},
-//	}
-//	for _, c := range cases {
-//		got := CheckOut(c.n, c.t, c.brs, c.bks)
-//		if !reflect.DeepEqual(got, c.want) {
-//			t.Errorf("CheckOut(%s, %s, %v, %v) ==\n%v want \n%v",
-//				c.n, c.t, c.brs, c.bks, got, c.want)
-//		}
-//	}
-//}
-//
-//func TestCheckIn(t *testing.T) {
-//	var testbks1 = []BookPtr{&bk1lib, &bk2lib}
-//	var testbks2 = []BookPtr{&bk2lib, {Title: "Title1", Author: "Author1", Borrower: nil}}
-//	cases := []struct {
-//		t    string
-//		bks  Books
-//		want Books
-//	}{
-//		{"Title1", testbks1, testbks2},
-//		{"Title2", testbks1, testbks1},
-//		{"NoTitle", testbks1, testbks1},
-//	}
-//	for _, c := range cases {
-//		got := CheckIn(c.t, c.bks)
-//		if !reflect.DeepEqual(got, c.want) {
-//			t.Errorf("CheckIn(%s, %v) ==\n%v want \n%v",
-//				c.t, c.bks, got, c.want)
-//		}
-//	}
-//}
-//
-//func Test_jsonStringToBorrowersPass(t *testing.T) {
-//	js := jsonStringBorrowers
-//	wantBrs := brs1
-//	wantError := error(nil)
-//
-//	got, err := JsonStringToBorrowers(js)
-//	if !reflect.DeepEqual(got, wantBrs) || err != wantError {
-//		t.Errorf("JsonStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
-//			js, got, err, wantBrs, wantError)
-//	}
-//}
-//
-//func Test_jsonStringToBorrowersFail(t *testing.T) {
-//	cases := []struct {
-//		js        string
-//		wantBrs   Borrowers
-//		wantError error
-//	}{
-//		{jsonStringBorrowersBadParse, ZeroBorrowers, errors.New("invalid character '\"' after object key")},
-//		{jsonStringBorrowersBadNameField, ZeroBorrowers, errors.New("missing Borrower field value - borrowers list is empty")},
-//		{jsonStringBorrowersBadMaxBooksField, ZeroBorrowers, errors.New("missing Borrower field value - borrowers list is empty")},
-//	}
-//	for _, c := range cases {
-//		got, err := JsonStringToBorrowers(c.js)
-//		if err != nil {
-//			if err.Error() != c.wantError.Error() {
-//				t.Errorf("JsonStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
-//					c.js, got, err, c.wantBrs, c.wantError)
-//			}
-//		}
-//	}
-//}
-//
-//func Test_jsonStringToBooksPass(t *testing.T) {
-//	js := jsonStringBooks
-//	wantBks := []BookPtr{{Title: "Title1", Author: "Author1", Borrower: &borrower.Borrower{Name: "Borrower1", MaxBooks: 1}}, {Title: "Title2", Author: "Author2", Borrower: nil}}
-//	wantError := error(nil)
-//
-//	got, err := JsonStringToBooks(js)
-//
-//	if !reflect.DeepEqual(got, wantBks) || err != wantError {
-//		t.Errorf("JSONStringToBooks\n(%s)\n==\n%v and %v\nwant\n%v and %v",
-//			js, got, err, wantBks, wantError)
-//	}
-//}
-//
-//func Test_jsonStringToBooksFail(t *testing.T) {
-//	cases := []struct {
-//		js        string
-//		wantBks   Books
-//		wantError error
-//	}{
-//		{jsonStringBooksBadParse, ZeroBooks, errors.New("invalid character '\"' after object key")},
-//		{jsonStringBooksBadTitleField, ZeroBooks, errors.New("missing Book field value - book list is empty")},
-//		{jsonStringBooksBadBorrowerField, ZeroBooks, errors.New("missing Borrower field value - book list is empty")},
-//	}
-//	for _, c := range cases {
-//		got, err := JsonStringToBooks(c.js)
-//		if err != nil {
-//			if err.Error() != c.wantError.Error() {
-//				t.Errorf("JSONStringToBooks\n(%s)\n==\n%v and %v\nwant\n%v and %v",
-//					c.js, got, err, c.wantBks, c.wantError)
-//			}
-//		}
-//	}
-//}
-//
-//func TestBorrowersToJSONString(t *testing.T) {
-//	got, err := BorrowersToJSONSting(brs1)
-//	want := jsonStringBorrowers
-//	if got != want || err != nil {
-//		t.Errorf("BorrwersToJSONSting(%v) ==\n(%q) want \n(%q)",
-//			brs1, got, want)
-//	}
-//}
-//
-//func TestBooksToJSONString(t *testing.T) {
-//	got, err := BooksToJSONSting(bks1)
-//	want := jsonStringBooks
-//	if got != want || err != nil {
-//		t.Errorf("BooksToJSONSting(%v) ==\n(%q) want \n(%q)",
-//			bks1, got, want)
-//	}
-//}
-//
-//func TestStatusToString(t *testing.T) {
-//	br1libL := borrower.Borrower{Name: "Borrower1", MaxBooks: 1}
-//	br2libL := borrower.Borrower{Name: "Borrower2", MaxBooks: 2}
-//	br3libL := borrower.Borrower{Name: "Borrower3", MaxBooks: 3}
-//	brs2L := []BorrowerPtr{&br1libL, &br2libL, &br3libL}
-//
-//	bk1libL := book.Book{Title: "Title1", Author: "Author1", Borrower: &br1lib}
-//	bk2libL := book.Book{Title: "Title2", Author: "Author2"}
-//	bk3libL := book.Book{Title: "Title3", Author: "Author3", Borrower: &br3lib}
-//	bks2L := []BookPtr{&bk1libL, &bk2libL, &bk3libL}
-//
-//	bks := bks2L
-//	brs := brs2L
-//	got := StatusToString(bks, brs)
-//	want := ss
-//	if got != want {
-//		t.Errorf("StatusToString(%v, %v) ==\n(%q) want \n(%q)",
-//			bks, brs, got, want)
-//	}
-//}
+func Test_findBorrower(t *testing.T) {
+	var ErrNoBorrowerFound = errors.New("did not find the requested borrower")
+	cases := []struct {
+		n       string
+		brs     Borrowers
+		wantBr  Borrower
+		wantErr error
+	}{
+		{"Borrower1", brs2, br1lib, nil},
+		{"Borrower11", brs2, ZeroBorrower, ErrNoBorrowerFound},
+	}
+	for _, c := range cases {
+		gotBr, gotErr := findBorrower(c.n, c.brs)
+		if !reflect.DeepEqual(gotBr, c.wantBr) ||
+			!reflect.DeepEqual(gotErr, c.wantErr) {
+			t.Errorf("findBorrower(%s, %v) ==\n%v\nwant\n%v\n%v\nwant\n%v",
+				c.n, c.brs, gotBr, c.wantBr, gotErr, c.wantErr)
+		}
+	}
+}
+
+func Test_findBook(t *testing.T) {
+	var ErrNoBookFound = errors.New("did not find the requested book")
+	cases := []struct {
+		t       string
+		bks     Books
+		wantBk  Book
+		wantErr error
+	}{
+		{"Title1", bks2, bk1lib, nil},
+		{"Title11", bks2, ZeroBook, ErrNoBookFound},
+	}
+	for _, c := range cases {
+		gotBk, gotErr := findBook(c.t, c.bks)
+		if gotBk != c.wantBk ||
+			!reflect.DeepEqual(gotBk, c.wantBk) ||
+			!reflect.DeepEqual(gotErr, c.wantErr) {
+			t.Errorf("findBook(%s, %v) ==\n%v\nwant\n%v\n%v\nwant\n%v",
+				c.t, c.bks, gotBk, c.wantBk, gotErr, c.wantErr)
+		}
+	}
+}
+
+func Test_getBooksForBorrower(t *testing.T) {
+	cases := []struct {
+		br   Borrower
+		bks  Books
+		want Books
+	}{
+		{br2lib, bks1, []Book{}},
+		{br1lib, bks1, []Book{bk1lib}},
+		{br3lib, bks3, []Book{bk3lib, bk4lib}},
+	}
+	for _, c := range cases {
+		got := getBooksForBorrower(c.br, c.bks)
+		if !reflect.DeepEqual(got, c.want) {
+			t.Errorf("GetBooksForborrower(%v, %v) ==\n%v want \n%v",
+				c.br, c.bks, got, c.want)
+		}
+	}
+}
+
+func TestCheckOut(t *testing.T) {
+	var testbks = Books{bk1lib, {Title: "Title2", Author: "Author2", Borrower: &Borrower{Name: "Borrower2", MaxBooks: 2}}}
+	cases := []struct {
+		n    string
+		t    string
+		brs  Borrowers
+		bks  Books
+		want Books
+	}{
+		{"Borrower2", "Title1", brs1, bks1, bks1},
+		{"Borrower2", "NoTitle", brs1, bks1, bks1},
+		{"NoName", "Title1", brs1, bks1, bks1},
+		{"Borrower1", "Title2", brs1, bks1, bks1},
+		{"Borrower2", "Title2", brs1, bks1, testbks},
+	}
+	for _, c := range cases {
+		got := CheckOut(c.n, c.t, c.brs, c.bks)
+		if !reflect.DeepEqual(got, c.want) {
+			t.Errorf("CheckOut(%s, %s, %v, %v) ==\n%v want \n%v",
+				c.n, c.t, c.brs, c.bks, got, c.want)
+		}
+	}
+}
+
+func TestCheckIn(t *testing.T) {
+	var testbks1 = Books{bk1lib, bk2lib}
+	var testbks2 = Books{bk2lib, {Title: "Title1", Author: "Author1", Borrower: nil}}
+	cases := []struct {
+		t    string
+		bks  Books
+		want Books
+	}{
+		{"Title1", testbks1, testbks2},
+		{"Title2", testbks1, testbks1},
+		{"NoTitle", testbks1, testbks1},
+	}
+	for _, c := range cases {
+		got := CheckIn(c.t, c.bks)
+		if !reflect.DeepEqual(got, c.want) {
+			t.Errorf("CheckIn(%s, %v) ==\n%v want \n%v",
+				c.t, c.bks, got, c.want)
+		}
+	}
+}
+
+func Test_jsonStringToBorrowersPass(t *testing.T) {
+	js := jsonStringBorrowers
+	wantBrs := brs1
+	wantError := error(nil)
+
+	got, err := JsonStringToBorrowers(js)
+	if !reflect.DeepEqual(got, wantBrs) || err != wantError {
+		t.Errorf("JsonStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
+			js, got, err, wantBrs, wantError)
+	}
+}
+
+func Test_jsonStringToBorrowersFail(t *testing.T) {
+	cases := []struct {
+		js        string
+		wantBrs   Borrowers
+		wantError error
+	}{
+		{jsonStringBorrowersBadParse, ZeroBorrowers, errors.New("invalid character '\"' after object key")},
+		{jsonStringBorrowersBadNameField, ZeroBorrowers, errors.New("missing Borrower field value - borrowers list is empty")},
+		{jsonStringBorrowersBadMaxBooksField, ZeroBorrowers, errors.New("missing Borrower field value - borrowers list is empty")},
+	}
+	for _, c := range cases {
+		got, err := JsonStringToBorrowers(c.js)
+		if err != nil {
+			if err.Error() != c.wantError.Error() {
+				t.Errorf("JsonStringToBorrowers\n(%s)\n==\n%v and %v\nwant\n%v and %v",
+					c.js, got, err, c.wantBrs, c.wantError)
+			}
+		}
+	}
+}
+
+func Test_jsonStringToBooksPass(t *testing.T) {
+	js := jsonStringBooks
+	wantBks := Books{{Title: "Title1", Author: "Author1", Borrower: &Borrower{Name: "Borrower1", MaxBooks: 1}}, {Title: "Title2", Author: "Author2", Borrower: nil}}
+	wantError := error(nil)
+
+	got, err := JsonStringToBooks(js)
+
+	if !reflect.DeepEqual(got, wantBks) || err != wantError {
+		t.Errorf("JSONStringToBooks\n(%s)\n==\n%v and %v\nwant\n%v and %v",
+			js, got, err, wantBks, wantError)
+	}
+}
+
+func Test_jsonStringToBooksFail(t *testing.T) {
+	cases := []struct {
+		js        string
+		wantBks   Books
+		wantError error
+	}{
+		{jsonStringBooksBadParse, ZeroBooks, errors.New("invalid character '\"' after object key")},
+		{jsonStringBooksBadTitleField, ZeroBooks, errors.New("missing Book field value - book list is empty")},
+		{jsonStringBooksBadBorrowerField, ZeroBooks, errors.New("missing Borrower field value - book list is empty")},
+	}
+	for _, c := range cases {
+		got, err := JsonStringToBooks(c.js)
+		if err != nil {
+			if err.Error() != c.wantError.Error() {
+				t.Errorf("JSONStringToBooks\n(%s)\n==\n%v and %v\nwant\n%v and %v",
+					c.js, got, err, c.wantBks, c.wantError)
+			}
+		}
+	}
+}
+
+func TestBorrowersToJSONString(t *testing.T) {
+	got, err := BorrowersToJSONSting(brs1)
+	want := jsonStringBorrowers
+	if got != want || err != nil {
+		t.Errorf("BorrwersToJSONSting(%v) ==\n(%q) want \n(%q)",
+			brs1, got, want)
+	}
+}
+
+func TestBooksToJSONString(t *testing.T) {
+	got, err := BooksToJSONSting(bks1)
+	want := jsonStringBooks
+	if got != want || err != nil {
+		t.Errorf("BooksToJSONSting(%v) ==\n(%q) want \n(%q)",
+			bks1, got, want)
+	}
+}
+
+func TestStatusToString(t *testing.T) {
+	br1libL := Borrower{Name: "Borrower1", MaxBooks: 1}
+	br2libL := Borrower{Name: "Borrower2", MaxBooks: 2}
+	br3libL := Borrower{Name: "Borrower3", MaxBooks: 3}
+	brs2L := Borrowers{br1libL, br2libL, br3libL}
+
+	bk1libL := Book{Title: "Title1", Author: "Author1", Borrower: &br1lib}
+	bk2libL := Book{Title: "Title2", Author: "Author2"}
+	bk3libL := Book{Title: "Title3", Author: "Author3", Borrower: &br3lib}
+	bks2L := Books{bk1libL, bk2libL, bk3libL}
+
+	bks := bks2L
+	brs := brs2L
+	got := StatusToString(bks, brs)
+	want := ss
+	if got != want {
+		t.Errorf("StatusToString(%v, %v) ==\n(%q) want \n(%q)",
+			bks, brs, got, want)
+	}
+}
