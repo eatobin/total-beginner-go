@@ -21,35 +21,35 @@ func TestSetTitle(t *testing.T) {
 	}
 }
 
-//func TestSetAuthor(t *testing.T) {
-//	author := "Author1"
-//	gotBkA := badAuthor.SetAuthor(author).String()
-//	if gotBkA != wantAvail {
-//		t.Fatalf("(%v) SetAuthor(%v) == %v, want %v", badAuthor, author, gotBkA, wantAvail)
-//	}
-//}
-//
-//func TestSetBorrower(t *testing.T) {
-//	cases := []struct {
-//		bk           Book
-//		br           *Borrower
-//		wantBkString string
-//	}{
-//		{bk1, &newBorrower, wantCheckedOut},
-//		{bk2, &newBorrower, wantCheckedOut},
-//		{bk3, nil, wantAvail},
-//	}
-//	for _, c := range cases {
-//		gotBkString := c.bk.SetBorrower(c.br).String()
-//		if gotBkString != c.wantBkString {
-//			t.Fatalf("(%v) SetBorrower(%v) == %v, want %v", c.bk, c.br, gotBkString, c.wantBkString)
-//		}
-//	}
-//}
-//
-//func TestBkToJsonString(t *testing.T) {
-//	gotJsonString, _ := badTitle.BkToJsonString()
-//	if gotJsonString != jsonString {
-//		t.Fatalf("(%v) BkToJsonString() == %v, want %v", badTitle, gotJsonString, jsonString)
-//	}
-//}
+func TestSetAuthor(t *testing.T) {
+	author := "Author1"
+	gotBkA := badAuthor.SetAuthor(author).String()
+	if gotBkA != wantAvail {
+		t.Fatalf("(%v) SetAuthor(%v) == %v, want %v", badAuthor, author, gotBkA, wantAvail)
+	}
+}
+
+func TestSetBorrower(t *testing.T) {
+	cases := []struct {
+		bk           Book
+		br           *Borrower
+		wantBkString string
+	}{
+		{bk1, &newBorrower, wantCheckedOut},
+		{bk2, &newBorrower, wantCheckedOut},
+		{bk3, nil, wantAvail},
+	}
+	for _, c := range cases {
+		gotBkString := c.bk.SetBorrower(c.br).String()
+		if gotBkString != c.wantBkString {
+			t.Fatalf("(%v) SetBorrower(%v) == %v, want %v", c.bk, c.br, gotBkString, c.wantBkString)
+		}
+	}
+}
+
+func TestBkToJsonString(t *testing.T) {
+	gotJsonString, _ := badTitle.BkToJsonString()
+	if gotJsonString != jsonString {
+		t.Fatalf("(%v) BkToJsonString() == %v, want %v", badTitle, gotJsonString, jsonString)
+	}
+}
