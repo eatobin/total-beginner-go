@@ -1,8 +1,6 @@
 package borrower
 
-import (
-	"testing"
-)
+import "testing"
 
 var badName, _ = JsonStringToBorrower("{\"name\":\"Borrower1X\",\"maxBooks\":1}")
 var badMB, _ = JsonStringToBorrower("{\"name\":\"Borrower1\",\"maxBooks\":19}")
@@ -25,9 +23,9 @@ func TestSetMaxBooks(t *testing.T) {
 	}
 }
 
-func TestBrToJsonString(t *testing.T) {
-	gotJsonString, _ := badName.BrToJsonString()
-	if gotJsonString != jsonString {
-		t.Fatalf("(%v) BrToJsonString() == %v, want %v", badName, gotJsonString, jsonString)
-	}
-}
+//func TestBrToJsonString(t *testing.T) {
+//	gotJsonString, _ := badName.BrToJsonString()
+//	if gotJsonString != jsonString {
+//		t.Fatalf("(%v) BrToJsonString() == %v, want %v", badName, gotJsonString, jsonString)
+//	}
+//}
