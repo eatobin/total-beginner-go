@@ -1,56 +1,53 @@
 package library
 
-//import (
-//	"encoding/json"
-//	"errors"
-//	"github.com/eatobin/totalbeginnergo/book"
-//	"github.com/eatobin/totalbeginnergo/borrower"
-//	"strconv"
-//	"strings"
-//)
-//
-//type BorrowerPtr = *borrower.Borrower
-//type Borrowers = []BorrowerPtr
-//type BookPtr = *book.Book
-//type Books = []BookPtr
-//
-//var ZeroBorrowers Borrowers
-//var ZeroBooks Books
-//
-//func containsBorrower(brs Borrowers, br BorrowerPtr) bool {
-//	for _, b := range brs {
-//		if *b == *br {
-//			return true
-//		}
-//	}
-//	return false
-//}
-//
-//func containsBook(bks Books, bk BookPtr) bool {
-//	for _, b := range bks {
-//		if *b == *bk {
-//			return true
-//		}
-//	}
-//	return false
-//}
-//
-//// AddBorrower adds a Borrower pointer to a slice of Borrower pointers
-//func AddBorrower(brs Borrowers, br BorrowerPtr) Borrowers {
-//	if containsBorrower(brs, br) {
-//		return brs
-//	}
-//	return append(brs, br)
-//}
-//
-//// AddBook adds a Book pointer to a slice of Book pointers
-//func AddBook(bks Books, bk BookPtr) Books {
-//	if containsBook(bks, bk) {
-//		return bks
-//	}
-//	return append(bks, bk)
-//}
-//
+import (
+	"github.com/eatobin/totalbeginnergo/book"
+	"github.com/eatobin/totalbeginnergo/borrower"
+)
+
+type Borrower = borrower.Borrower
+type BorrowerPtr = *Borrower
+type Borrowers = []Borrower
+type Book = book.Book
+type Books = []Book
+
+var ZeroBorrowers Borrowers
+var ZeroBooks Books
+
+func containsBorrower(brs Borrowers, br Borrower) bool {
+	for _, b := range brs {
+		if b == br {
+			return true
+		}
+	}
+	return false
+}
+
+func containsBook(bks Books, bk Book) bool {
+	for _, b := range bks {
+		if b == bk {
+			return true
+		}
+	}
+	return false
+}
+
+// AddBorrower adds a Borrower to a slice of Borrowers
+func AddBorrower(brs Borrowers, br Borrower) Borrowers {
+	if containsBorrower(brs, br) {
+		return brs
+	}
+	return append(brs, br)
+}
+
+// AddBook adds a Book pointer to a slice of Book pointers
+func AddBook(bks Books, bk Book) Books {
+	if containsBook(bks, bk) {
+		return bks
+	}
+	return append(bks, bk)
+}
+
 //// removeBook removes a Book pointer from a slice of Book pointers
 //func removeBook(bks Books, bk BookPtr) Books {
 //	nBks := make(Books, 0)

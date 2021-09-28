@@ -1,77 +1,74 @@
 package library
 
-//import (
-//	"errors"
-//	"github.com/eatobin/totalbeginnergo/book"
-//	"github.com/eatobin/totalbeginnergo/borrower"
-//	"reflect"
-//	"testing"
-//)
-//
-//var br1lib = borrower.Borrower{Name: "Borrower1", MaxBooks: 1}
-//var br2lib = borrower.Borrower{Name: "Borrower2", MaxBooks: 2}
-//var br3lib = borrower.Borrower{Name: "Borrower3", MaxBooks: 3}
-//
-//var brs1 = Borrowers{&br1lib, &br2lib}
-//var brs2 = Borrowers{&br1lib, &br2lib, &br3lib}
-//
-//var bk1lib = book.Book{Title: "Title1", Author: "Author1", Borrower: &br1lib}
-//var bk2lib = book.Book{Title: "Title2", Author: "Author2"}
-//var bk3lib = book.Book{Title: "Title3", Author: "Author3", Borrower: &br3lib}
-//var bk4lib = book.Book{Title: "Title4", Author: "Author4", Borrower: &br3lib}
-//
-//var bks1 = Books{&bk1lib, &bk2lib}
-//var bks2 = Books{&bk1lib, &bk2lib, &bk3lib}
-//var bks3 = Books{&bk1lib, &bk2lib, &bk3lib, &bk4lib}
-//
-//var jsonStringBorrowers = "[{\"name\":\"Borrower1\",\"maxBooks\":1},{\"name\":\"Borrower2\",\"maxBooks\":2}]"
-//var jsonStringBorrowersBadParse = `[{"name""Borrower1","maxBooks":1},{"name":"Borrower2","maxBooks":2}]`
-//var jsonStringBorrowersBadNameField = `[{"noName":"Borrower1","maxBooks":1},{"name":"Borrower2","maxBooks":2}]`
-//var jsonStringBorrowersBadMaxBooksField = `[{"name":"Borrower1","noMaxBooks":1},{"name":"Borrower2","maxBooks":2}]`
-//
-//var jsonStringBooks = `[{"title":"Title1","author":"Author1","borrower":{"name":"Borrower1","maxBooks":1}},{"title":"Title2","author":"Author2"}]`
-//var jsonStringBooksBadParse = `[{"title""Title2","author":"Author22","borrower":{"name":"NoName","maxBooks":-1}},{"title":"Title99","author":"Author99","borrower":{"name":"Borrower1","maxBooks":1}}]`
-//var jsonStringBooksBadTitleField = `[{"noTitle":"Title2","author":"Author22","borrower":{"name":"NoName","maxBooks":-1}},{"title":"Title99","author":"Author99","borrower":{"name":"Borrower1","maxBooks":1}}]`
-//var jsonStringBooksBadBorrowerField = `[{"title":"Title1","author":"Author1","borrower":{"noName":"Borrower1","maxBooks":1}},{"title":"Title2","author":"Author2","borrower":{"name":"Borrower2","maxBooks":2}}]`
-//
-//var ss = "\n--- Status Report of Test Library ---\n\nTest Library: 3 books; 3 borrowers.\n\nTitle1 by Author1; Checked out to Borrower1\nTitle2 by Author2; Available\nTitle3 by Author3; Checked out to Borrower3\n\nBorrower1 [1 books]\nBorrower2 [2 books]\nBorrower3 [3 books]\n\n--- End of Status Report ---\n"
-//
-//func TestAddBorrower(t *testing.T) {
-//	cases := []struct {
-//		brs     Borrowers
-//		br      BorrowerPtr
-//		wantBrs Borrowers
-//	}{
-//		{brs1, &br3lib, brs2},
-//		{brs1, &br2lib, brs1},
-//	}
-//	for _, c := range cases {
-//		gotBrs := AddBorrower(c.brs, c.br)
-//		if !reflect.DeepEqual(gotBrs, c.wantBrs) {
-//			t.Errorf("AddBorrower(%v, %v) ==\n%v want\n%v",
-//				c.brs, c.br, gotBrs, c.wantBrs)
-//		}
-//	}
-//}
-//
-//func TestAddBook(t *testing.T) {
-//	cases := []struct {
-//		bks     Books
-//		bk      BookPtr
-//		wantBks Books
-//	}{
-//		{bks1, &bk3lib, bks2},
-//		{bks1, &bk2lib, bks1},
-//	}
-//	for _, c := range cases {
-//		gotBks := AddBook(c.bks, c.bk)
-//		if !reflect.DeepEqual(gotBks, c.wantBks) {
-//			t.Errorf("AddBook(%v, %v) ==\n%v want\n%v",
-//				c.bks, c.bk, gotBks, c.wantBks)
-//		}
-//	}
-//}
-//
+import (
+	"reflect"
+	"testing"
+)
+
+var br1lib = Borrower{Name: "Borrower1", MaxBooks: 1}
+var br2lib = Borrower{Name: "Borrower2", MaxBooks: 2}
+var br3lib = Borrower{Name: "Borrower3", MaxBooks: 3}
+
+var brs1 = Borrowers{br1lib, br2lib}
+var brs2 = Borrowers{br1lib, br2lib, br3lib}
+
+var bk1lib = Book{Title: "Title1", Author: "Author1", Borrower: &br1lib}
+var bk2lib = Book{Title: "Title2", Author: "Author2"}
+var bk3lib = Book{Title: "Title3", Author: "Author3", Borrower: &br3lib}
+var bk4lib = Book{Title: "Title4", Author: "Author4", Borrower: &br3lib}
+
+var bks1 = Books{bk1lib, bk2lib}
+var bks2 = Books{bk1lib, bk2lib, bk3lib}
+var bks3 = Books{bk1lib, bk2lib, bk3lib, bk4lib}
+
+var jsonStringBorrowers = "[{\"name\":\"Borrower1\",\"maxBooks\":1},{\"name\":\"Borrower2\",\"maxBooks\":2}]"
+var jsonStringBorrowersBadParse = `[{"name""Borrower1","maxBooks":1},{"name":"Borrower2","maxBooks":2}]`
+var jsonStringBorrowersBadNameField = `[{"noName":"Borrower1","maxBooks":1},{"name":"Borrower2","maxBooks":2}]`
+var jsonStringBorrowersBadMaxBooksField = `[{"name":"Borrower1","noMaxBooks":1},{"name":"Borrower2","maxBooks":2}]`
+
+var jsonStringBooks = `[{"title":"Title1","author":"Author1","borrower":{"name":"Borrower1","maxBooks":1}},{"title":"Title2","author":"Author2"}]`
+var jsonStringBooksBadParse = `[{"title""Title2","author":"Author22","borrower":{"name":"NoName","maxBooks":-1}},{"title":"Title99","author":"Author99","borrower":{"name":"Borrower1","maxBooks":1}}]`
+var jsonStringBooksBadTitleField = `[{"noTitle":"Title2","author":"Author22","borrower":{"name":"NoName","maxBooks":-1}},{"title":"Title99","author":"Author99","borrower":{"name":"Borrower1","maxBooks":1}}]`
+var jsonStringBooksBadBorrowerField = `[{"title":"Title1","author":"Author1","borrower":{"noName":"Borrower1","maxBooks":1}},{"title":"Title2","author":"Author2","borrower":{"name":"Borrower2","maxBooks":2}}]`
+
+var ss = "\n--- Status Report of Test Library ---\n\nTest Library: 3 books; 3 borrowers.\n\nTitle1 by Author1; Checked out to Borrower1\nTitle2 by Author2; Available\nTitle3 by Author3; Checked out to Borrower3\n\nBorrower1 [1 books]\nBorrower2 [2 books]\nBorrower3 [3 books]\n\n--- End of Status Report ---\n"
+
+func TestAddBorrower(t *testing.T) {
+	cases := []struct {
+		brs     Borrowers
+		br      Borrower
+		wantBrs Borrowers
+	}{
+		{brs1, br3lib, brs2},
+		{brs1, br2lib, brs1},
+	}
+	for _, c := range cases {
+		gotBrs := AddBorrower(c.brs, c.br)
+		if !reflect.DeepEqual(gotBrs, c.wantBrs) {
+			t.Errorf("AddBorrower(%v, %v) ==\n%v want\n%v",
+				c.brs, c.br, gotBrs, c.wantBrs)
+		}
+	}
+}
+
+func TestAddBook(t *testing.T) {
+	cases := []struct {
+		bks     Books
+		bk      Book
+		wantBks Books
+	}{
+		{bks1, bk3lib, bks2},
+		{bks1, bk2lib, bks1},
+	}
+	for _, c := range cases {
+		gotBks := AddBook(c.bks, c.bk)
+		if !reflect.DeepEqual(gotBks, c.wantBks) {
+			t.Errorf("AddBook(%v, %v) ==\n%v want\n%v",
+				c.bks, c.bk, gotBks, c.wantBks)
+		}
+	}
+}
+
 //func Test_findBorrower(t *testing.T) {
 //	var ErrNoBorrowerFound = errors.New("did not find the requested borrower")
 //	cases := []struct {
