@@ -4,7 +4,6 @@ import "testing"
 
 var badName, _ = JsonStringToBorrower("{\"name\":\"Borrower1X\",\"maxBooks\":1}")
 var badMB, _ = JsonStringToBorrower("{\"name\":\"Borrower1\",\"maxBooks\":19}")
-var wantBr = "Borrower1 [1 books]"
 var jsonString = "{\"name\":\"Borrower1X\",\"maxBooks\":1}"
 var brA = Borrower{Name: "Borrower1", MaxBooks: 1}
 var brB = Borrower{Name: "Borrower1", MaxBooks: 1}
@@ -27,15 +26,15 @@ func TestSetName(t *testing.T) {
 	goodName := "Borrower1"
 	gotBr := badName.SetName(goodName)
 	if !gotBr.Equal(brA) {
-		t.Fatalf("(%v) SetName(%v) == %v, want %v", badName, goodName, gotBr, wantBr)
+		t.Fatalf("(%v) SetName(%v) == %v, want %v", badName, goodName, gotBr, brA)
 	}
 }
 
 func TestSetMaxBooks(t *testing.T) {
 	goodMB := 1
-	gotBrMB := badMB.SetMaxBooks(goodMB).String()
-	if gotBrMB != wantBr {
-		t.Fatalf("(%v) SetMaxBooks(%v) == %v, want %v", badMB, goodMB, gotBrMB, wantBr)
+	gotBrMB := badMB.SetMaxBooks(goodMB)
+	if !gotBrMB.Equal(brA) {
+		t.Fatalf("(%v) SetMaxBooks(%v) == %v, want %v", badMB, goodMB, gotBrMB, brA)
 	}
 }
 
