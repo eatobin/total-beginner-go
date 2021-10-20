@@ -11,6 +11,16 @@ type Borrower struct {
 	MaxBooks int    `json:"maxBooks"`
 }
 
+func (br Borrower) Equal(b Borrower) bool {
+	if &br == &b {
+		return true
+	}
+	if br.Name != b.Name || br.MaxBooks != b.MaxBooks {
+		return false
+	}
+	return true
+}
+
 // JsonStringToBorrower turns a Borrower JSON string into a Borrower
 func JsonStringToBorrower(borrowerString string) (Borrower, error) {
 	var borrower Borrower
