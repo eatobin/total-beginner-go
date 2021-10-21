@@ -21,7 +21,7 @@ var ZeroBooks Books
 
 func containsBorrower(brs Borrowers, br Borrower) bool {
 	for _, b := range brs {
-		if b == br {
+		if b.Equal(br) {
 			return true
 		}
 	}
