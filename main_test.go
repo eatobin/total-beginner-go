@@ -3,7 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
-	"github.com/eatobin/totalbeginnergo/library"
+	"github.com/eatobin/total-beginner-go/library"
 	"os"
 	"testing"
 )

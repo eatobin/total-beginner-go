@@ -3,8 +3,8 @@ package library
 import (
 	"encoding/json"
 	"errors"
-	"github.com/eatobin/totalbeginnergo/book"
-	"github.com/eatobin/totalbeginnergo/borrower"
+	"github.com/eatobin/total-beginner-go/book"
+	"github.com/eatobin/total-beginner-go/borrower"
 	"strconv"
 	"strings"
 )

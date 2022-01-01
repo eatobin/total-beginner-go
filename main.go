@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/eatobin/totalbeginnergo/book"
-	"github.com/eatobin/totalbeginnergo/borrower"
-	"github.com/eatobin/totalbeginnergo/library"
+	"github.com/eatobin/total-beginner-go/book"
+	"github.com/eatobin/total-beginner-go/borrower"
+	"github.com/eatobin/total-beginner-go/library"
 	"io/ioutil"
 	"os"
 )

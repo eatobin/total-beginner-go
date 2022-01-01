@@ -3,7 +3,7 @@ package book
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/eatobin/totalbeginnergo/borrower"
+	"github.com/eatobin/total-beginner-go/borrower"
 )
 
 type Borrower = borrower.Borrower
