@@ -1,3 +1,3 @@
 module github.com/eatobin/total-beginner-go
 
-go 1.17
+go 1.18
